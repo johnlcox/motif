@@ -11,5 +11,12 @@
 
   <artifactId>motif-examples</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.leacox.motif</groupId>
+      <artifactId>motif</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>

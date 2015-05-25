@@ -20,13 +20,13 @@ class YesMatch<T, R> implements Match<T, R> {
   }
 
   @Override
-  public MatchEnd<R> orElse(R result) {
+  public MatchEnd<R> orElse(R other) {
     return new MatchEnd<>(result);
   }
 
   @Override
   public MatchEnd<R> orElse(Supplier<R> supplier) {
-    return new MatchEnd<>(supplier.get());
+    return new MatchEnd<>(result);
   }
 
   @Override

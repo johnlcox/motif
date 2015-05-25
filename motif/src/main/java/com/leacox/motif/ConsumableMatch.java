@@ -1,8 +1,7 @@
 package com.leacox.motif;
 
+import com.leacox.motif.function.Consumer0;
 import com.leacox.motif.pattern.ConsumablePattern;
-
-import java.util.function.Consumer;
 
 /**
  * @author John Leacox
@@ -10,5 +9,5 @@ import java.util.function.Consumer;
 public interface ConsumableMatch<T> {
   ConsumableMatch<T> when(ConsumablePattern<T> pattern);
 
-  void orElse(Consumer<T> consumer);
+  void orElse(Consumer0 consumer);
 }

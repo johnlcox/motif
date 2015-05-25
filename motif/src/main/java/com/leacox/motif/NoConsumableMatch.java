@@ -1,8 +1,7 @@
 package com.leacox.motif;
 
+import com.leacox.motif.function.Consumer0;
 import com.leacox.motif.pattern.ConsumablePattern;
-
-import java.util.function.Consumer;
 
 /**
  * @author John Leacox
@@ -25,7 +24,7 @@ class NoConsumableMatch<T> implements ConsumableMatch<T> {
   }
 
   @Override
-  public void orElse(Consumer<T> consumer) {
-    consumer.accept(value);
+  public void orElse(Consumer0 consumer) {
+    consumer.accept();
   }
 }

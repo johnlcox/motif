@@ -6,11 +6,14 @@ import java.util.function.Function;
 /**
  * @author John Leacox
  */
-public class TypeOfPattern {
+public final class TypeOfPattern {
+  private TypeOfPattern() {
+  }
+
   @SuppressWarnings("unchecked")
   public static <C, T, R> Pattern<T, R> caseTypeOf(
       Class<C> expectedClass, Function<C, R> function) {
-    return new BasePattern<>(
+    return Pattern.of(
         v -> v != null && expectedClass.isAssignableFrom(v.getClass()),
         v -> function.apply((C) v));
   }
@@ -18,7 +21,7 @@ public class TypeOfPattern {
   @SuppressWarnings("unchecked")
   public static <C, T> ConsumablePattern<T> caseTypeOf(
       Class<C> expectedClass, Consumer<C> consumer) {
-    return new BaseConsumablePattern<>(
+    return ConsumablePattern.of(
         v -> v != null && expectedClass.isAssignableFrom(v.getClass()),
         v -> consumer.accept((C) v));
   }

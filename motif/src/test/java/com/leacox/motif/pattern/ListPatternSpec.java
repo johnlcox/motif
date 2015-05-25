@@ -32,6 +32,7 @@ public class ListPatternSpec {
               "match empty list", expect -> {
                 String result = match(emptyList)
                     .when(caseNil(() -> "Nil"))
+                    .orElse(() -> "orElse")
                     .get();
 
                 expect.that(result).is("Nil");
@@ -40,7 +41,8 @@ public class ListPatternSpec {
           it.should(
               "match empty list and consume right side", expect -> {
                 match(emptyList)
-                    .when(caseNil(() -> System.out.println("nil")));
+                    .when(caseNil(() -> System.out.println("nil")))
+                    .orElse(() -> System.out.println("orElse"));
               });
 
           it.should(
@@ -57,7 +59,8 @@ public class ListPatternSpec {
               "match one item list and consume right side", expect -> {
                 match(oneItemList)
                     .when(caseNil(() -> System.out.println("nil")))
-                    .when(caseHeadNil((String s) -> System.out.println(s)));
+                    .when(caseHeadNil((String s) -> System.out.println(s)))
+                    .orElse(() -> System.out.println("Nope"));
               });
 
           it.should(
@@ -71,6 +74,7 @@ public class ListPatternSpec {
                 expect.that(result).is("head: one tail: [two]");
               });
 
+          // TODO: actually test something
           it.should(
               "match multi-item list and consume right side", expect -> {
                 match(twoItemList)

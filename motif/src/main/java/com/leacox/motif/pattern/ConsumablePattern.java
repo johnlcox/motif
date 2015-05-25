@@ -1,10 +1,27 @@
 package com.leacox.motif.pattern;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 /**
  * @author John Leacox
  */
 public interface ConsumablePattern<T> {
-  public boolean matches(T value);
+  boolean matches(T value);
 
-  public void consume(T value);
+  void consume(T value);
+
+  static <T> ConsumablePattern<T> of(Function<T, Boolean> matcher, Consumer<T> consumer) {
+    return new ConsumablePattern<T>() {
+      @Override
+      public boolean matches(T value) {
+        return matcher.apply(value);
+      }
+
+      @Override
+      public void consume(T value) {
+        consumer.accept(value);
+      }
+    };
+  }
 }
