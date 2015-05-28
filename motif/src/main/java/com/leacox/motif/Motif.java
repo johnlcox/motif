@@ -10,8 +10,4 @@ public class Motif {
   public static <T> Of<T> match(T value) {
     return new Of<>(value);
   }
-
-  public static OfInt matchInt(int value) {
-    return new OfInt(value);
-  }
 }
