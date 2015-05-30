@@ -2,6 +2,7 @@ package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.pattern.OrElsePattern.orElse;
 import static com.leacox.motif.pattern.PrimitivePattern.caseBoolean;
 import static com.leacox.motif.pattern.PrimitivePattern.caseByte;
 import static com.leacox.motif.pattern.PrimitivePattern.caseChar;
@@ -29,11 +30,11 @@ public class PrimitivePatternSpec {
                 byte b = 27;
 
                 // No byte literals in Java so you have to cast
-                String result = match(b)
-                    .when(caseByte((byte) 4, x -> "Nope"))
-                    .when(caseByte((byte) 27, x -> "27"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(b).on(
+                    caseByte((byte) 4, x -> "Nope"),
+                    caseByte((byte) 27, x -> "27"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(b));
               });
@@ -43,11 +44,11 @@ public class PrimitivePatternSpec {
                 short s = 382;
 
                 // No short literals in Java so you have to cast
-                String result = match(s)
-                    .when(caseShort((short) 4, x -> "Nope"))
-                    .when(caseShort((short) 382, x -> "382"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(s).on(
+                    caseShort((short) 4, x -> "Nope"),
+                    caseShort((short) 382, x -> "382"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(s));
               });
@@ -56,11 +57,11 @@ public class PrimitivePatternSpec {
               "match int", expect -> {
                 int i = 2875283;
 
-                String result = match(i)
-                    .when(caseInt(4, x -> "Nope"))
-                    .when(caseInt(2875283, x -> "2875283"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(i).on(
+                    caseInt(4, x -> "Nope"),
+                    caseInt(2875283, x -> "2875283"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(i));
               });
@@ -69,11 +70,11 @@ public class PrimitivePatternSpec {
               "match long", expect -> {
                 long l = 82874927472927l;
 
-                String result = match(l)
-                    .when(caseLong(4l, x -> "Nope"))
-                    .when(caseLong(82874927472927l, x -> "82874927472927"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(l).on(
+                    caseLong(4l, x -> "Nope"),
+                    caseLong(82874927472927l, x -> "82874927472927"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(l));
               });
@@ -82,11 +83,11 @@ public class PrimitivePatternSpec {
               "match float", expect -> {
                 float f = 382.84782f;
 
-                String result = match(f)
-                    .when(caseFloat(4f, x -> "Nope"))
-                    .when(caseFloat(382.84782f, String::valueOf))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(f).on(
+                    caseFloat(4f, x -> "Nope"),
+                    caseFloat(382.84782f, String::valueOf),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(f));
               });
@@ -95,11 +96,11 @@ public class PrimitivePatternSpec {
               "match double", expect -> {
                 double d = 89378393384832.3847849394;
 
-                String result = match(d)
-                    .when(caseDouble(4d, x -> "Nope"))
-                    .when(caseDouble(89378393384832.3847849394, String::valueOf))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(d).on(
+                    caseDouble(4d, x -> "Nope"),
+                    caseDouble(89378393384832.3847849394, String::valueOf),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(d));
               });
@@ -108,11 +109,11 @@ public class PrimitivePatternSpec {
               "match char", expect -> {
                 char c = 'T';
 
-                String result = match(c)
-                    .when(caseChar('t', x -> "Nope"))
-                    .when(caseChar('T', x -> "T"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(c).on(
+                    caseChar('t', x -> "Nope"),
+                    caseChar('T', x -> "T"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(c));
               });
@@ -121,11 +122,11 @@ public class PrimitivePatternSpec {
               "match String", expect -> {
                 String s = "Hello World";
 
-                String result = match(s)
-                    .when(caseString("Goodbye World", x -> "Nope"))
-                    .when(caseString("Hello World", x -> x))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(s).on(
+                    caseString("Goodbye World", x -> "Nope"),
+                    caseString("Hello World", x -> x),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(s);
               });
@@ -134,11 +135,11 @@ public class PrimitivePatternSpec {
               "match boolean true", expect -> {
                 boolean t = true;
 
-                String result = match(t)
-                    .when(caseBoolean(false, x -> "Nope"))
-                    .when(caseBoolean(true, x -> "true"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(t).on(
+                    caseBoolean(false, x -> "Nope"),
+                    caseBoolean(true, x -> "true"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(t));
               });
@@ -148,11 +149,11 @@ public class PrimitivePatternSpec {
                 boolean f = false;
 
                 // No short literals in Java so you have to cast
-                String result = match(f)
-                    .when(caseBoolean(true, x -> "Nope"))
-                    .when(caseBoolean(false, x -> "false"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(f).on(
+                    caseBoolean(true, x -> "Nope"),
+                    caseBoolean(false, x -> "false"),
+                    orElse(x -> "orElse")
+                );
 
                 expect.that(result).is(String.valueOf(f));
               });

@@ -5,6 +5,8 @@ import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.pattern.ListPattern.caseHeadNil;
 import static com.leacox.motif.pattern.ListPattern.caseHeadTail;
 import static com.leacox.motif.pattern.ListPattern.caseNil;
+import static com.leacox.motif.pattern.OrElsePattern.orElse;
+import static com.leacox.motif.pattern.OrElsePattern.otherwise;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -30,46 +32,49 @@ public class ListPatternSpec {
         "the list pattern", it -> {
           it.should(
               "match empty list", expect -> {
-                String result = match(emptyList)
-                    .when(caseNil(() -> "Nil"))
-                    .orElse(() -> "orElse")
-                    .get();
+                String result = match(emptyList).on(
+                    caseNil(() -> "Nil"),
+                    orElse("orElse")
+                );
 
                 expect.that(result).is("Nil");
               });
 
           it.should(
               "match empty list and consume right side", expect -> {
-                match(emptyList)
-                    .when(caseNil(() -> System.out.println("nil")))
-                    .orElse(() -> System.out.println("orElse"));
+                match(emptyList).on(
+                    caseNil(() -> System.out.println("nil")),
+                    otherwise(() -> System.out.println("a")),
+                    otherwise(t -> System.out.println(t))
+                );
               });
 
           it.should(
               "match one item list", expect -> {
-                String result = match(oneItemList)
-                    .when(caseNil(() -> "Nil"))
-                    .when(caseHeadNil((String s) -> s))
-                    .get();
+                String result = match(oneItemList).on(
+                    caseNil(() -> "Nil"),
+                    caseHeadNil((String s) -> s)
+                );
 
                 expect.that(result).is("one");
               });
 
           it.should(
               "match one item list and consume right side", expect -> {
-                match(oneItemList)
-                    .when(caseNil(() -> System.out.println("nil")))
-                    .when(caseHeadNil((String s) -> System.out.println(s)))
-                    .orElse(() -> System.out.println("Nope"));
+                match(oneItemList).on(
+                    caseNil(() -> System.out.println("nil")),
+                    caseHeadNil((String s) -> System.out.println(s)),
+                    otherwise(() -> System.out.println("Nope"))
+                );
               });
 
           it.should(
               "match multi-item list", expect -> {
-                String result = match(twoItemList)
-                    .when(caseNil(() -> "Nil"))
-                    .when(caseHeadNil((String s) -> s))
-                    .when(caseHeadTail((x, xs) -> "head: " + x + " tail: " + xs))
-                    .get();
+                String result = match(twoItemList).on(
+                    caseNil(() -> "Nil"),
+                    caseHeadNil((String s) -> s),
+                    caseHeadTail((x, xs) -> "head: " + x + " tail: " + xs)
+                );
 
                 expect.that(result).is("head: one tail: [two]");
               });
@@ -77,16 +82,15 @@ public class ListPatternSpec {
           // TODO: actually test something
           it.should(
               "match multi-item list and consume right side", expect -> {
-                match(twoItemList)
-                    .when(caseNil(() -> System.out.println("nil")))
-                    .when(caseHeadNil((String s) -> System.out.println(s)))
-                    .when(
-                        caseHeadTail(
-                            (String x, List<String> xs) -> System.out
-                                .println("head: " + x + " tail: " + xs)));
+                match(twoItemList).on(
+                    caseNil(() -> System.out.println("nil")),
+                    caseHeadNil((String s) -> System.out.println(s)),
+                    caseHeadTail(
+                        (String x, List<String> xs) -> System.out
+                            .println("head: " + x + " tail: " + xs))
+                );
               });
         }
-
     );
   }
 }

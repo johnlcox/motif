@@ -25,33 +25,33 @@ public class TypeOfPatternSpec {
         "the typeof pattern", it -> {
           it.should(
               "match String", expect -> {
-                String result = match(myString)
-                    .when(caseTypeOf(Double.class, Object::toString))
-                    .when(caseTypeOf(OffsetDateTime.class, OffsetDateTime::toString))
-                    .when(caseTypeOf(String.class, s -> s))
-                    .get();
+                String result = match(myString).on(
+                    caseTypeOf(Double.class, Object::toString),
+                    caseTypeOf(OffsetDateTime.class, OffsetDateTime::toString),
+                    caseTypeOf(String.class, s -> s)
+                );
 
                 expect.that(result).is(myString);
               });
 
           it.should(
               "match OffsetDateTime", expect -> {
-                String result = match(currentDateTime)
-                    .when(caseTypeOf(Double.class, Object::toString))
-                    .when(caseTypeOf(OffsetDateTime.class, OffsetDateTime::toString))
-                    .when(caseTypeOf(String.class, s -> s))
-                    .get();
+                String result = match(currentDateTime).on(
+                    caseTypeOf(Double.class, Object::toString),
+                    caseTypeOf(OffsetDateTime.class, OffsetDateTime::toString),
+                    caseTypeOf(String.class, s -> s)
+                );
 
                 expect.that(result).is(currentDateTime.toString());
               });
 
           it.should(
               "match Double", expect -> {
-                String result = match(pi)
-                    .when(caseTypeOf(Double.class, Object::toString))
-                    .when(caseTypeOf(OffsetDateTime.class, OffsetDateTime::toString))
-                    .when(caseTypeOf(String.class, s -> s))
-                    .get();
+                String result = match(pi).on(
+                    caseTypeOf(Double.class, Object::toString),
+                    caseTypeOf(OffsetDateTime.class, OffsetDateTime::toString),
+                    caseTypeOf(String.class, s -> s)
+                );
 
                 expect.that(result).is(pi.toString());
               });

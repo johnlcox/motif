@@ -20,9 +20,9 @@ public class CasePatternSpec {
     describe(
         "the case pattern", it -> it.should(
             "match cat", expect -> {
-              String result = match(cat)
-                  .when(caseAnimal("Cat", 4, (name, legs) -> "(" + name + ", " + legs + ")"))
-                  .get();
+              String result = match(cat).on(
+                  caseAnimal("Cat", 4, (name, legs) -> "(" + name + ", " + legs + ")")
+              );
 
               expect.that(result).is("(Cat, 4)");
             }));
