@@ -1,6 +1,6 @@
 package com.leacox.motif.pattern;
 
-import com.leacox.motif.ArgumentMatcher;
+import com.leacox.motif.matchers.ArgumentMatcher;
 
 import java.util.function.DoubleFunction;
 import java.util.function.Function;

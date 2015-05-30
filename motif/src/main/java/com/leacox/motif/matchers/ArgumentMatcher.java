@@ -1,4 +1,4 @@
-package com.leacox.motif;
+package com.leacox.motif.matchers;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;

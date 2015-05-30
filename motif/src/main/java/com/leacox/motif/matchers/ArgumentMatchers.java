@@ -1,7 +1,4 @@
-package com.leacox.motif;
-
-import com.leacox.motif.internal.matchers.Any;
-import com.leacox.motif.internal.matchers.Equals;
+package com.leacox.motif.matchers;
 
 /**
  * @author John Leacox
@@ -10,8 +7,8 @@ public class ArgumentMatchers {
   private ArgumentMatchers() {
   }
 
-  public static ArgumentMatcher any() {
-    return Any.ANY;
+  public static <T> ArgumentMatcher<T> any() {
+    return (ArgumentMatcher<T>) Any.ANY;
   }
 
   public static <T> ArgumentMatcher eq(T value) {

@@ -1,13 +1,13 @@
-package com.leacox.motif.internal;
+package com.leacox.motif.pattern;
 
-import com.leacox.motif.ArgumentMatcher;
+import com.leacox.motif.matchers.ArgumentMatcher;
 
 import java.util.List;
 
 /**
  * @author John Leacox
  */
-public class ArgumentsComparator {
+class ArgumentsComparator {
   private ArgumentsComparator() {
   }
 

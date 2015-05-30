@@ -1,13 +1,11 @@
-package com.leacox.motif.internal.matchers;
-
-import com.leacox.motif.ArgumentMatcher;
+package com.leacox.motif.matchers;
 
 import java.util.Objects;
 
 /**
  * @author John Leacox
  */
-public class Equals extends ArgumentMatcher<Object> {
+class Equals extends ArgumentMatcher<Object> {
   private final Object expected;
 
   public Equals(Object expected) {

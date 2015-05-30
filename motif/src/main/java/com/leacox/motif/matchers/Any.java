@@ -1,11 +1,9 @@
-package com.leacox.motif.internal.matchers;
-
-import com.leacox.motif.ArgumentMatcher;
+package com.leacox.motif.matchers;
 
 /**
  * @author John Leacox
  */
-public class Any extends ArgumentMatcher {
+class Any extends ArgumentMatcher {
   public static final Any ANY = new Any();
 
   private Any() {

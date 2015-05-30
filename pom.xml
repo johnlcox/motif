@@ -5,7 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
   <modules>
     <module>motif</module>
-    <module>motif-examples</module>
+
+    <module>examples</module>
+    <module>benchmarks</module>
   </modules>
 
   <parent>
@@ -22,6 +24,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
+    <jmh.version>1.9.3</jmh.version>
   </properties>
 
   <scm>
@@ -41,6 +44,22 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-core</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-generator-annprocess</artifactId>
+        <version>${jmh.version}</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <pluginManagement>

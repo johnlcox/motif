@@ -1,10 +1,10 @@
 package com.leacox.motif.pattern;
 
-import static com.leacox.motif.ArgumentMatchers.eq;
+import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 import static com.leacox.motif.pattern.TuplePattern.caseTuple1;
 import static com.leacox.motif.pattern.TuplePattern.caseTuple2;
 
-import com.leacox.motif.ArgumentMatcher;
+import com.leacox.motif.matchers.ArgumentMatcher;
 import com.leacox.motif.caseclass.Case1;
 import com.leacox.motif.caseclass.Case2;
 import com.leacox.motif.function.Function2;

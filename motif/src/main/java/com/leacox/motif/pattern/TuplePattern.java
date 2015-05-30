@@ -1,10 +1,9 @@
 package com.leacox.motif.pattern;
 
-import static com.leacox.motif.ArgumentMatchers.eq;
+import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
-import com.leacox.motif.ArgumentMatcher;
 import com.leacox.motif.function.Function2;
-import com.leacox.motif.internal.ArgumentsComparator;
+import com.leacox.motif.matchers.ArgumentMatcher;
 import com.leacox.motif.tuple.Tuple1;
 import com.leacox.motif.tuple.Tuple2;
 
