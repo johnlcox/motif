@@ -36,4 +36,9 @@ public abstract class Tuple {
   public int hashCode() {
     return Objects.hash(values);
   }
+
+  @Override
+  public String toString() {
+    return "(" + values.stream().reduce((t, u) -> t + "," + u).get() + ")";
+  }
 }
