@@ -3,13 +3,18 @@ package com.leacox.motif.pattern;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 import static com.leacox.motif.pattern.TuplePattern.caseTuple1;
 import static com.leacox.motif.pattern.TuplePattern.caseTuple2;
+import static com.leacox.motif.pattern.TuplePattern.caseTuple3;
+import static com.leacox.motif.pattern.TypeOfPattern.caseTypeOf;
 
-import com.leacox.motif.matchers.ArgumentMatcher;
 import com.leacox.motif.caseclass.Case1;
 import com.leacox.motif.caseclass.Case2;
+import com.leacox.motif.caseclass.Case3;
 import com.leacox.motif.function.Function2;
+import com.leacox.motif.function.Function3;
+import com.leacox.motif.matchers.ArgumentMatcher;
 import com.leacox.motif.tuple.Tuple1;
 import com.leacox.motif.tuple.Tuple2;
+import com.leacox.motif.tuple.Tuple3;
 
 import java.util.function.Function;
 
@@ -41,5 +46,30 @@ public final class CaseClassPattern {
     Pattern<Tuple2<A, B>, R> tuple2Pattern = caseTuple2(a, b, function);
     return Pattern
         .of(t -> tuple2Pattern.matches(t.extract()), t -> tuple2Pattern.apply(t.extract()));
+  }
+
+  public static <T extends Case3<A, B, C>, A, B, C, R> Pattern<T, R> case3(
+      A a, B b, C c, Function3<A, B, C, R> function) {
+    return case3(eq(a), eq(b), eq(c), function);
+  }
+
+  public static <T extends Case3<A, B, C>, A, B, C, R> Pattern<T, R> case3(
+      ArgumentMatcher<A> a, ArgumentMatcher<B> b, ArgumentMatcher<C> c,
+      Function3<A, B, C, R> function) {
+    Pattern<Tuple3<A, B, C>, R> tuple3Pattern = caseTuple3(a, b, c, function);
+    return Pattern
+        .of(t -> tuple3Pattern.matches(t.extract()), t -> tuple3Pattern.apply(t.extract()));
+  }
+
+  public static <S extends Case3<A, B, C>, T, A, B, C, R> Pattern<T, R> case3(
+      Class<S> clazz, ArgumentMatcher a, ArgumentMatcher b, ArgumentMatcher c,
+      Function3<A, B, C, R> function) {
+    Pattern<Tuple3<A, B, C>, R> tuple3Pattern = caseTuple3(a, b, c, function);
+    Pattern<T, S> typeOfPattern = caseTypeOf(clazz, d -> d);
+    return Pattern
+        .of(
+            t -> typeOfPattern.matches(t) && tuple3Pattern
+                .matches(typeOfPattern.apply(t).extract()),
+            t -> tuple3Pattern.apply(typeOfPattern.apply(t).extract()));
   }
 }

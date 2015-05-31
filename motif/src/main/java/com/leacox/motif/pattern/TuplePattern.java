@@ -3,9 +3,11 @@ package com.leacox.motif.pattern;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
 import com.leacox.motif.function.Function2;
+import com.leacox.motif.function.Function3;
 import com.leacox.motif.matchers.ArgumentMatcher;
 import com.leacox.motif.tuple.Tuple1;
 import com.leacox.motif.tuple.Tuple2;
+import com.leacox.motif.tuple.Tuple3;
 
 import java.util.function.Function;
 
@@ -39,5 +41,18 @@ public final class TuplePattern {
     return Pattern.of(
         t -> ArgumentsComparator.argumentsMatch(matchers, t.toList()),
         t -> function.apply(t.first(), t.second()));
+  }
+
+  public static <A, B, C, R> Pattern<Tuple3<A, B, C>, R> caseTuple3(
+      A a, B b, C c, Function3<A, B, C, R> function) {
+    return caseTuple3(eq(a), eq(b), eq(c), function);
+  }
+
+  public static <A, B, C, R> Pattern<Tuple3<A, B, C>, R> caseTuple3(
+      ArgumentMatcher a, ArgumentMatcher b, ArgumentMatcher c, Function3<A, B, C, R> function) {
+    ArgumentMatcher[] matchers = new ArgumentMatcher[] {a, b, c};
+    return Pattern.of(
+        t -> ArgumentsComparator.argumentsMatch(matchers, t.toList()),
+        t -> function.apply(t.first(), t.second(), t.third()));
   }
 }

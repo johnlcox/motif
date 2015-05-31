@@ -11,7 +11,7 @@ public class ArgumentMatchers {
     return (ArgumentMatcher<T>) Any.ANY;
   }
 
-  public static <T> ArgumentMatcher eq(T value) {
-    return new Equals(value);
+  public static <T> ArgumentMatcher<T> eq(T value) {
+    return (ArgumentMatcher<T>) new Equals(value);
   }
 }
