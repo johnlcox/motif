@@ -30,17 +30,6 @@ public final class OrElsePattern {
   }
 
   public static <T> ConsumablePattern<T> otherwise(Consumer0 consumer) {
-    return new ConsumablePattern<T>() {
-
-      @Override
-      public boolean matches(T value) {
-        return true;
-      }
-
-      @Override
-      public void consume(T value) {
-        consumer.accept();
-      }
-    };
+    return ConsumablePattern.of(t -> true, t -> consumer.accept());
   }
 }

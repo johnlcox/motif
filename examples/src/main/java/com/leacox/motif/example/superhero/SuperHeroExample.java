@@ -3,7 +3,7 @@ package com.leacox.motif.example.superhero;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
-import static com.leacox.motif.pattern.CaseClassPattern.case3;
+import static com.leacox.motif.pattern.CaseClassPatterns.case3;
 import static com.leacox.motif.pattern.OrElsePattern.orElse;
 
 import java.math.BigDecimal;
@@ -47,6 +47,7 @@ public class SuperHeroExample {
         case3(
             SuperHero.class, any(), any(), eq(Optional.of(alterEgo)), (n, p, a) -> Optional.of(p)),
         orElse(Optional.empty())
+
     );
   }
 }

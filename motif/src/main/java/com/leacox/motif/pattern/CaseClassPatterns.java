@@ -21,8 +21,8 @@ import java.util.function.Function;
 /**
  * @author John Leacox
  */
-public final class CaseClassPattern {
-  private CaseClassPattern() {
+public final class CaseClassPatterns {
+  private CaseClassPatterns() {
   }
 
   public static <T extends Case1<A>, A, R> Pattern<T, R> case1(A a, Function<A, R> function) {
@@ -48,17 +48,9 @@ public final class CaseClassPattern {
         .of(t -> tuple2Pattern.matches(t.extract()), t -> tuple2Pattern.apply(t.extract()));
   }
 
-  public static <T extends Case3<A, B, C>, A, B, C, R> Pattern<T, R> case3(
-      A a, B b, C c, Function3<A, B, C, R> function) {
-    return case3(eq(a), eq(b), eq(c), function);
-  }
-
-  public static <T extends Case3<A, B, C>, A, B, C, R> Pattern<T, R> case3(
-      ArgumentMatcher<A> a, ArgumentMatcher<B> b, ArgumentMatcher<C> c,
-      Function3<A, B, C, R> function) {
-    Pattern<Tuple3<A, B, C>, R> tuple3Pattern = caseTuple3(a, b, c, function);
-    return Pattern
-        .of(t -> tuple3Pattern.matches(t.extract()), t -> tuple3Pattern.apply(t.extract()));
+  public static <S extends Case3<A, B, C>, T, A, B, C, R> Pattern<T, R> case3(
+      Class<S> clazz, A a, B b, C c, Function3<A, B, C, R> function) {
+    return case3(clazz, eq(a), eq(b), eq(c), function);
   }
 
   public static <S extends Case3<A, B, C>, T, A, B, C, R> Pattern<T, R> case3(
@@ -72,4 +64,21 @@ public final class CaseClassPattern {
                 .matches(typeOfPattern.apply(t).extract()),
             t -> tuple3Pattern.apply(typeOfPattern.apply(t).extract()));
   }
+
+  //public static <S extends Case3<A, B, C>, T, A, B, C> ConsumablePattern<T> case3(
+  //    Class<S> clazz, A a, B b, C c, Consumer3<A, B, C> consumer) {
+  //  return case3(clazz, eq(a), eq(b), eq(c), consumer);
+  //}
+  //
+  //public static <S extends Case3<A, B, C>, T, A, B, C> ConsumablePattern<T> case3(
+  //    Class<S> clazz, ArgumentMatcher a, ArgumentMatcher b, ArgumentMatcher c,
+  //    Consumer3<A, B, C> consumer) {
+  //  ConsumablePattern<Tuple3<A, B, C>> tuple3Pattern = caseTuple3(a, b, c, consumer);
+  //  Pattern<T, S> typeOfPattern = caseTypeOf(clazz, d -> d);
+  //  return ConsumablePattern
+  //      .of(
+  //          t -> typeOfPattern.matches(t) && tuple3Pattern
+  //              .matches(typeOfPattern.apply(t).extract()),
+  //          t -> tuple3Pattern.consume(typeOfPattern.apply(t).extract()));
+  //}
 }

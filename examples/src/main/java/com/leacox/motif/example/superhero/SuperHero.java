@@ -1,6 +1,6 @@
 package com.leacox.motif.example.superhero;
 
-import static com.leacox.motif.pattern.CaseClassPattern.case3;
+import static com.leacox.motif.pattern.CaseClassPatterns.case3;
 
 import com.leacox.motif.caseclass.Case3;
 import com.leacox.motif.function.Function3;

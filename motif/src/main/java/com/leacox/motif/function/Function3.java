@@ -3,6 +3,7 @@ package com.leacox.motif.function;
 /**
  * @author John Leacox
  */
+@FunctionalInterface
 public interface Function3<A, B, C, R> {
   /**
    * Applies this function to the given arguments.

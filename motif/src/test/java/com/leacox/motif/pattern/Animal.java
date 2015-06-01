@@ -26,6 +26,6 @@ public abstract class Animal implements Case2<String, Integer> {
 
   public static <T extends Animal, R> Pattern<T, R> caseAnimal(
       String name, Integer numberOfLegs, Function2<String, Integer, R> function) {
-    return CaseClassPattern.case2(name, numberOfLegs, function);
+    return CaseClassPatterns.case2(name, numberOfLegs, function);
   }
 }
