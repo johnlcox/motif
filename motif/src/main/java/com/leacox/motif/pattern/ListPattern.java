@@ -20,7 +20,7 @@ public final class ListPattern {
     return Pattern.of(List::isEmpty, l -> supplier.get());
   }
 
-  public static <T> ConsumablePattern<List<T>> caseNil(Consumer0 consumer) {
+  public static <T> ConsumablePattern<List<T>> cazeNil(Consumer0 consumer) {
     return ConsumablePattern.of(List::isEmpty, l -> consumer.accept());
   }
 
@@ -28,7 +28,7 @@ public final class ListPattern {
     return Pattern.of(l -> l.size() == 1, l -> function.apply(l.get(0)));
   }
 
-  public static <T> ConsumablePattern<List<T>> caseHeadNil(Consumer<T> consumer) {
+  public static <T> ConsumablePattern<List<T>> cazeHeadNil(Consumer<T> consumer) {
     return ConsumablePattern.of(l -> l.size() == 1, l -> consumer.accept(l.get(0)));
   }
 
@@ -36,7 +36,7 @@ public final class ListPattern {
     return Pattern.of(l -> l.size() > 1, l -> function.apply(l.get(0), l.subList(1, l.size())));
   }
 
-  public static <T> ConsumablePattern<List<T>> caseHeadTail(Consumer2<T, List<T>> consumer) {
+  public static <T> ConsumablePattern<List<T>> cazeHeadTail(Consumer2<T, List<T>> consumer) {
     return ConsumablePattern
         .of(l -> l.size() > 1, l -> consumer.accept(l.get(0), l.subList(1, l.size())));
   }

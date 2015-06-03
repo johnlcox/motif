@@ -19,7 +19,7 @@ public final class TypeOfPattern {
   }
 
   @SuppressWarnings("unchecked")
-  public static <C, T> ConsumablePattern<T> caseTypeOf(
+  public static <C, T> ConsumablePattern<T> cazeTypeOf(
       Class<C> expectedClass, Consumer<C> consumer) {
     return ConsumablePattern.of(
         v -> v != null && expectedClass.isAssignableFrom(v.getClass()),

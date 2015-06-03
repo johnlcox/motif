@@ -43,7 +43,7 @@ public class ListPatternSpec {
           it.should(
               "match empty list and consume right side", expect -> {
                 match(emptyList).on(
-                    caseNil(() -> System.out.println("nil")),
+                    ListPattern.cazeNil(() -> System.out.println("nil")),
                     otherwise(() -> System.out.println("a")),
                     otherwise(t -> System.out.println(t))
                 );
@@ -62,8 +62,8 @@ public class ListPatternSpec {
           it.should(
               "match one item list and consume right side", expect -> {
                 match(oneItemList).on(
-                    caseNil(() -> System.out.println("nil")),
-                    caseHeadNil((String s) -> System.out.println(s)),
+                    ListPattern.cazeNil(() -> System.out.println("nil")),
+                    ListPattern.cazeHeadNil((String s) -> System.out.println(s)),
                     otherwise(() -> System.out.println("Nope"))
                 );
               });
@@ -83,9 +83,9 @@ public class ListPatternSpec {
           it.should(
               "match multi-item list and consume right side", expect -> {
                 match(twoItemList).on(
-                    caseNil(() -> System.out.println("nil")),
-                    caseHeadNil((String s) -> System.out.println(s)),
-                    caseHeadTail(
+                    ListPattern.cazeNil(() -> System.out.println("nil")),
+                    ListPattern.cazeHeadNil((String s) -> System.out.println(s)),
+                    ListPattern.cazeHeadTail(
                         (String x, List<String> xs) -> System.out
                             .println("head: " + x + " tail: " + xs))
                 );

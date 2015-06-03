@@ -18,7 +18,7 @@ public final class OptionalPattern {
     return Pattern.of(Optional::isPresent, o -> function.apply(o.get()));
   }
 
-  public static <T> ConsumablePattern<Optional<T>> caseSome(Consumer<T> consumer) {
+  public static <T> ConsumablePattern<Optional<T>> cazeSome(Consumer<T> consumer) {
     return ConsumablePattern.of(Optional::isPresent, o -> consumer.accept(o.get()));
   }
 
@@ -26,7 +26,7 @@ public final class OptionalPattern {
     return Pattern.of(o -> !o.isPresent(), o -> supplier.get());
   }
 
-  public static <T> ConsumablePattern<Optional<T>> caseNone(Consumer0 consumer) {
+  public static <T> ConsumablePattern<Optional<T>> cazeNone(Consumer0 consumer) {
     return ConsumablePattern.of(o -> !o.isPresent(), o -> consumer.accept());
   }
 }

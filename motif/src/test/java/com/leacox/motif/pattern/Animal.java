@@ -24,8 +24,8 @@ public abstract class Animal implements Case2<String, Integer> {
     return Tuple2.of(name(), numberOfLegs());
   }
 
-  public static <T extends Animal, R> Pattern<T, R> caseAnimal(
+  public static <R> Pattern<Animal, R> caseAnimal(
       String name, Integer numberOfLegs, Function2<String, Integer, R> function) {
-    return CaseClassPatterns.case2(name, numberOfLegs, function);
+    return CaseClassPatterns.case2(Animal.class, name, numberOfLegs, function);
   }
 }
