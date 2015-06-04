@@ -34,9 +34,9 @@ public class SuperHeroExample {
 
     System.out.println("Iron man powers: " + ironManPowersOpt.get());
 
-    Civilian notIronMan = Civilian.create("Ben Urich", new BigDecimal(15000));
+    Civilian benUrich = Civilian.create("Ben Urich", new BigDecimal(15000));
 
-    Optional<ImmutableList<String>> benUrichPowersOpt = getPowersForAlterEgo(ironMan, notIronMan);
+    Optional<ImmutableList<String>> benUrichPowersOpt = getPowersForAlterEgo(ironMan, benUrich);
 
     System.out.println("Iron man powers if alter ego Ben Urich: " + benUrichPowersOpt);
   }
@@ -47,7 +47,6 @@ public class SuperHeroExample {
         case3(
             SuperHero.class, any(), any(), eq(Optional.of(alterEgo)), (n, p, a) -> Optional.of(p)),
         orElse(Optional.empty())
-
     );
   }
 }

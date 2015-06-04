@@ -6,7 +6,7 @@ import com.leacox.motif.pattern.Pattern;
 /**
  * @author John Leacox
  */
-public class Motif {
+public final class Motif {
   private Motif() {
   }
 
@@ -14,7 +14,7 @@ public class Motif {
     return new Matching<>(value);
   }
 
-  public static class Matching<T> {
+  public static final class Matching<T> {
     private final T value;
 
     public Matching(T value) {

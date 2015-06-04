@@ -5,6 +5,9 @@ import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.pattern.ListPattern.caseHeadNil;
 import static com.leacox.motif.pattern.ListPattern.caseHeadTail;
 import static com.leacox.motif.pattern.ListPattern.caseNil;
+import static com.leacox.motif.pattern.ListPattern.cazeHeadNil;
+import static com.leacox.motif.pattern.ListPattern.cazeHeadTail;
+import static com.leacox.motif.pattern.ListPattern.cazeNil;
 import static com.leacox.motif.pattern.OrElsePattern.orElse;
 import static com.leacox.motif.pattern.OrElsePattern.otherwise;
 
@@ -43,7 +46,7 @@ public class ListPatternSpec {
           it.should(
               "match empty list and consume right side", expect -> {
                 match(emptyList).on(
-                    ListPattern.cazeNil(() -> System.out.println("nil")),
+                    cazeNil(() -> System.out.println("nil")),
                     otherwise(() -> System.out.println("a")),
                     otherwise(t -> System.out.println(t))
                 );
@@ -62,8 +65,8 @@ public class ListPatternSpec {
           it.should(
               "match one item list and consume right side", expect -> {
                 match(oneItemList).on(
-                    ListPattern.cazeNil(() -> System.out.println("nil")),
-                    ListPattern.cazeHeadNil((String s) -> System.out.println(s)),
+                    cazeNil(() -> System.out.println("nil")),
+                    cazeHeadNil((String s) -> System.out.println(s)),
                     otherwise(() -> System.out.println("Nope"))
                 );
               });
@@ -83,9 +86,9 @@ public class ListPatternSpec {
           it.should(
               "match multi-item list and consume right side", expect -> {
                 match(twoItemList).on(
-                    ListPattern.cazeNil(() -> System.out.println("nil")),
-                    ListPattern.cazeHeadNil((String s) -> System.out.println(s)),
-                    ListPattern.cazeHeadTail(
+                    cazeNil(() -> System.out.println("nil")),
+                    cazeHeadNil((String s) -> System.out.println(s)),
+                    cazeHeadTail(
                         (String x, List<String> xs) -> System.out
                             .println("head: " + x + " tail: " + xs))
                 );

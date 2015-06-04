@@ -45,10 +45,10 @@ public final class TuplePattern {
         t -> consumer.accept(t.first()));
   }
 
-  public static <A, B, R> Pattern<Tuple2<A, B>, R> caseTuple2(
-      A a, B b, Function2<A, B, R> function) {
-    return caseTuple2(eq(a), eq(b), function);
-  }
+  //public static <A, B, R> Pattern<Tuple2<A, B>, R> caseTuple2(
+  //    A a, B b, Function2<A, B, R> function) {
+  //  return caseTuple2(eq(a), eq(b), function);
+  //}
 
   public static <A, B, R> Pattern<Tuple2<A, B>, R> caseTuple2(
       ArgumentMatcher a, ArgumentMatcher b, Function2<A, B, R> function) {
@@ -58,10 +58,10 @@ public final class TuplePattern {
         t -> function.apply(t.first(), t.second()));
   }
 
-  public static <A, B> ConsumablePattern<Tuple2<A, B>> cazeTuple2(
-      A a, B b, Consumer2<A, B> consumer) {
-    return cazeTuple2(eq(a), eq(b), consumer);
-  }
+  //public static <A, B> ConsumablePattern<Tuple2<A, B>> cazeTuple2(
+  //    A a, B b, Consumer2<A, B> consumer) {
+  //  return cazeTuple2(eq(a), eq(b), consumer);
+  //}
 
   public static <A, B> ConsumablePattern<Tuple2<A, B>> cazeTuple2(
       ArgumentMatcher a, ArgumentMatcher b, Consumer2<A, B> consumer) {
