@@ -2,12 +2,16 @@ package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.fluent.Pattern.OptionalPatterns.caseNone2;
+import static com.leacox.motif.fluent.Pattern.OptionalPatterns.caseSome2;
+import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.pattern.OptionalPattern.caseNone;
 import static com.leacox.motif.pattern.OptionalPattern.caseSome;
 import static com.leacox.motif.pattern.OptionalPattern.cazeNone;
-import static com.leacox.motif.pattern.OptionalPattern.cazeSome;
 import static com.leacox.motif.pattern.OrElsePattern.orElse;
 import static com.leacox.motif.pattern.OrElsePattern.otherwise;
+
+import com.leacox.motif.fluent.FluentMotif;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -47,22 +51,40 @@ public class OptionalPatternSpec {
 
           it.should(
               "handle some", expect -> {
+                String result = FluentMotif.match(some)
+                    .when(caseNone2()).is(() -> "hi")
+                    .when(caseSome2("not a string?")).is(a -> "What?")
+                    .when(caseSome2("a string")).is(a -> "Found it")
+                    .when(caseSome2(any())).is(a -> a)
+                    .getMatch();
+
+                expect.that(result).is("Found it");
+              });
+
+          it.should(
+              "handle some with exact match", expect -> {
                 String result = match(some).on(
                     caseNone(() -> "None"),
-                    caseSome(a -> a)
+                    caseSome("Not a string?", t -> "What?"),
+                    caseSome("a string", t -> "Found it")
                 );
 
-                expect.that(result).is("a string");
+                expect.that(result).is("Found it");
               });
 
           it.should(
               "consume some", expect -> {
                 Consuming consuming = new Consuming();
 
-                match(some).on(
-                    cazeNone(() -> consuming.consume("None")),
-                    cazeSome(consuming::consume)
-                );
+                //match(some).on(
+                //    cazeNone(() -> consuming.consume("None")),
+                //    cazeSome(consuming::consume)
+                //);
+
+                FluentMotif.match(some)
+                    .when(caseNone2()).is(() -> consuming.consume("None"))
+                    .when(caseSome2(any())).is(consuming::consume)
+                    .doMatch();
 
                 expect.that(consuming.getConsumed()).is(some.get());
               });
