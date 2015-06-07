@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Motif : Scala-like pattern matching for Java 8">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Motif</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/johnlcox/motif">View on GitHub</a>
+
+          <h1 id="project_title">Motif</h1>
+          <h2 id="project_tagline">Scala-like pattern matching for Java 8</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/johnlcox/motif/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/johnlcox/motif/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>Motif is a library for doing Scala-like pattern matching in Java. It uses a fluent API for building matching patterns with corresponding match expressions.</p>
+
+<p>Motif comes with many built-in matching types:</p>
+
+<ul>
+<li>java.util.Optional</li>
+<li>java.util.List</li>
+<li>Primitives</li>
+<li>Case classes</li>
+<li>Tuples</li>
+<li>Hamcrest matchers</li>
+</ul>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<h3>
+<a id="fizzbuzz" class="anchor" href="#fizzbuzz" aria-hidden="true"><span class="octicon octicon-link"></span></a>FizzBuzz</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-smi">IntStream</span><span class="pl-k">.</span>range(<span class="pl-c1">0</span>, <span class="pl-c1">101</span>)<span class="pl-k">.</span>forEach(
+    n <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(
+        match(<span class="pl-smi">Tuple2</span><span class="pl-k">.</span>of(n <span class="pl-k">%</span> <span class="pl-c1">3</span>, n <span class="pl-k">%</span> <span class="pl-c1">5</span>))
+            .when(caseTuple2(eq(<span class="pl-c1">0</span>), eq(<span class="pl-c1">0</span>)))<span class="pl-k">.</span>get((x, y) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>FizzBuzz<span class="pl-pds">"</span></span>)
+            .when(caseTuple2(eq(<span class="pl-c1">0</span>), any()))<span class="pl-k">.</span>get((x, y) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Fizz<span class="pl-pds">"</span></span>)
+            .when(caseTuple2(any(), eq(<span class="pl-c1">0</span>)))<span class="pl-k">.</span>get((x, y) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Buzz<span class="pl-pds">"</span></span>)
+            .orElse(<span class="pl-smi">String</span><span class="pl-k">.</span>valueOf(n))
+            .getMatch()
+    )
+);</pre></div>
+
+<h3>
+<a id="factorial" class="anchor" href="#factorial" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factorial</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">long</span> factorial(<span class="pl-k">long</span> i) {
+  <span class="pl-k">return</span> match(i)
+      .when(caseLong(<span class="pl-c1">0</span>))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-c1">1l</span>)
+      .when(caseLong(any()))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> x <span class="pl-k">*</span> factorial(x <span class="pl-k">-</span> <span class="pl-c1">1</span>))
+      .getMatch();
+}</pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>Copyright 2015 John Leacox
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Motif maintained by <a href="https://github.com/johnlcox">johnlcox</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-63842936-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
