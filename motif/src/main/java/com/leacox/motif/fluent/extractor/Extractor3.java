@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author John Leacox
  */
 public interface Extractor3<T, A, B, C> {
-  public T apply(A a, B b, C c);
+  //T apply(A a, B b, C c);
 
-  public Optional<Tuple3<A, B, C>> unapply(T t);
+  Optional<Tuple3<A, B, C>> unapply(T t);
 }

@@ -22,4 +22,10 @@ public class FluentMatching<T> {
     return new InitialMatching2<>(
         matchBuilder.extractor, value, matchBuilder.toMatchA, matchBuilder.toMatchB);
   }
+
+  public <A, B, C> InitialMatching3<T, A, B, C> when(MatchingExtractor3<T, A, B, C> matchBuilder) {
+    return new InitialMatching3<>(
+        matchBuilder.extractor, value, matchBuilder.toMatchA, matchBuilder.toMatchB,
+        matchBuilder.toMatchC);
+  }
 }

@@ -1,11 +1,6 @@
 package com.leacox.motif.example.superhero;
 
-import static com.leacox.motif.pattern.CaseClassPatterns.case3;
-
 import com.leacox.motif.caseclass.Case3;
-import com.leacox.motif.function.Function3;
-import com.leacox.motif.matchers.ArgumentMatcher;
-import com.leacox.motif.pattern.Pattern;
 import com.leacox.motif.tuple.Tuple3;
 
 import com.google.auto.value.AutoValue;
@@ -35,11 +30,4 @@ public abstract class SuperHero
   public abstract ImmutableList<String> powers();
 
   public abstract Optional<Civilian> alterEgo();
-
-  public static <T extends Character, R> Pattern<T, R> caseSuperHero(
-      ArgumentMatcher<String> name, ArgumentMatcher<ImmutableList<String>> powers,
-      ArgumentMatcher<Optional<Civilian>> alterEgo,
-      Function3<String, ImmutableList<String>, Optional<Civilian>, R> function) {
-    return case3(SuperHero.class, name, powers, alterEgo, function);
-  }
 }

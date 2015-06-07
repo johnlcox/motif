@@ -5,8 +5,9 @@ package com.leacox.motif.pattern;
  */
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.pattern.Animal.caseAnimal;
+import static com.leacox.motif.fluent.FluentMotif.match;
+import static com.leacox.motif.fluent.cases.CaseClassCases.case2;
+import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -20,9 +21,10 @@ public class CasePatternSpec {
     describe(
         "the case pattern", it -> it.should(
             "match cat", expect -> {
-              String result = match(cat).on(
-                  caseAnimal("Cat", 4, (name, legs) -> "(" + name + ", " + legs + ")")
-              );
+              String result = match(cat)
+                  .when(case2(Animal.class, eq("Cat"), eq(4))).get(
+                      (name, legs) -> "(" + name + ", " + legs + ")")
+                  .getMatch();
 
               expect.that(result).is("(Cat, 4)");
             }));

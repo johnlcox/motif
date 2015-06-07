@@ -22,10 +22,10 @@ public final class TupleCases {
   }
 
   private static class Tuple1Extractor<A> implements Extractor1<Tuple1<A>, A> {
-    @Override
-    public Tuple1<A> apply(A a) {
-      return Tuple1.of(a);
-    }
+    //@Override
+    //public Tuple1<A> apply(A a) {
+    //  return Tuple1.of(a);
+    //}
 
     @Override
     public Optional<A> unapply(Tuple1<A> tuple1) {
@@ -34,10 +34,10 @@ public final class TupleCases {
   }
 
   private static class Tuple2Extractor<A, B> implements Extractor2<Tuple2<A, B>, A, B> {
-    @Override
-    public Tuple2<A, B> apply(A a, B b) {
-      return Tuple2.of(a, b);
-    }
+    //@Override
+    //public Tuple2<A, B> apply(A a, B b) {
+    //  return Tuple2.of(a, b);
+    //}
 
     @Override
     public Optional<Tuple2<A, B>> unapply(Tuple2<A, B> tuple2) {
@@ -46,10 +46,10 @@ public final class TupleCases {
   }
 
   private static class Tuple3Extractor<A, B, C> implements Extractor3<Tuple3<A, B, C>, A, B, C> {
-    @Override
-    public Tuple3<A, B, C> apply(A a, B b, C c) {
-      return Tuple3.of(a, b, c);
-    }
+    //@Override
+    //public Tuple3<A, B, C> apply(A a, B b, C c) {
+    //  return Tuple3.of(a, b, c);
+    //}
 
     @Override
     public Optional<Tuple3<A, B, C>> unapply(Tuple3<A, B, C> tuple3) {

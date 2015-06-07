@@ -28,7 +28,7 @@ public class FizzBuzzBenchmark {
   public void fizzbuzzConditional() {
     IntStream.range(0, 101).forEach(
         n -> {
-          if (n % 3 * 5 == 0) {
+          if (n % (3 * 5) == 0) {
             System.out.println("FizzBuzz");
           } else if (n % 3 == 0) {
             System.out.println("Fizz");
