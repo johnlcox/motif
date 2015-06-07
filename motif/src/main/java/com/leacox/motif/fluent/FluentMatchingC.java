@@ -23,17 +23,25 @@ public class FluentMatchingC<T> {
     patterns.add(pattern);
   }
 
-  public <U> OngoingMatchingC0<T, U> when(MatchingExtractor0<U> matchBuilder) {
-    return new OngoingMatchingC0<>(this, matchBuilder.extractor);
+  public <U> OngoingMatchingC0<T, U> when(MatchingExtractor0<U> matchingExtractor) {
+    return new OngoingMatchingC0<>(this, matchingExtractor.extractor);
   }
 
-  public <U, A> OngoingMatchingC1<T, U, A> when(MatchingExtractor1<U, A> matchBuilder) {
-    return new OngoingMatchingC1<>(this, matchBuilder.extractor, matchBuilder.toMatch);
+  public <U, A> OngoingMatchingC1<T, U, A> when(MatchingExtractor1<U, A> matchingExtractor) {
+    return new OngoingMatchingC1<>(this, matchingExtractor.extractor, matchingExtractor.toMatch);
   }
 
-  public <U, A, B> OngoingMatchingC2<T, U, A, B> when(MatchingExtractor2<U, A, B> matchBuilder) {
+  public <U, A, B> OngoingMatchingC2<T, U, A, B> when(
+      MatchingExtractor2<U, A, B> matchingExtractor) {
     return new OngoingMatchingC2<>(
-        this, matchBuilder.extractor, matchBuilder.toMatchA, matchBuilder.toMatchB);
+        this, matchingExtractor.extractor, matchingExtractor.toMatchA, matchingExtractor.toMatchB);
+  }
+
+  public <U, A, B, C> OngoingMatchingC3<T, U, A, B, C> when(
+      MatchingExtractor3<U, A, B, C> matchingExtractor) {
+    return new OngoingMatchingC3<>(
+        this, matchingExtractor.extractor, matchingExtractor.toMatchA, matchingExtractor.toMatchB,
+        matchingExtractor.toMatchC);
   }
 
   public void doMatch() {
