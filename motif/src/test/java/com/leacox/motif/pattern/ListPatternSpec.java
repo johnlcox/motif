@@ -1,15 +1,11 @@
 package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.pattern.ListPattern.caseHeadNil;
-import static com.leacox.motif.pattern.ListPattern.caseHeadTail;
-import static com.leacox.motif.pattern.ListPattern.caseNil;
-import static com.leacox.motif.pattern.ListPattern.cazeHeadNil;
-import static com.leacox.motif.pattern.ListPattern.cazeHeadTail;
-import static com.leacox.motif.pattern.ListPattern.cazeNil;
-import static com.leacox.motif.pattern.OrElsePattern.orElse;
-import static com.leacox.motif.pattern.OrElsePattern.otherwise;
+import static com.leacox.motif.fluent.FluentMotif.match;
+import static com.leacox.motif.fluent.cases.ListCases.caseHeadNil;
+import static com.leacox.motif.fluent.cases.ListCases.caseHeadTail;
+import static com.leacox.motif.fluent.cases.ListCases.caseNil;
+import static com.leacox.motif.matchers.ArgumentMatchers.any;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -35,63 +31,71 @@ public class ListPatternSpec {
         "the list pattern", it -> {
           it.should(
               "match empty list", expect -> {
-                String result = match(emptyList).on(
-                    caseNil(() -> "Nil"),
-                    orElse("orElse")
-                );
+                String result = match(emptyList)
+                    .when(caseNil()).get(() -> "Nil")
+                    .orElse("orElse")
+                    .getMatch();
 
                 expect.that(result).is("Nil");
               });
 
           it.should(
               "match empty list and consume right side", expect -> {
-                match(emptyList).on(
-                    cazeNil(() -> System.out.println("nil")),
-                    otherwise(() -> System.out.println("a")),
-                    otherwise(t -> System.out.println(t))
-                );
+                Consuming consuming = new Consuming();
+
+                match(emptyList)
+                    .when(caseNil()).then(() -> consuming.consume("nil"))
+                    .orElse(x -> consuming.consume("orElse"))
+                    .doMatch();
+
+                expect.that(consuming.getConsumed()).is("nil");
               });
 
           it.should(
               "match one item list", expect -> {
-                String result = match(oneItemList).on(
-                    caseNil(() -> "Nil"),
-                    caseHeadNil((String s) -> s)
-                );
+                String result = match(oneItemList)
+                    .when(caseNil()).get(() -> "Nil")
+                    .when(caseHeadNil(any())).get(s -> s)
+                    .getMatch();
 
                 expect.that(result).is("one");
               });
 
           it.should(
               "match one item list and consume right side", expect -> {
-                match(oneItemList).on(
-                    cazeNil(() -> System.out.println("nil")),
-                    cazeHeadNil((String s) -> System.out.println(s)),
-                    otherwise(() -> System.out.println("Nope"))
-                );
+                Consuming consuming = new Consuming();
+
+                match(oneItemList)
+                    .when(caseNil()).then(() -> consuming.consume("nil"))
+                    .when(caseHeadNil(any())).then(consuming::consume)
+                    .orElse(() -> consuming.consume("Nope"))
+                    .doMatch();
+
+                expect.that(consuming.getConsumed()).is("one");
               });
 
           it.should(
               "match multi-item list", expect -> {
-                String result = match(twoItemList).on(
-                    caseNil(() -> "Nil"),
-                    caseHeadNil((String s) -> s),
-                    caseHeadTail((x, xs) -> "head: " + x + " tail: " + xs)
-                );
+                String result = match(twoItemList)
+                    .when(caseNil()).get(() -> "Nil")
+                    .when(caseHeadNil(any())).get((x) -> x)
+                    .when(caseHeadTail(any(), any())).get((x, xs) -> "head: " + x + " tail: " + xs)
+                    .getMatch();
 
                 expect.that(result).is("head: one tail: [two]");
               });
 
-          // TODO: actually test something
           it.should(
               "match multi-item list and consume right side", expect -> {
-                match(twoItemList).on(
-                    cazeNil(() -> System.out.println("nil")),
-                    cazeHeadNil((String s) -> System.out.println(s)),
-                    cazeHeadTail(
-                        (String x, List<String> xs) -> System.out
-                            .println("head: " + x + " tail: " + xs))
-                );
+                Consuming consuming = new Consuming();
+
+                // TODO: Why is intellij formatting consuming lambda continuation indents this way?
+                match(twoItemList)
+                    .when(caseNil()).then(() -> consuming.consume("nil"))
+                    .when(caseHeadNil(any())).then(consuming::consume)
+                    .when(caseHeadTail(any(), any())).then(
+                    (x, xs) -> consuming.consume("head: " + x + " tail: " + xs))
+                    .doMatch();
               });
         }
     );

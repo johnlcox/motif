@@ -2,8 +2,8 @@ package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.fluent.Pattern.OptionalPatterns.caseNone2;
-import static com.leacox.motif.fluent.Pattern.OptionalPatterns.caseSome2;
+import static com.leacox.motif.fluent.cases.OptionalCases.caseNone2;
+import static com.leacox.motif.fluent.cases.OptionalCases.caseSome2;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.pattern.OptionalPattern.caseNone;
 import static com.leacox.motif.pattern.OptionalPattern.caseSome;
@@ -52,10 +52,10 @@ public class OptionalPatternSpec {
           it.should(
               "handle some", expect -> {
                 String result = FluentMotif.match(some)
-                    .when(caseNone2()).is(() -> "hi")
-                    .when(caseSome2("not a string?")).is(a -> "What?")
-                    .when(caseSome2("a string")).is(a -> "Found it")
-                    .when(caseSome2(any())).is(a -> a)
+                    .when(caseSome2("not a string?")).get(a -> "What?")
+                    .when(caseSome2("a string")).get(a -> "Found it")
+                    .when(caseSome2(any())).get(a -> a)
+                    .when(caseNone2()).get(() -> "hi")
                     .getMatch();
 
                 expect.that(result).is("Found it");
@@ -76,14 +76,9 @@ public class OptionalPatternSpec {
               "consume some", expect -> {
                 Consuming consuming = new Consuming();
 
-                //match(some).on(
-                //    cazeNone(() -> consuming.consume("None")),
-                //    cazeSome(consuming::consume)
-                //);
-
                 FluentMotif.match(some)
-                    .when(caseNone2()).is(() -> consuming.consume("None"))
-                    .when(caseSome2(any())).is(consuming::consume)
+                    .when(caseNone2()).then(() -> consuming.consume("None"))
+                    .when(caseSome2(any())).then(consuming::consume)
                     .doMatch();
 
                 expect.that(consuming.getConsumed()).is(some.get());
@@ -111,17 +106,5 @@ public class OptionalPatternSpec {
                 expect.that(consuming.getConsumed()).is("otherwise");
               });
         });
-  }
-
-  private static class Consuming {
-    private Object t;
-
-    public Object getConsumed() {
-      return t;
-    }
-
-    public void consume(Object t) {
-      this.t = t;
-    }
   }
 }

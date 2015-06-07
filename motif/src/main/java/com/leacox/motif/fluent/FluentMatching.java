@@ -10,11 +10,16 @@ public class FluentMatching<T> {
     this.value = value;
   }
 
-  public <A> PatternBuilder1<T, A> when(MatchBuilder1<T, A> matchBuilder) {
-    return new PatternBuilder1<>(matchBuilder.extractor, value, matchBuilder.toMatch);
+  public InitialMatching0<T> when(MatchingExtractor0<T> matchBuilder) {
+    return new InitialMatching0<>(matchBuilder.extractor, value);
   }
 
-  public <A> PatternBuilder0<T, A> when(MatchBuilder0<T, A> matchBuilder) {
-    return new PatternBuilder0<>(matchBuilder.extractor, value);
+  public <A> InitialMatching1<T, A> when(MatchingExtractor1<T, A> matchBuilder) {
+    return new InitialMatching1<>(matchBuilder.extractor, value, matchBuilder.toMatch);
+  }
+
+  public <A, B> InitialMatching2<T, A, B> when(MatchingExtractor2<T, A, B> matchBuilder) {
+    return new InitialMatching2<>(
+        matchBuilder.extractor, value, matchBuilder.toMatchA, matchBuilder.toMatchB);
   }
 }

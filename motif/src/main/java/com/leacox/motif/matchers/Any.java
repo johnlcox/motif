@@ -3,10 +3,11 @@ package com.leacox.motif.matchers;
 /**
  * @author John Leacox
  */
-class Any extends ArgumentMatcher {
+public class Any<T> extends ArgumentMatcher {
+  private final T t = null;
   public static final Any ANY = new Any();
 
-  private Any() {
+  public Any() {
   }
 
   @Override

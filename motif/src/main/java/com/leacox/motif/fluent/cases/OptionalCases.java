@@ -1,11 +1,11 @@
-package com.leacox.motif.fluent.Pattern;
+package com.leacox.motif.fluent.cases;
 
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
-import com.leacox.motif.Extractor0;
-import com.leacox.motif.Extractor1;
-import com.leacox.motif.fluent.MatchBuilder0;
-import com.leacox.motif.fluent.MatchBuilder1;
+import com.leacox.motif.fluent.extractor.Extractor0;
+import com.leacox.motif.fluent.extractor.Extractor1;
+import com.leacox.motif.fluent.MatchingExtractor0;
+import com.leacox.motif.fluent.MatchingExtractor1;
 import com.leacox.motif.matchers.ArgumentMatcher;
 
 import java.util.Optional;
@@ -13,15 +13,15 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-public final class OptionalPatterns {
-  private OptionalPatterns() {
+public final class OptionalCases {
+  private OptionalCases() {
   }
 
-  public static <T> MatchBuilder1<Optional<T>, T> caseSome2(T a) {
+  public static <T> MatchingExtractor1<Optional<T>, T> caseSome2(T a) {
     return caseSome2(eq(a));
   }
 
-  public static <T> MatchBuilder1<Optional<T>, T> caseSome2(ArgumentMatcher<T> a) {
+  public static <T> MatchingExtractor1<Optional<T>, T> caseSome2(ArgumentMatcher<T> a) {
     Extractor1<Optional<T>, T> extractor = new Extractor1<Optional<T>, T>() {
       @Override
       public Optional<T> apply(T t) {
@@ -38,10 +38,10 @@ public final class OptionalPatterns {
       }
     };
 
-    return new MatchBuilder1<>(extractor, a);
+    return new MatchingExtractor1<>(extractor, a);
   }
 
-  public static <T> MatchBuilder0<Optional<T>, T> caseNone2() {
+  public static <T> MatchingExtractor0<Optional<T>> caseNone2() {
     Extractor0<Optional<T>> extractor = new Extractor0<Optional<T>>() {
       @Override
       public Optional<T> apply() {
@@ -54,6 +54,6 @@ public final class OptionalPatterns {
       }
     };
 
-    return new MatchBuilder0<>(extractor);
+    return new MatchingExtractor0<>(extractor);
   }
 }

@@ -1,10 +1,9 @@
 package com.leacox.motif.benchmarks;
 
-import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.fluent.FluentMotif.match;
+import static com.leacox.motif.fluent.cases.TupleCases.caseTuple2;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
-import static com.leacox.motif.pattern.OrElsePattern.orElse;
-import static com.leacox.motif.pattern.TuplePattern.caseTuple2;
 
 import com.leacox.motif.tuple.Tuple2;
 
@@ -46,12 +45,13 @@ public class FizzBuzzBenchmark {
   public void fizzBuzzPatternMatching() {
     IntStream.range(0, 101).forEach(
         n -> System.out.println(
-            match(Tuple2.of(n % 3, n % 5)).on(
-                caseTuple2(eq(0), eq(0), (x, y) -> "FizzBuzz"),
-                caseTuple2(eq(0), any(), (x, y) -> "Fizz"),
-                caseTuple2(any(), eq(0), (x, y) -> "Buzz"),
-                orElse(n)
-            ))
+            match(Tuple2.of(n % 3, n % 5))
+                .when(caseTuple2(eq(0), eq(0))).get((x, y) -> "FizzBuzz")
+                .when(caseTuple2(eq(0), any())).get((x, y) -> "Fizz")
+                .when(caseTuple2(any(), any())).get((x, y) -> "Buzz")
+                .orElse(String.valueOf(n))
+                .getMatch()
+        )
     );
   }
 }

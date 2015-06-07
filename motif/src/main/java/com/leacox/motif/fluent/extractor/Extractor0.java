@@ -1,4 +1,4 @@
-package com.leacox.motif;
+package com.leacox.motif.fluent.extractor;
 
 /**
  * @author John Leacox

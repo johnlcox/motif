@@ -8,7 +8,7 @@ public class ArgumentMatchers {
   }
 
   public static <T> ArgumentMatcher<T> any() {
-    return (ArgumentMatcher<T>) Any.ANY;
+    return Any.ANY;
   }
 
   public static <T> ArgumentMatcher<T> eq(T value) {
