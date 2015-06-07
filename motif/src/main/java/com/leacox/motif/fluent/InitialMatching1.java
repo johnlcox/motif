@@ -10,11 +10,11 @@ import java.util.function.Function;
 /**
  * @author John Leacox
  */
-public final class InitialMatching1<T, A> extends Matching1<T, A> {
+public final class InitialMatching1<T, U, A> extends Matching1<T, U, A> {
   private final T value;
 
   InitialMatching1(
-      Extractor1<T, A> extractor, T value, Matcher<A> toMatchA) {
+      Extractor1<U, A> extractor, T value, Matcher<A> toMatchA) {
     super(extractor, toMatchA);
 
     this.value = value;

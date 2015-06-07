@@ -31,6 +31,11 @@ public final class TupleCases {
     public Optional<A> unapply(Tuple1<A> tuple1) {
       return tuple1.first() == null ? Optional.empty() : Optional.ofNullable(tuple1.first());
     }
+
+    @Override
+    public Class<Tuple1> getExtractorClass() {
+      return Tuple1.class;
+    }
   }
 
   private static class Tuple2Extractor<A, B> implements Extractor2<Tuple2<A, B>, A, B> {
@@ -43,6 +48,11 @@ public final class TupleCases {
     public Optional<Tuple2<A, B>> unapply(Tuple2<A, B> tuple2) {
       return Optional.ofNullable(tuple2);
     }
+
+    @Override
+    public Class<Tuple2> getExtractorClass() {
+      return Tuple2.class;
+    }
   }
 
   private static class Tuple3Extractor<A, B, C> implements Extractor3<Tuple3<A, B, C>, A, B, C> {
@@ -54,6 +64,11 @@ public final class TupleCases {
     @Override
     public Optional<Tuple3<A, B, C>> unapply(Tuple3<A, B, C> tuple3) {
       return Optional.ofNullable(tuple3);
+    }
+
+    @Override
+    public Class<Tuple3> getExtractorClass() {
+      return Tuple3.class;
     }
   }
 

@@ -31,6 +31,11 @@ public final class CaseClassCases {
     public Optional<Tuple2<A, B>> unapply(T t) {
       return caseClazz.isAssignableFrom(t.getClass()) ? Optional.of(t.extract()) : Optional.empty();
     }
+
+    @Override
+    public Class getExtractorClass() {
+      return caseClazz;
+    }
   }
 
   private static class Case3Extractor<T extends Case3<A, B, C>, A, B, C>
@@ -55,6 +60,11 @@ public final class CaseClassCases {
       }
 
       return Optional.of(t.extract());
+    }
+
+    @Override
+    public Class getExtractorClass() {
+      return caseClazz;
     }
   }
 

@@ -9,11 +9,11 @@ import org.hamcrest.Matcher;
 /**
  * @author John Leacox
  */
-public final class InitialMatching2<T, A, B> extends Matching2<T, A, B> {
+public final class InitialMatching2<T, U, A, B> extends Matching2<T, U, A, B> {
   private final T value;
 
   InitialMatching2(
-      Extractor2<T, A, B> extractor, T value, Matcher<A> toMatchA, Matcher<B> toMatchB) {
+      Extractor2<U, A, B> extractor, T value, Matcher<A> toMatchA, Matcher<B> toMatchB) {
     super(extractor, toMatchA, toMatchB);
 
     this.value = value;

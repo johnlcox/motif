@@ -14,14 +14,14 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-abstract class Matching3<T, A, B, C> {
-  private final Extractor3<T, A, B, C> extractor;
+abstract class Matching3<T, U, A, B, C> {
+  private final Extractor3<U, A, B, C> extractor;
   private final Matcher<A> toMatchA;
   private final Matcher<B> toMatchB;
   private final Matcher<C> toMatchC;
 
   Matching3(
-      Extractor3<T, A, B, C> extractor, Matcher<A> toMatchA, Matcher<B> toMatchB,
+      Extractor3<U, A, B, C> extractor, Matcher<A> toMatchA, Matcher<B> toMatchB,
       Matcher<C> toMatchC) {
     this.extractor = extractor;
     this.toMatchA = toMatchA;
@@ -34,7 +34,11 @@ abstract class Matching3<T, A, B, C> {
     fluentMatchingR.addPattern(
         Pattern.of(
             t -> {
-              Optional<Tuple3<A, B, C>> opt = extractor.unapply(t);
+              if (!extractor.getExtractorClass().isAssignableFrom(t.getClass())) {
+                return false;
+              }
+
+              Optional<Tuple3<A, B, C>> opt = extractor.unapply((U) t);
               if (opt.isPresent()) {
                 Tuple3<A, B, C> tuple3 = opt.get();
                 return toMatchA.matches(tuple3.first()) && toMatchB.matches(tuple3.second())
@@ -44,7 +48,7 @@ abstract class Matching3<T, A, B, C> {
               return false;
             },
             t -> {
-              Tuple3<A, B, C> tuple3 = extractor.unapply(t).get();
+              Tuple3<A, B, C> tuple3 = extractor.unapply((U) t).get();
               return function.apply(tuple3.first(), tuple3.second(), tuple3.third());
             }
         )
@@ -57,7 +61,11 @@ abstract class Matching3<T, A, B, C> {
     fluentMatchingC.addPattern(
         ConsumablePattern.of(
             t -> {
-              Optional<Tuple3<A, B, C>> opt = extractor.unapply(t);
+              if (!extractor.getExtractorClass().isAssignableFrom(t.getClass())) {
+                return false;
+              }
+
+              Optional<Tuple3<A, B, C>> opt = extractor.unapply((U) t);
               if (opt.isPresent()) {
                 Tuple3<A, B, C> tuple3 = opt.get();
                 return toMatchA.matches(tuple3.first()) && toMatchB.matches(tuple3.second())
@@ -67,7 +75,7 @@ abstract class Matching3<T, A, B, C> {
               return false;
             },
             t -> {
-              Tuple3<A, B, C> tuple3 = extractor.unapply(t).get();
+              Tuple3<A, B, C> tuple3 = extractor.unapply((U) t).get();
               consumer.accept(tuple3.first(), tuple3.second(), tuple3.third());
             }
         )

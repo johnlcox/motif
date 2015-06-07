@@ -9,4 +9,6 @@ public interface Extractor1<T, A> {
   //T apply(A a);
 
   Optional<A> unapply(T t);
+
+  Class getExtractorClass();
 }

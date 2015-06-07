@@ -36,6 +36,11 @@ public final class OptionalCases {
           return Optional.empty();
         }
       }
+
+      @Override
+      public Class getExtractorClass() {
+        return Optional.class;
+      }
     };
 
     return new MatchingExtractor1<>(extractor, a);
@@ -51,6 +56,11 @@ public final class OptionalCases {
       @Override
       public boolean unapply(Optional<T> t) {
         return !t.isPresent();
+      }
+
+      @Override
+      public Class<Optional> getExtractorClass() {
+        return Optional.class;
       }
     };
 

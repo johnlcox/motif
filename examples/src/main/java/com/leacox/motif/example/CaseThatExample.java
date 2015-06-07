@@ -1,5 +1,8 @@
 package com.leacox.motif.example;
 
+import static com.leacox.motif.fluent.FluentMotif.match;
+import static com.leacox.motif.fluent.cases.CaseThatCases.caseEq;
+
 /**
  * @author John Leacox
  */
@@ -11,14 +14,13 @@ public class CaseThatExample {
   public void run() {
     Object pi = Math.PI;
 
-    // TODO: Reimplement this example
-    //String result = match(pi).on(
-    //    caseEq(42, () -> "a magic no."),
-    //    caseEq("Hello!", () -> "a greet"),
-    //    caseEq(Math.PI, () -> "another magic no."),
-    //    orElse("something else")
-    //);
+    String result = match(pi)
+        .when(caseEq(42)).get(t -> "a magic no.")
+        .when(caseEq("Hello!")).get(t -> "a greet")
+        .when(caseEq(Math.PI)).get(t -> "another magic no.")
+        .orElse("something else")
+        .getMatch();
 
-    //    System.out.println("Matching Result: " + result);
+    System.out.println("Matching Result: " + result);
   }
 }

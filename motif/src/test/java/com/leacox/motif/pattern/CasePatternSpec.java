@@ -22,6 +22,8 @@ public class CasePatternSpec {
         "the case pattern", it -> it.should(
             "match cat", expect -> {
               String result = match(cat)
+                  .when(case2(NotAnimal.class, eq("Cat"), eq(4))).get(
+                      (name, legs) -> "(" + name + ", " + legs + ")")
                   .when(case2(Animal.class, eq("Cat"), eq(4))).get(
                       (name, legs) -> "(" + name + ", " + legs + ")")
                   .getMatch();

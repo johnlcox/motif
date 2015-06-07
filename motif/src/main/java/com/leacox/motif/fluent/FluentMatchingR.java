@@ -23,15 +23,15 @@ public class FluentMatchingR<T, R> {
     patterns.add(pattern);
   }
 
-  public OngoingMatchingR0<T, R> when(MatchingExtractor0<T> matchBuilder) {
+  public <U> OngoingMatchingR0<T, U, R> when(MatchingExtractor0<U> matchBuilder) {
     return new OngoingMatchingR0<>(this, matchBuilder.extractor);
   }
 
-  public <A> OngoingMatchingR1<T, A, R> when(MatchingExtractor1<T, A> matchBuilder) {
+  public <U, A> OngoingMatchingR1<T, U, A, R> when(MatchingExtractor1<U, A> matchBuilder) {
     return new OngoingMatchingR1<>(this, matchBuilder.extractor, matchBuilder.toMatch);
   }
 
-  public <A, B> OngoingMatchingR2<T, A, B, R> when(MatchingExtractor2<T, A, B> matchBuilder) {
+  public <U, A, B> OngoingMatchingR2<T, U, A, B, R> when(MatchingExtractor2<U, A, B> matchBuilder) {
     return new OngoingMatchingR2<>(
         this, matchBuilder.extractor, matchBuilder.toMatchA, matchBuilder.toMatchB);
   }

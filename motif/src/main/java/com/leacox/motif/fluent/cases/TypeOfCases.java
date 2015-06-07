@@ -31,6 +31,11 @@ public final class TypeOfCases {
       return expectedClass.isAssignableFrom(o.getClass()) ? Optional.of((T) o)
           : Optional.empty();
     }
+
+    @Override
+    public Class getExtractorClass() {
+      return expectedClass;
+    }
   }
 
   public static <S extends Object, T> MatchingExtractor1<S, T> caseTypeOf(Class<T> clazz) {

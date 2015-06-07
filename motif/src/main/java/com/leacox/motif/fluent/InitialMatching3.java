@@ -9,11 +9,11 @@ import org.hamcrest.Matcher;
 /**
  * @author John Leacox
  */
-public class InitialMatching3<T, A, B, C> extends Matching3<T, A, B, C> {
+public class InitialMatching3<T, U, A, B, C> extends Matching3<T, U, A, B, C> {
   private final T value;
 
   InitialMatching3(
-      Extractor3<T, A, B, C> extractor, T value, Matcher<A> toMatchA, Matcher<B> toMatchB,
+      Extractor3<U, A, B, C> extractor, T value, Matcher<A> toMatchA, Matcher<B> toMatchB,
       Matcher<C> toMatchC) {
     super(extractor, toMatchA, toMatchB, toMatchC);
 

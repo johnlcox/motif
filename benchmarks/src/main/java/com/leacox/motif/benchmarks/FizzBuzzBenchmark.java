@@ -48,7 +48,7 @@ public class FizzBuzzBenchmark {
             match(Tuple2.of(n % 3, n % 5))
                 .when(caseTuple2(eq(0), eq(0))).get((x, y) -> "FizzBuzz")
                 .when(caseTuple2(eq(0), any())).get((x, y) -> "Fizz")
-                .when(caseTuple2(any(), any())).get((x, y) -> "Buzz")
+                .when(caseTuple2(any(), eq(0))).get((x, y) -> "Buzz")
                 .orElse(String.valueOf(n))
                 .getMatch()
         )

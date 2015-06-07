@@ -6,11 +6,11 @@ import com.leacox.motif.function.Consumer0;
 /**
  * @author John Leacox
  */
-public final class OngoingMatchingC0<T> extends Matching0<T> {
+public final class OngoingMatchingC0<T, U> extends Matching0<T, U> {
   private final FluentMatchingC<T> fluentMatchingC;
 
   OngoingMatchingC0(
-      FluentMatchingC<T> fluentMatchingC, Extractor0<T> extractor) {
+      FluentMatchingC<T> fluentMatchingC, Extractor0<U> extractor) {
     super(extractor);
 
     this.fluentMatchingC = fluentMatchingC;

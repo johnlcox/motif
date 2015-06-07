@@ -10,23 +10,33 @@ import java.util.function.Supplier;
 /**
  * @author John Leacox
  */
-abstract class Matching0<T> {
-  private final Extractor0<T> extractor;
+abstract class Matching0<T, U> {
+  private final Extractor0<U> extractor;
 
   Matching0(
-      Extractor0<T> extractor) {
+      Extractor0<U> extractor) {
     this.extractor = extractor;
   }
 
   <R> FluentMatchingR<T, R> get(
       FluentMatchingR<T, R> fluentMatchingR, Supplier<R> supplier) {
-    fluentMatchingR.addPattern(Pattern.of(extractor::unapply, t -> supplier.get()));
+    fluentMatchingR.addPattern(
+        Pattern.of(
+            t -> {
+              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                  .unapply((U) t);
+            }, t -> supplier.get()));
 
     return fluentMatchingR;
   }
 
   FluentMatchingC<T> then(FluentMatchingC<T> fluentMatchingC, Consumer0 consumer) {
-    fluentMatchingC.addPattern(ConsumablePattern.of(extractor::unapply, t -> consumer.accept()));
+    fluentMatchingC.addPattern(
+        ConsumablePattern.of(
+            t -> {
+              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                  .unapply((U) t);
+            }, t -> consumer.accept()));
 
     return fluentMatchingC;
   }

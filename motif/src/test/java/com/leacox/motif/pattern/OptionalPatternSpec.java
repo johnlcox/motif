@@ -5,6 +5,7 @@ import static com.leacox.motif.fluent.FluentMotif.match;
 import static com.leacox.motif.fluent.cases.OptionalCases.caseNone;
 import static com.leacox.motif.fluent.cases.OptionalCases.caseSome;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
+import static com.leacox.motif.matchers.ArgumentMatchers.anyString;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -47,7 +48,7 @@ public class OptionalPatternSpec {
                 String result = match(some)
                     .when(caseSome("not a string?")).get(a -> "What?")
                     .when(caseSome("a string")).get(a -> "Found it")
-                    .when(caseSome(any())).get(a -> a)
+                    .when(caseSome(anyString())).get(a -> a)
                     .when(caseNone()).get(() -> "hi")
                     .getMatch();
 

@@ -10,20 +10,21 @@ public class FluentMatching<T> {
     this.value = value;
   }
 
-  public InitialMatching0<T> when(MatchingExtractor0<T> matchBuilder) {
+  public <U> InitialMatching0<T, U> when(MatchingExtractor0<U> matchBuilder) {
     return new InitialMatching0<>(matchBuilder.extractor, value);
   }
 
-  public <A> InitialMatching1<T, A> when(MatchingExtractor1<T, A> matchBuilder) {
+  public <U, A> InitialMatching1<T, U, A> when(MatchingExtractor1<U, A> matchBuilder) {
     return new InitialMatching1<>(matchBuilder.extractor, value, matchBuilder.toMatch);
   }
 
-  public <A, B> InitialMatching2<T, A, B> when(MatchingExtractor2<T, A, B> matchBuilder) {
+  public <U, A, B> InitialMatching2<T, U, A, B> when(MatchingExtractor2<U, A, B> matchBuilder) {
     return new InitialMatching2<>(
         matchBuilder.extractor, value, matchBuilder.toMatchA, matchBuilder.toMatchB);
   }
 
-  public <A, B, C> InitialMatching3<T, A, B, C> when(MatchingExtractor3<T, A, B, C> matchBuilder) {
+  public <U, A, B, C> InitialMatching3<T, U, A, B, C> when(
+      MatchingExtractor3<U, A, B, C> matchBuilder) {
     return new InitialMatching3<>(
         matchBuilder.extractor, value, matchBuilder.toMatchA, matchBuilder.toMatchB,
         matchBuilder.toMatchC);

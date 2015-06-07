@@ -9,11 +9,11 @@ import java.util.function.Consumer;
 /**
  * @author John Leacox
  */
-public final class OngoingMatchingC1<T, A> extends Matching1<T, A> {
+public final class OngoingMatchingC1<T, U, A> extends Matching1<T, U, A> {
   private final FluentMatchingC<T> fluentMatchingC;
 
   OngoingMatchingC1(
-      FluentMatchingC<T> fluentMatchingC, Extractor1<T, A> extractor, Matcher<A> toMatchA) {
+      FluentMatchingC<T> fluentMatchingC, Extractor1<U, A> extractor, Matcher<A> toMatchA) {
     super(extractor, toMatchA);
 
     this.fluentMatchingC = fluentMatchingC;

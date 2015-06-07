@@ -13,12 +13,12 @@ import java.util.function.Function;
 /**
  * @author John Leacox
  */
-abstract class Matching1<T, A> {
-  private final Extractor1<T, A> extractor;
+abstract class Matching1<T, U, A> {
+  private final Extractor1<U, A> extractor;
   private final Matcher<A> toMatchA;
 
   Matching1(
-      Extractor1<T, A> extractor, Matcher<A> toMatchA) {
+      Extractor1<U, A> extractor, Matcher<A> toMatchA) {
     this.extractor = extractor;
     this.toMatchA = toMatchA;
   }
@@ -28,7 +28,11 @@ abstract class Matching1<T, A> {
     fluentMatchingR.addPattern(
         Pattern.of(
             t -> {
-              Optional<A> opt = extractor.unapply(t);
+              if (!extractor.getExtractorClass().isAssignableFrom(t.getClass())) {
+                return false;
+              }
+
+              Optional<A> opt = extractor.unapply((U) t);
               if (opt.isPresent()) {
                 A a = opt.get();
                 return toMatchA.matches(a);
@@ -37,7 +41,7 @@ abstract class Matching1<T, A> {
               return false;
             },
             t -> {
-              A a = extractor.unapply(t).get();
+              A a = extractor.unapply((U) t).get();
               return function.apply(a);
             }
         )
@@ -50,7 +54,11 @@ abstract class Matching1<T, A> {
     fluentMatchingC.addPattern(
         ConsumablePattern.of(
             t -> {
-              Optional<A> opt = extractor.unapply(t);
+              if (!extractor.getExtractorClass().isAssignableFrom(t.getClass())) {
+                return false;
+              }
+
+              Optional<A> opt = extractor.unapply((U) t);
               if (opt.isPresent()) {
                 A a = opt.get();
                 return toMatchA.matches(a);
@@ -59,7 +67,7 @@ abstract class Matching1<T, A> {
               return false;
             },
             t -> {
-              A a = extractor.unapply(t).get();
+              A a = extractor.unapply((U) t).get();
               consumer.accept(a);
             }
         )

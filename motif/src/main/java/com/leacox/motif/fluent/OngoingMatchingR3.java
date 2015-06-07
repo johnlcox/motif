@@ -8,11 +8,11 @@ import org.hamcrest.Matcher;
 /**
  * @author John Leacox
  */
-public class OngoingMatchingR3<T, A, B, C, R> extends Matching3<T, A, B, C> {
+public class OngoingMatchingR3<T, U, A, B, C, R> extends Matching3<T, U, A, B, C> {
   private final FluentMatchingR<T, R> fluentMatchingR;
 
   OngoingMatchingR3(
-      FluentMatchingR<T, R> fluentMatchingR, Extractor3<T, A, B, C> extractor, Matcher<A> toMatchA,
+      FluentMatchingR<T, R> fluentMatchingR, Extractor3<U, A, B, C> extractor, Matcher<A> toMatchA,
       Matcher<B> toMatchB, Matcher<C> toMatchC) {
     super(extractor, toMatchA, toMatchB, toMatchC);
 

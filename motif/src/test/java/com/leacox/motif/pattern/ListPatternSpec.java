@@ -6,6 +6,7 @@ import static com.leacox.motif.fluent.cases.ListCases.caseHeadNil;
 import static com.leacox.motif.fluent.cases.ListCases.caseHeadTail;
 import static com.leacox.motif.fluent.cases.ListCases.caseNil;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
+import static com.leacox.motif.matchers.ArgumentMatchers.anyString;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -55,7 +56,7 @@ public class ListPatternSpec {
               "match one item list", expect -> {
                 String result = match(oneItemList)
                     .when(caseNil()).get(() -> "Nil")
-                    .when(caseHeadNil(any())).get(s -> s)
+                    .when(caseHeadNil(anyString())).get(s -> s)
                     .getMatch();
 
                 expect.that(result).is("one");
@@ -78,7 +79,7 @@ public class ListPatternSpec {
               "match multi-item list", expect -> {
                 String result = match(twoItemList)
                     .when(caseNil()).get(() -> "Nil")
-                    .when(caseHeadNil(any())).get((x) -> x)
+                    .when(caseHeadNil(anyString())).get((x) -> x)
                     .when(caseHeadTail(any(), any())).get((x, xs) -> "head: " + x + " tail: " + xs)
                     .getMatch();
 

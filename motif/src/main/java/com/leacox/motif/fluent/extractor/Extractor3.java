@@ -11,4 +11,6 @@ public interface Extractor3<T, A, B, C> {
   //T apply(A a, B b, C c);
 
   Optional<Tuple3<A, B, C>> unapply(T t);
+
+  Class getExtractorClass();
 }

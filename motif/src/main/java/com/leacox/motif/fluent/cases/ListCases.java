@@ -36,6 +36,11 @@ public final class ListCases {
 
       return Optional.empty();
     }
+
+    @Override
+    public Class<List> getExtractorClass() {
+      return List.class;
+    }
   }
 
   private static class ListExtractor<A> implements Extractor2<List<A>, A, List<A>> {
@@ -55,6 +60,11 @@ public final class ListCases {
 
       return Optional.of(Tuple2.of(list.get(0), list.subList(1, list.size())));
     }
+
+    @Override
+    public Class<List> getExtractorClass() {
+      return List.class;
+    }
   }
 
   private static class EmptyListExtractor<A> implements Extractor0<List<A>> {
@@ -66,6 +76,11 @@ public final class ListCases {
     @Override
     public boolean unapply(List<A> list) {
       return list.isEmpty();
+    }
+
+    @Override
+    public Class<List> getExtractorClass() {
+      return List.class;
     }
   }
 

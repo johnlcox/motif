@@ -11,6 +11,10 @@ public class ArgumentMatchers {
     return Any.ANY;
   }
 
+  public static ArgumentMatcher<String> anyString() {
+    return Any.ANY;
+  }
+
   public static <T> ArgumentMatcher<T> eq(T value) {
     return (ArgumentMatcher<T>) new Equals(value);
   }

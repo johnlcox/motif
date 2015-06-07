@@ -8,10 +8,10 @@ import java.util.function.Supplier;
 /**
  * @author John Leacox
  */
-public final class InitialMatching0<T> extends Matching0<T> {
+public final class InitialMatching0<T, U> extends Matching0<T, U> {
   private final T value;
 
-  InitialMatching0(Extractor0<T> extractor, T value) {
+  InitialMatching0(Extractor0<U> extractor, T value) {
     super(extractor);
 
     this.value = value;

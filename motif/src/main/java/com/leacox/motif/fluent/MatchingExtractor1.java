@@ -7,11 +7,11 @@ import org.hamcrest.Matcher;
 /**
  * @author John Leacox
  */
-public final class MatchingExtractor1<T, S> {
-  final Extractor1<T, S> extractor;
-  final Matcher<S> toMatch;
+public final class MatchingExtractor1<T, A> {
+  final Extractor1<T, A> extractor;
+  final Matcher<A> toMatch;
 
-  public MatchingExtractor1(Extractor1<T, S> extractor, Matcher<S> toMatch) {
+  public MatchingExtractor1(Extractor1<T, A> extractor, Matcher<A> toMatch) {
     this.extractor = extractor;
     this.toMatch = toMatch;
   }
