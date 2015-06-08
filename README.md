@@ -31,6 +31,31 @@ public long factorial(long i) {
 }
 ```
 
+## Download
+
+Add the Sonatype snapshot repository:
+
+```xml
+<repository>
+  <id>ossrh</id>
+  <name>Sonatype OSSRH</name>
+  <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
+```
+
+Download the latest snapshot JAR via Maven:
+
+```xml
+<dependency>
+  <groupId>com.leacox.motif</groupId>
+  <artifactId>motif</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
 ## License
 
     Copyright 2015 John Leacox
