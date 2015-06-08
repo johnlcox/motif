@@ -1,9 +1,9 @@
 package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.OptionalCases.caseNone;
-import static com.leacox.motif.fluent.cases.OptionalCases.caseSome;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.OptionalCases.caseNone;
+import static com.leacox.motif.cases.OptionalCases.caseSome;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.anyString;
 
@@ -97,8 +97,25 @@ public class OptionalPatternSpec {
                     .orElse(t -> consuming.consume("otherwise"))
                     .doMatch();
 
+                Optional<Person> personOpt = getPerson();
+                match(personOpt)
+                    .when(caseSome(any())).then(person -> doStuff(person))
+                    .when(caseNone()).then(() -> System.out.println("Person not found"))
+                    .doMatch();
+
                 expect.that(consuming.getConsumed()).is("otherwise");
               });
         });
+  }
+
+  public static class Person {
+  }
+
+  public Optional<Person> getPerson() {
+    return Optional.empty();
+  }
+
+  public void doStuff(Person person) {
+
   }
 }

@@ -1,7 +1,7 @@
 package com.leacox.motif.benchmarks;
 
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.TupleCases.caseTuple2;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.TupleCases.caseTuple2;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 

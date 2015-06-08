@@ -1,16 +1,16 @@
 package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseBoolean;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseByte;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseChar;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseDouble;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseFloat;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseInt;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseLong;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseShort;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseString;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.PrimitiveCases.caseBoolean;
+import static com.leacox.motif.cases.PrimitiveCases.caseByte;
+import static com.leacox.motif.cases.PrimitiveCases.caseChar;
+import static com.leacox.motif.cases.PrimitiveCases.caseDouble;
+import static com.leacox.motif.cases.PrimitiveCases.caseFloat;
+import static com.leacox.motif.cases.PrimitiveCases.caseInt;
+import static com.leacox.motif.cases.PrimitiveCases.caseLong;
+import static com.leacox.motif.cases.PrimitiveCases.caseShort;
+import static com.leacox.motif.cases.PrimitiveCases.caseString;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 

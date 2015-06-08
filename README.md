@@ -20,6 +20,16 @@ IntStream.range(0, 101).forEach(
 );
 ```
 
+### Optional
+
+```java
+Optional<Person> personOpt = getPerson();
+match(personOpt)
+    .when(caseSome(any())).then(person -> doStuff(person))
+    .when(caseNone()).then(() -> System.out.println("Person not found"))
+    .doMatch();
+```
+
 ### Factorial
 
 ```java

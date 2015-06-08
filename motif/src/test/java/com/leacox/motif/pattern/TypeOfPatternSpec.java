@@ -1,8 +1,8 @@
 package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.TypeOfCases.caseTypeOf;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.TypeOfCases.caseTypeOf;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 

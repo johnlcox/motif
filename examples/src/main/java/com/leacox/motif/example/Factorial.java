@@ -1,7 +1,7 @@
 package com.leacox.motif.example;
 
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.PrimitiveCases.caseLong;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.PrimitiveCases.caseLong;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 
 /**

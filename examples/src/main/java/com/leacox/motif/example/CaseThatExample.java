@@ -1,7 +1,7 @@
 package com.leacox.motif.example;
 
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.CaseThatCases.caseEq;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.CaseThatCases.caseEq;
 
 /**
  * @author John Leacox

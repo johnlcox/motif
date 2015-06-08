@@ -11,6 +11,10 @@ public class ArgumentMatchers {
     return Any.ANY;
   }
 
+  public static <T> ArgumentMatcher<T> any(Class<T> clazz) {
+    return Any.ANY;
+  }
+
   public static ArgumentMatcher<String> anyString() {
     return Any.ANY;
   }

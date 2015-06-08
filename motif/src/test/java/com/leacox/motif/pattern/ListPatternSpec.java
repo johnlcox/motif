@@ -1,10 +1,10 @@
 package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.ListCases.caseHeadNil;
-import static com.leacox.motif.fluent.cases.ListCases.caseHeadTail;
-import static com.leacox.motif.fluent.cases.ListCases.caseNil;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.ListCases.caseHeadNil;
+import static com.leacox.motif.cases.ListCases.caseHeadTail;
+import static com.leacox.motif.cases.ListCases.caseNil;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.anyString;
 

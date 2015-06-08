@@ -1,7 +1,7 @@
 package com.leacox.motif.example.superhero;
 
-import static com.leacox.motif.fluent.FluentMotif.match;
-import static com.leacox.motif.fluent.cases.CaseClassCases.case3;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.CaseClassCases.case3;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
 import java.math.BigDecimal;
