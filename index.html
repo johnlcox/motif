@@ -65,6 +65,15 @@
 );</pre></div>
 
 <h3>
+<a id="optional" class="anchor" href="#optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optional</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">Optional&lt;<span class="pl-smi">Person</span>&gt;</span> personOpt <span class="pl-k">=</span> getPerson();
+match(personOpt)
+    .when(caseSome(any(<span class="pl-smi">Person</span><span class="pl-k">.</span>class)))<span class="pl-k">.</span>then(person <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(person))
+    .when(caseNone())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Person not found<span class="pl-pds">"</span></span>))
+    .doMatch();</pre></div>
+
+<h3>
 <a id="factorial" class="anchor" href="#factorial" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factorial</h3>
 
 <div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">long</span> factorial(<span class="pl-k">long</span> i) {
