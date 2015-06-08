@@ -75,6 +75,28 @@
 }</pre></div>
 
 <h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Add the Sonatype snapshot repository:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">repository</span>&gt;
+  &lt;<span class="pl-ent">id</span>&gt;ossrh&lt;/<span class="pl-ent">id</span>&gt;
+  &lt;<span class="pl-ent">name</span>&gt;Sonatype OSSRH&lt;/<span class="pl-ent">name</span>&gt;
+  &lt;<span class="pl-ent">url</span>&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/<span class="pl-ent">url</span>&gt;
+  &lt;<span class="pl-ent">snapshots</span>&gt;
+    &lt;<span class="pl-ent">enabled</span>&gt;true&lt;/<span class="pl-ent">enabled</span>&gt;
+  &lt;/<span class="pl-ent">snapshots</span>&gt;
+&lt;/<span class="pl-ent">repository</span>&gt;</pre></div>
+
+<p>Download the latest snapshot JAR via Maven:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;com.leacox.motif&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;motif&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;1.0-SNAPSHOT&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <pre><code>Copyright 2015 John Leacox
