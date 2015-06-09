@@ -97,12 +97,6 @@ public class OptionalPatternSpec {
                     .orElse(t -> consuming.consume("otherwise"))
                     .doMatch();
 
-                Optional<Person> personOpt = getPerson();
-                match(personOpt)
-                    .when(caseSome(any())).then(person -> doStuff(person))
-                    .when(caseNone()).then(() -> System.out.println("Person not found"))
-                    .doMatch();
-
                 expect.that(consuming.getConsumed()).is("otherwise");
               });
         });
