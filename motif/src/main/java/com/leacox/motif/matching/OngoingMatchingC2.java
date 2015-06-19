@@ -3,8 +3,6 @@ package com.leacox.motif.matching;
 import com.leacox.motif.extractor.Extractor2;
 import com.leacox.motif.function.Consumer2;
 
-import org.hamcrest.Matcher;
-
 /**
  * @author John Leacox
  */
@@ -12,9 +10,8 @@ public final class OngoingMatchingC2<T, U extends T, A, B> extends Matching2<T, 
   private final FluentMatchingC<T> fluentMatchingC;
 
   OngoingMatchingC2(
-      FluentMatchingC<T> fluentMatchingC, Extractor2<U, A, B> extractor, Matcher<A> toMatchA,
-      Matcher<B> toMatchB) {
-    super(extractor, toMatchA, toMatchB);
+      FluentMatchingC<T> fluentMatchingC, Extractor2<U, A, B> extractor) {
+    super(extractor);
 
     this.fluentMatchingC = fluentMatchingC;
   }

@@ -4,8 +4,6 @@ import com.leacox.motif.extractor.Extractor2;
 import com.leacox.motif.function.Consumer2;
 import com.leacox.motif.function.Function2;
 
-import org.hamcrest.Matcher;
-
 /**
  * @author John Leacox
  */
@@ -13,8 +11,8 @@ public final class InitialMatching2<T, U extends T, A, B> extends Matching2<T, U
   private final T value;
 
   InitialMatching2(
-      Extractor2<U, A, B> extractor, T value, Matcher<A> toMatchA, Matcher<B> toMatchB) {
-    super(extractor, toMatchA, toMatchB);
+      Extractor2<U, A, B> extractor, T value) {
+    super(extractor);
 
     this.value = value;
   }

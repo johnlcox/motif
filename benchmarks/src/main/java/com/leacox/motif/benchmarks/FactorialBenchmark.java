@@ -2,7 +2,7 @@ package com.leacox.motif.benchmarks;
 
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.PrimitiveCases.caseLong;
-import static com.leacox.motif.matchers.ArgumentMatchers.any;
+import static com.leacox.motif.decomposition.MatchesAny.any;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -44,7 +44,7 @@ public class FactorialBenchmark {
 
   private long factMatching(long i) {
     return match(i)
-        .when(caseLong(0)).get(x -> 1l)
+        .when(caseLong(0)).get(() -> 1l)
         .when(caseLong(any())).get(x -> x * factMatching(x - 1))
         .getMatch();
   }

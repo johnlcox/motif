@@ -8,9 +8,9 @@ import org.hamcrest.Matcher;
  * @author John Leacox
  */
 public final class MatchingExtractor2<T, A, B> {
-  final Extractor2<T, A, B> extractor;
-  final Matcher<A> toMatchA;
-  final Matcher<B> toMatchB;
+  public final Extractor2<T, A, B> extractor;
+  public final Matcher<A> toMatchA;
+  public final Matcher<B> toMatchB;
 
   MatchingExtractor2(
       Extractor2<T, A, B> extractor, Matcher<A> toMatchA, Matcher<B> toMatchB) {

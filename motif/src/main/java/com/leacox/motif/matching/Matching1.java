@@ -4,9 +4,6 @@ import com.leacox.motif.extractor.Extractor1;
 import com.leacox.motif.pattern.ConsumablePattern;
 import com.leacox.motif.pattern.Pattern;
 
-import org.hamcrest.Matcher;
-
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -15,12 +12,10 @@ import java.util.function.Function;
  */
 abstract class Matching1<T, U extends T, A> {
   private final Extractor1<U, A> extractor;
-  private final Matcher<A> toMatchA;
 
   Matching1(
-      Extractor1<U, A> extractor, Matcher<A> toMatchA) {
+      Extractor1<U, A> extractor) {
     this.extractor = extractor;
-    this.toMatchA = toMatchA;
   }
 
   <R> FluentMatchingR<T, R> get(
@@ -28,17 +23,8 @@ abstract class Matching1<T, U extends T, A> {
     fluentMatchingR.addPattern(
         Pattern.of(
             t -> {
-              if (!extractor.getExtractorClass().isAssignableFrom(t.getClass())) {
-                return false;
-              }
-
-              Optional<A> opt = extractor.unapply((U) t);
-              if (opt.isPresent()) {
-                A a = opt.get();
-                return toMatchA.matches(a);
-              }
-
-              return false;
+              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                  .unapply((U) t).isPresent();
             },
             t -> {
               A a = extractor.unapply((U) t).get();
@@ -54,17 +40,8 @@ abstract class Matching1<T, U extends T, A> {
     fluentMatchingC.addPattern(
         ConsumablePattern.of(
             t -> {
-              if (!extractor.getExtractorClass().isAssignableFrom(t.getClass())) {
-                return false;
-              }
-
-              Optional<A> opt = extractor.unapply((U) t);
-              if (opt.isPresent()) {
-                A a = opt.get();
-                return toMatchA.matches(a);
-              }
-
-              return false;
+              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                  .unapply((U) t).isPresent();
             },
             t -> {
               A a = extractor.unapply((U) t).get();

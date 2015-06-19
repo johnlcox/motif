@@ -1,15 +1,22 @@
 package com.leacox.motif.cases;
 
+import static com.leacox.motif.matchers.ArgumentMatchers.any;
+import static com.leacox.motif.matchers.ArgumentMatchers.eq;
+
+import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
+import com.leacox.motif.decomposition.MatchesAny;
 import com.leacox.motif.extractor.Extractor0;
 import com.leacox.motif.extractor.Extractor1;
 import com.leacox.motif.extractor.Extractor2;
-import com.leacox.motif.matching.MatchingExtractor0;
-import com.leacox.motif.matching.MatchingExtractor1;
-import com.leacox.motif.matching.MatchingExtractor2;
+import com.leacox.motif.extractor.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 
 import org.hamcrest.Matcher;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +50,28 @@ public final class ListCases {
     }
   }
 
+  private static class HeadFieldExtractor<A> implements FieldExtractor<List<A>> {
+    private final HeadExtractor<A> headExtractor = new HeadExtractor<>();
+
+    @Override
+    public Optional<List<Object>> unapply(List<A> value) {
+      Optional<A> opt = headExtractor.unapply(value);
+      if (!opt.isPresent()) {
+        return Optional.empty();
+      }
+
+      List<Object> fields = new ArrayList<>();
+      fields.add(opt.get());
+
+      return Optional.of(fields);
+    }
+
+    @Override
+    public Class<?> getExtractorClass() {
+      return headExtractor.getExtractorClass();
+    }
+  }
+
   private static class ListExtractor<A> implements Extractor2<List<A>, A, List<A>> {
     //@Override
     //public List<A> apply(A head, List<A> tail) {
@@ -67,6 +96,29 @@ public final class ListCases {
     }
   }
 
+  private static class HeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
+    private final ListExtractor<A> listExtractor = new ListExtractor<>();
+
+    @Override
+    public Optional<List<Object>> unapply(List<A> value) {
+      Optional<Tuple2<A, List<A>>> opt = listExtractor.unapply(value);
+      if (!opt.isPresent()) {
+        return Optional.empty();
+      }
+
+      List<Object> fields = new ArrayList<>();
+      fields.add(opt.get().first());
+      fields.add(opt.get().second());
+
+      return Optional.of(fields);
+    }
+
+    @Override
+    public Class<?> getExtractorClass() {
+      return listExtractor.getExtractorClass();
+    }
+  }
+
   private static class EmptyListExtractor<A> implements Extractor0<List<A>> {
     //@Override
     //public List<A> apply() {
@@ -84,16 +136,59 @@ public final class ListCases {
     }
   }
 
-  public static <T> MatchingExtractor0<List<T>> caseNil() {
-    return MatchingExtractor0.create(new EmptyListExtractor<>());
+  private static class NilFieldExtractor<A> implements FieldExtractor<List<A>> {
+    private final EmptyListExtractor<A> emptyListExtractor = new EmptyListExtractor<>();
+
+    @Override
+    public Optional<List<Object>> unapply(List<A> value) {
+      if (!emptyListExtractor.unapply(value)) {
+        return Optional.empty();
+      }
+
+      return Optional.of(Collections.emptyList());
+    }
+
+    @Override
+    public Class<?> getExtractorClass() {
+      return emptyListExtractor.getExtractorClass();
+    }
   }
 
-  public static <T> MatchingExtractor1<List<T>, T> caseHeadNil(Matcher<T> head) {
-    return MatchingExtractor1.create(new HeadExtractor<>(), head);
+  public static <T> DecomposableMatchBuilder0<List<T>> nil() {
+    return new DecomposableMatchBuilder0<>(Collections.emptyList(), new NilFieldExtractor<>());
   }
 
-  public static <T> MatchingExtractor2<List<T>, T, List<T>> caseHeadTail(
-      Matcher<T> head, Matcher<List<T>> tail) {
-    return MatchingExtractor2.create(new ListExtractor<>(), head, tail);
+  public static <T> DecomposableMatchBuilder1<List<T>, T> headNil(T head) {
+    List<Matcher<Object>> matchers = new ArrayList<>();
+    matchers.add(eq(head));
+
+    return new DecomposableMatchBuilder1<>(matchers, 0, new HeadFieldExtractor<>());
+  }
+
+  public static <T> DecomposableMatchBuilder1<List<T>, T> headNil(MatchesAny head) {
+    List<Matcher<Object>> matchers = new ArrayList<>();
+    matchers.add(any());
+
+    return new DecomposableMatchBuilder1<>(matchers, 0, new HeadFieldExtractor<>());
+  }
+
+  public static <T> DecomposableMatchBuilder2<List<T>, T, List<T>> headTail(
+      T head, MatchesAny tail) {
+    List<Matcher<Object>> matchers = new ArrayList<>();
+    matchers.add(eq(head));
+    matchers.add(any());
+
+    return new DecomposableMatchBuilder2<>(
+        matchers, Tuple2.of(0, 1), new HeadTailFieldExtractor<>());
+  }
+
+  public static <T> DecomposableMatchBuilder2<List<T>, T, List<T>> headTail(
+      MatchesAny head, MatchesAny tail) {
+    List<Matcher<Object>> matchers = new ArrayList<>();
+    matchers.add(any());
+    matchers.add(any());
+
+    return new DecomposableMatchBuilder2<>(
+        matchers, Tuple2.of(0, 1), new HeadTailFieldExtractor<>());
   }
 }

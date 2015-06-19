@@ -2,9 +2,14 @@ package com.leacox.motif.cases;
 
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 
+import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
 import com.leacox.motif.extractor.Extractor1;
-import com.leacox.motif.matching.MatchingExtractor1;
+import com.leacox.motif.extractor.FieldExtractor;
 
+import org.hamcrest.Matcher;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,7 +43,36 @@ public final class TypeOfCases {
     }
   }
 
-  public static <S extends Object, T> MatchingExtractor1<S, T> caseTypeOf(Class<T> clazz) {
-    return MatchingExtractor1.create(new TypeOfExtractor<>(clazz), any());
+  private static class TypeOfFieldExtractor<S, T> implements FieldExtractor<S> {
+    private final TypeOfExtractor<S, T> typeOfExtractor;
+
+    TypeOfFieldExtractor(Class<T> expectedClass) {
+      this.typeOfExtractor = new TypeOfExtractor<>(expectedClass);
+    }
+
+    @Override
+    public Optional<List<Object>> unapply(S value) {
+      Optional<T> opt = typeOfExtractor.unapply(value);
+      if (!opt.isPresent()) {
+        return Optional.empty();
+      }
+
+      List<Object> fields = new ArrayList<>();
+      fields.add(opt.get());
+
+      return Optional.of(fields);
+    }
+
+    @Override
+    public Class<?> getExtractorClass() {
+      return typeOfExtractor.getExtractorClass();
+    }
+  }
+
+  public static <S, T> DecomposableMatchBuilder1<S, T> typeOf(Class<T> clazz) {
+    List<Matcher<Object>> matchers = new ArrayList<>();
+    matchers.add(any()); // The extractor takes care of the matching
+
+    return new DecomposableMatchBuilder1<>(matchers, 0, new TypeOfFieldExtractor<>(clazz));
   }
 }

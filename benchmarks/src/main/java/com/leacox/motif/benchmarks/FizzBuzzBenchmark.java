@@ -1,9 +1,8 @@
 package com.leacox.motif.benchmarks;
 
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.TupleCases.caseTuple2;
-import static com.leacox.motif.matchers.ArgumentMatchers.any;
-import static com.leacox.motif.matchers.ArgumentMatchers.eq;
+import static com.leacox.motif.cases.TupleCases.tuple2;
+import static com.leacox.motif.decomposition.MatchesAny.any;
 
 import com.leacox.motif.tuple.Tuple2;
 
@@ -27,12 +26,6 @@ public class FizzBuzzBenchmark {
   @Benchmark
   public void fizzbuzzConditional() {
 
-
-
-
-
-
-
     IntStream.range(0, 101).forEach(
         n -> {
           if (n % (3 * 5) == 0) {
@@ -46,14 +39,6 @@ public class FizzBuzzBenchmark {
           }
         }
     );
-
-
-
-
-
-
-
-
   }
 
   @Benchmark
@@ -61,9 +46,9 @@ public class FizzBuzzBenchmark {
     IntStream.range(0, 101).forEach(
         n -> System.out.println(
             match(Tuple2.of(n % 3, n % 5))
-                .when(caseTuple2(eq(0), eq(0))).get((x, y) -> "FizzBuzz")
-                .when(caseTuple2(eq(0), any())).get((x, y) -> "Fizz")
-                .when(caseTuple2(any(), eq(0))).get((x, y) -> "Buzz")
+                .when(tuple2(0, 0)).get(() -> "FizzBuzz")
+                .when(tuple2(0, any())).get(y -> "Fizz")
+                .when(tuple2(any(), 0)).get(x -> "Buzz")
                 .orElse(String.valueOf(n))
                 .getMatch()
         )

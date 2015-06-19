@@ -2,8 +2,6 @@ package com.leacox.motif.matching;
 
 import com.leacox.motif.extractor.Extractor1;
 
-import org.hamcrest.Matcher;
-
 import java.util.function.Function;
 
 /**
@@ -13,8 +11,8 @@ public final class OngoingMatchingR1<T, U extends T, A, R> extends Matching1<T, 
   private final FluentMatchingR<T, R> fluentMatchingR;
 
   OngoingMatchingR1(
-      FluentMatchingR<T, R> fluentMatchingR, Extractor1<U, A> extractor, Matcher<A> toMatchA) {
-    super(extractor, toMatchA);
+      FluentMatchingR<T, R> fluentMatchingR, Extractor1<U, A> extractor) {
+    super(extractor);
 
     this.fluentMatchingR = fluentMatchingR;
   }

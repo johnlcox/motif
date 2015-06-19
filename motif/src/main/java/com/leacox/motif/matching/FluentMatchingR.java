@@ -1,6 +1,9 @@
 package com.leacox.motif.matching;
 
 import com.leacox.motif.MatchException;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
 import com.leacox.motif.pattern.Pattern;
 
 import java.util.ArrayList;
@@ -23,19 +26,19 @@ public final class FluentMatchingR<T, R> {
     patterns.add(pattern);
   }
 
-  public <U extends T> OngoingMatchingR0<T, U, R> when(MatchingExtractor0<U> matchingExtractor) {
-    return new OngoingMatchingR0<>(this, matchingExtractor.extractor);
+  public <U extends T> OngoingMatchingR0<T, U, R> when(
+      DecomposableMatchBuilder0<U> decomposableMatchBuilder) {
+    return new OngoingMatchingR0<>(this, decomposableMatchBuilder.build());
   }
 
   public <U extends T, A> OngoingMatchingR1<T, U, A, R> when(
-      MatchingExtractor1<U, A> matchingExtractor) {
-    return new OngoingMatchingR1<>(this, matchingExtractor.extractor, matchingExtractor.toMatch);
+      DecomposableMatchBuilder1<U, A> decomposableMatchBuilder) {
+    return new OngoingMatchingR1<>(this, decomposableMatchBuilder.build());
   }
 
   public <U extends T, A, B> OngoingMatchingR2<T, U, A, B, R> when(
-      MatchingExtractor2<U, A, B> matchingExtractor) {
-    return new OngoingMatchingR2<>(
-        this, matchingExtractor.extractor, matchingExtractor.toMatchA, matchingExtractor.toMatchB);
+      DecomposableMatchBuilder2<U, A, B> decomposableMatchBuilder) {
+    return new OngoingMatchingR2<>(this, decomposableMatchBuilder.build());
   }
 
   public <U extends T, A, B, C> OngoingMatchingR3<T, U, A, B, C, R> when(

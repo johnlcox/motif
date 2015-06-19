@@ -22,10 +22,8 @@ abstract class Matching0<T, U extends T> {
       FluentMatchingR<T, R> fluentMatchingR, Supplier<R> supplier) {
     fluentMatchingR.addPattern(
         Pattern.of(
-            t -> {
-              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
-                  .unapply((U) t);
-            }, t -> supplier.get()));
+            t -> extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                .unapply((U) t), t -> supplier.get()));
 
     return fluentMatchingR;
   }
@@ -33,10 +31,8 @@ abstract class Matching0<T, U extends T> {
   FluentMatchingC<T> then(FluentMatchingC<T> fluentMatchingC, Consumer0 consumer) {
     fluentMatchingC.addPattern(
         ConsumablePattern.of(
-            t -> {
-              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
-                  .unapply((U) t);
-            }, t -> consumer.accept()));
+            t -> extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                .unapply((U) t), t -> consumer.accept()));
 
     return fluentMatchingC;
   }

@@ -1,6 +1,6 @@
 package com.leacox.motif;
 
-import com.leacox.motif.matchers.ArgumentMatcher;
+import com.leacox.motif.decomposition.MatchesAny;
 import com.leacox.motif.matching.FluentMatching;
 
 /**
@@ -37,8 +37,8 @@ public final class Motif {
    * {@link com.leacox.motif.extractor.Extractor1 Extractor1}) for your type, and then create a new
    * instance of {@code MatchingExtractorN} with the extractor for your type and the args to match
    * on. The easiest way to do this is to create a static method that can be imported like
-   * {@link com.leacox.motif.cases.OptionalCases#caseSome(ArgumentMatcher)
-   * OptionalCases#caseSome(ArgumentMatcher)}.
+   * {@link com.leacox.motif.cases.OptionalCases#some(MatchesAny)
+   * OptionalCases#some(ArgumentMatcher)}.
    *
    * <p>The following are some basic pattern matching examples:
    * <pre>
@@ -47,7 +47,7 @@ public final class Motif {
    * // Matching on Optional
    * Optional<Person> personOpt = getPerson();
    * match(personOpt)
-   *     .when(caseSome(any())).then(person -> doStuff(person))
+   *     .when(some(any())).then(person -> doStuff(person))
    *     .when(caseNone()).then(() -> System.out.println("Person not found"))
    *     .doMatch();
    * }

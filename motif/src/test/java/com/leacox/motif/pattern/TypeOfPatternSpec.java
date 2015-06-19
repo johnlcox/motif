@@ -2,7 +2,7 @@ package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.TypeOfCases.caseTypeOf;
+import static com.leacox.motif.cases.TypeOfCases.typeOf;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -26,9 +26,9 @@ public class TypeOfPatternSpec {
           it.should(
               "match String", expect -> {
                 String result = match(myString)
-                    .when(caseTypeOf(Double.class)).get(Object::toString)
-                    .when(caseTypeOf(OffsetDateTime.class)).get(OffsetDateTime::toString)
-                    .when(caseTypeOf(String.class)).get(s -> s)
+                    .when(typeOf(Double.class)).get(Object::toString)
+                    .when(typeOf(OffsetDateTime.class)).get(OffsetDateTime::toString)
+                    .when(typeOf(String.class)).get(s -> s)
                     .getMatch();
 
                 expect.that(result).is(myString);
@@ -37,9 +37,9 @@ public class TypeOfPatternSpec {
           it.should(
               "match OffsetDateTime", expect -> {
                 String result = match(currentDateTime)
-                    .when(caseTypeOf(Double.class)).get(Object::toString)
-                    .when(caseTypeOf(OffsetDateTime.class)).get(OffsetDateTime::toString)
-                    .when(caseTypeOf(String.class)).get(s -> s)
+                    .when(typeOf(Double.class)).get(Object::toString)
+                    .when(typeOf(OffsetDateTime.class)).get(OffsetDateTime::toString)
+                    .when(typeOf(String.class)).get(s -> s)
                     .getMatch();
 
                 expect.that(result).is(currentDateTime.toString());
@@ -48,9 +48,9 @@ public class TypeOfPatternSpec {
           it.should(
               "match Double", expect -> {
                 String result = match(pi)
-                    .when(caseTypeOf(Double.class)).get(Object::toString)
-                    .when(caseTypeOf(OffsetDateTime.class)).get(OffsetDateTime::toString)
-                    .when(caseTypeOf(String.class)).get(s -> s)
+                    .when(typeOf(Double.class)).get(Object::toString)
+                    .when(typeOf(OffsetDateTime.class)).get(OffsetDateTime::toString)
+                    .when(typeOf(String.class)).get(s -> s)
                     .getMatch();
 
                 expect.that(result).is(pi.toString());

@@ -30,8 +30,8 @@ public class PrimitivePatternSpec {
 
                 // No byte literals in Java so you have to cast
                 String result = match(b)
-                    .when(caseByte((byte) 4)).get(x -> "Nope")
-                    .when(caseByte((byte) 27)).get(x -> "27")
+                    .when(caseByte((byte) 4)).get(() -> "Nope")
+                    .when(caseByte((byte) 27)).get(() -> "27")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -44,8 +44,8 @@ public class PrimitivePatternSpec {
 
                 // No short literals in Java so you have to cast
                 String result = match(s)
-                    .when(caseShort((short) 4)).get(x -> "Nope")
-                    .when(caseShort((short) 382)).get(x -> "382")
+                    .when(caseShort((short) 4)).get(() -> "Nope")
+                    .when(caseShort((short) 382)).get(() -> "382")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -57,8 +57,8 @@ public class PrimitivePatternSpec {
                 int i = 2875283;
 
                 String result = match(i)
-                    .when(caseInt(4)).get(x -> "Nope")
-                    .when(caseInt(2875283)).get(x -> "2875283")
+                    .when(caseInt(4)).get(() -> "Nope")
+                    .when(caseInt(2875283)).get(() -> "2875283")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -70,8 +70,8 @@ public class PrimitivePatternSpec {
                 long l = 82874927472927l;
 
                 String result = match(l)
-                    .when(caseLong(4l)).get(x -> "Nope")
-                    .when(caseLong(82874927472927l)).get(x -> "82874927472927")
+                    .when(caseLong(4l)).get(() -> "Nope")
+                    .when(caseLong(82874927472927l)).get(() -> "82874927472927")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -83,12 +83,12 @@ public class PrimitivePatternSpec {
                 float f = 382.84782f;
 
                 String result = match(f)
-                    .when(caseFloat(4f)).get(x -> "Nope")
-                    .when(caseFloat(382.84782f)).get(String::valueOf)
+                    .when(caseFloat(4f)).get(() -> "Nope")
+                    .when(caseFloat(382.84782f)).get(() -> "Yep")
                     .orElse(x -> "orElse")
                     .getMatch();
 
-                expect.that(result).is(String.valueOf(f));
+                expect.that(result).is("Yep");
               });
 
           it.should(
@@ -96,12 +96,12 @@ public class PrimitivePatternSpec {
                 double d = 89378393384832.3847849394;
 
                 String result = match(d)
-                    .when(caseDouble(4d)).get(x -> "Nope")
-                    .when(caseDouble(89378393384832.3847849394)).get(String::valueOf)
+                    .when(caseDouble(4d)).get(() -> "Nope")
+                    .when(caseDouble(89378393384832.3847849394)).get(() -> "Yep")
                     .orElse(x -> "orElse")
                     .getMatch();
 
-                expect.that(result).is(String.valueOf(d));
+                expect.that(result).is("Yep");
               });
 
           it.should(
@@ -109,8 +109,8 @@ public class PrimitivePatternSpec {
                 char c = 'T';
 
                 String result = match(c)
-                    .when(caseChar('t')).get(x -> "Nope")
-                    .when(caseChar('T')).get(x -> "T")
+                    .when(caseChar('t')).get(() -> "Nope")
+                    .when(caseChar('T')).get(() -> "T")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -122,8 +122,8 @@ public class PrimitivePatternSpec {
                 String s = "Hello World";
 
                 String result = match(s)
-                    .when(caseString("Goodbye World")).get(x -> "Nope")
-                    .when(caseString("Hello World")).get(x -> x)
+                    .when(caseString("Goodbye World")).get(() -> "Nope")
+                    .when(caseString("Hello World")).get(() -> "Hello World")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -135,8 +135,8 @@ public class PrimitivePatternSpec {
                 boolean t = true;
 
                 String result = match(t)
-                    .when(caseBoolean(false)).get(x -> "Nope")
-                    .when(caseBoolean(true)).get(x -> "true")
+                    .when(caseBoolean(false)).get(() -> "Nope")
+                    .when(caseBoolean(true)).get(() -> "true")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -149,8 +149,8 @@ public class PrimitivePatternSpec {
 
                 // No short literals in Java so you have to cast
                 String result = match(f)
-                    .when(caseBoolean(true)).get(x -> "Nope")
-                    .when(caseBoolean(false)).get(x -> "false")
+                    .when(caseBoolean(true)).get(() -> "Nope")
+                    .when(caseBoolean(false)).get(() -> "false")
                     .orElse(x -> "orElse")
                     .getMatch();
 

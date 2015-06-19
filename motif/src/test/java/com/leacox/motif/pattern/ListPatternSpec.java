@@ -2,11 +2,11 @@ package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.ListCases.caseHeadNil;
-import static com.leacox.motif.cases.ListCases.caseHeadTail;
-import static com.leacox.motif.cases.ListCases.caseNil;
-import static com.leacox.motif.matchers.ArgumentMatchers.any;
-import static com.leacox.motif.matchers.ArgumentMatchers.anyString;
+import static com.leacox.motif.cases.ListCases.headNil;
+import static com.leacox.motif.cases.ListCases.headTail;
+import static com.leacox.motif.cases.ListCases.nil;
+import static com.leacox.motif.decomposition.MatchesAny.__;
+import static com.leacox.motif.decomposition.MatchesAny.any;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -33,7 +33,7 @@ public class ListPatternSpec {
           it.should(
               "match empty list", expect -> {
                 String result = match(emptyList)
-                    .when(caseNil()).get(() -> "Nil")
+                    .when(nil()).get(() -> "Nil")
                     .orElse("orElse")
                     .getMatch();
 
@@ -45,7 +45,7 @@ public class ListPatternSpec {
                 Consuming consuming = new Consuming();
 
                 match(emptyList)
-                    .when(caseNil()).then(() -> consuming.consume("nil"))
+                    .when(nil()).then(() -> consuming.consume("nil"))
                     .orElse(x -> consuming.consume("orElse"))
                     .doMatch();
 
@@ -55,8 +55,8 @@ public class ListPatternSpec {
           it.should(
               "match one item list", expect -> {
                 String result = match(oneItemList)
-                    .when(caseNil()).get(() -> "Nil")
-                    .when(caseHeadNil(anyString())).get(s -> s)
+                    .when(nil()).get(() -> "Nil")
+                    .when(headNil(__)).get(s -> s)
                     .getMatch();
 
                 expect.that(result).is("one");
@@ -67,8 +67,8 @@ public class ListPatternSpec {
                 Consuming consuming = new Consuming();
 
                 match(oneItemList)
-                    .when(caseNil()).then(() -> consuming.consume("nil"))
-                    .when(caseHeadNil(any())).then(consuming::consume)
+                    .when(nil()).then(() -> consuming.consume("nil"))
+                    .when(headNil(any())).then(consuming::consume)
                     .orElse(() -> consuming.consume("Nope"))
                     .doMatch();
 
@@ -78,9 +78,9 @@ public class ListPatternSpec {
           it.should(
               "match multi-item list", expect -> {
                 String result = match(twoItemList)
-                    .when(caseNil()).get(() -> "Nil")
-                    .when(caseHeadNil(anyString())).get((x) -> x)
-                    .when(caseHeadTail(any(), any())).get((x, xs) -> "head: " + x + " tail: " + xs)
+                    .when(nil()).get(() -> "Nil")
+                    .when(headNil(__)).get((x) -> x)
+                    .when(headTail(any(), any())).get((x, xs) -> "head: " + x + " tail: " + xs)
                     .getMatch();
 
                 expect.that(result).is("head: one tail: [two]");
@@ -92,10 +92,11 @@ public class ListPatternSpec {
 
                 // TODO: Why is intellij formatting consuming lambda continuation indents this way?
                 match(twoItemList)
-                    .when(caseNil()).then(() -> consuming.consume("nil"))
-                    .when(caseHeadNil(any())).then(consuming::consume)
-                    .when(caseHeadTail(any(), any())).then(
-                    (x, xs) -> consuming.consume("head: " + x + " tail: " + xs))
+                    .when(nil()).then(() -> consuming.consume("nil"))
+                    .when(headNil(any())).then(consuming::consume)
+                    .when(headTail(any(), any())).then(
+                    (x, xs) ->
+                        consuming.consume("head: " + x + " tail: " + xs))
                     .doMatch();
               });
         }

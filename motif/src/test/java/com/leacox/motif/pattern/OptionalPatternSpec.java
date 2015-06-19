@@ -2,10 +2,12 @@ package com.leacox.motif.pattern;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.OptionalCases.caseNone;
-import static com.leacox.motif.cases.OptionalCases.caseSome;
-import static com.leacox.motif.matchers.ArgumentMatchers.any;
-import static com.leacox.motif.matchers.ArgumentMatchers.anyString;
+import static com.leacox.motif.cases.OptionalCases.none;
+import static com.leacox.motif.cases.OptionalCases.some;
+import static com.leacox.motif.cases.TupleCases.tuple2;
+import static com.leacox.motif.decomposition.MatchesAny.any;
+
+import com.leacox.motif.tuple.Tuple2;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -26,7 +28,7 @@ public class OptionalPatternSpec {
           it.should(
               "handle none", expect -> {
                 String result = match(none)
-                    .when(caseNone()).get(() -> "None")
+                    .when(none()).get(() -> "None")
                     .getMatch();
 
                 expect.that(result).is("None");
@@ -37,7 +39,7 @@ public class OptionalPatternSpec {
                 Consuming consuming = new Consuming();
 
                 match(none)
-                    .when(caseNone()).then(() -> consuming.consume("None"))
+                    .when(none()).then(() -> consuming.consume("None"))
                     .doMatch();
 
                 expect.that(consuming.getConsumed()).is("None");
@@ -46,10 +48,10 @@ public class OptionalPatternSpec {
           it.should(
               "handle some", expect -> {
                 String result = match(some)
-                    .when(caseSome("not a string?")).get(a -> "What?")
-                    .when(caseSome("a string")).get(a -> "Found it")
-                    .when(caseSome(anyString())).get(a -> a)
-                    .when(caseNone()).get(() -> "hi")
+                    .when(some("not a string?")).get(() -> "What?")
+                    .when(some("a string")).get(() -> "Found it")
+                    .when(some(any())).get(a -> a)
+                    .when(none()).get(() -> "hi")
                     .getMatch();
 
                 expect.that(result).is("Found it");
@@ -58,9 +60,9 @@ public class OptionalPatternSpec {
           it.should(
               "handle some with exact match", expect -> {
                 String result = match(some)
-                    .when(caseNone()).get(() -> "None")
-                    .when(caseSome("Not a string?")).get(t -> "What?")
-                    .when(caseSome("a string")).get(t -> "Found it")
+                    .when(none()).get(() -> "None")
+                    .when(some("Not a string?")).get(() -> "What?")
+                    .when(some("a string")).get(() -> "Found it")
                     .getMatch();
 
                 expect.that(result).is("Found it");
@@ -71,8 +73,8 @@ public class OptionalPatternSpec {
                 Consuming consuming = new Consuming();
 
                 match(some)
-                    .when(caseNone()).then(() -> consuming.consume("None"))
-                    .when(caseSome(any())).then(consuming::consume)
+                    .when(none()).then(() -> consuming.consume("None"))
+                    .when(some(any())).then(consuming::consume)
                     .doMatch();
 
                 expect.that(consuming.getConsumed()).is(some.get());
@@ -81,7 +83,7 @@ public class OptionalPatternSpec {
           it.should(
               "handle orElse", expect -> {
                 String result = match(some)
-                    .when(caseNone()).get(() -> "None")
+                    .when(none()).get(() -> "None")
                     .orElse("orElse")
                     .getMatch();
 
@@ -93,11 +95,51 @@ public class OptionalPatternSpec {
                 Consuming consuming = new Consuming();
 
                 match(some)
-                    .when(caseNone()).then(() -> consuming.consume("None"))
+                    .when(none()).then(() -> consuming.consume("None"))
                     .orElse(t -> consuming.consume("otherwise"))
                     .doMatch();
 
                 expect.that(consuming.getConsumed()).is("otherwise");
+
+                Optional<Optional<String>> nestedString = Optional.of(Optional.of("nested"));
+
+                String result = match(nestedString)
+                    .when(some(some(any()))).get(x -> x)
+                    .getMatch();
+
+                Optional<Tuple2<String, String>> doubleNested = Optional.of(
+                    Tuple2.of("nest1", "nest2"));
+
+                String result2 = match(doubleNested)
+                    .when(some(tuple2(any(), any()))).get((x, y) -> y)
+                    .getMatch();
+
+                expect.that(result2).is("nest2");
+
+                expect.that(result).is("nested");
+
+                //Tuple2<String, Tuple2<String, String>> tupled = Tuple2.of("A", Tuple2.of("C", "D"));
+
+                Tuple2<Tuple2<String, String>, Tuple2<String, String>> tupled = Tuple2.of(
+                    Tuple2.of("A", "B"), Tuple2.of("C", "D"));
+
+                String result3 = match(tupled)
+                    .when(tuple2(tuple2(any(), "B"), tuple2("C", any()))).get(
+                        (a, d) -> "(" + a + ", " + d + ")")
+                    .getMatch();
+
+                expect.that(result3).is("(A, D)");
+
+                String result4 = match(tupled)
+                    .when(tuple2(tuple2("A", "B"), tuple2(any(), "D"))).get(c -> c)
+                    .getMatch();
+
+                expect.that(result4).is("C");
+                //String result3 = match(tupled)
+                //    .when(tuple2(any(), tuple2(any(), any()))).get((x, y, z) -> x)
+                //    .getMatch();
+
+                //expect.that(result3).is("D");
               });
         });
   }

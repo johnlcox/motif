@@ -1,5 +1,9 @@
 package com.leacox.motif.matching;
 
+import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
+import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
+
 /**
  * @author John Leacox
  */
@@ -10,19 +14,19 @@ public final class FluentMatching<T> {
     this.value = value;
   }
 
-  public <U extends T> InitialMatching0<T, U> when(MatchingExtractor0<U> matchingExtractor) {
-    return new InitialMatching0<>(matchingExtractor.extractor, value);
+  public <U extends T> InitialMatching0<T, U> when(
+      DecomposableMatchBuilder0<U> decomposableMatchBuilder) {
+    return new InitialMatching0<>(decomposableMatchBuilder.build(), value);
   }
 
   public <U extends T, A> InitialMatching1<T, U, A> when(
-      MatchingExtractor1<U, A> matchingExtractor) {
-    return new InitialMatching1<>(matchingExtractor.extractor, value, matchingExtractor.toMatch);
+      DecomposableMatchBuilder1<U, A> decomposableMatchBuilder) {
+    return new InitialMatching1<>(decomposableMatchBuilder.build(), value);
   }
 
   public <U extends T, A, B> InitialMatching2<T, U, A, B> when(
-      MatchingExtractor2<U, A, B> matchingExtractor) {
-    return new InitialMatching2<>(
-        matchingExtractor.extractor, value, matchingExtractor.toMatchA, matchingExtractor.toMatchB);
+      DecomposableMatchBuilder2<U, A, B> decomposableMatchBuilder) {
+    return new InitialMatching2<>(decomposableMatchBuilder.build(), value);
   }
 
   public <U extends T, A, B, C> InitialMatching3<T, U, A, B, C> when(
