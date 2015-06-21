@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * @author John Leacox
  */
-class Equals extends ArgumentMatcher<Object> {
+class Equals implements Matcher<Object> {
   private final Object expected;
 
   public Equals(Object expected) {

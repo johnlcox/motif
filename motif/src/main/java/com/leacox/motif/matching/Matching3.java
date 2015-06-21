@@ -7,7 +7,7 @@ import com.leacox.motif.pattern.ConsumablePattern;
 import com.leacox.motif.pattern.Pattern;
 import com.leacox.motif.tuple.Tuple3;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.Optional;
 

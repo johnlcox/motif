@@ -29,7 +29,6 @@ public final class Motif {
    *   <li>{@link com.leacox.motif.cases.TypeOfCases TypeOf (instanceof)}</li>
    *   <li>{@link com.leacox.motif.cases.TupleCases Tuples}</li>
    *   <li>{@link com.leacox.motif.cases.CaseClassCases Case classes}</li>
-   *   <li>{@link com.leacox.motif.cases.CaseThatCases Hamcrest matcher cases}</li>
    * </ul>
    *
    * <p>In addition the matching case API is extremely extensible. All that is needed to create a

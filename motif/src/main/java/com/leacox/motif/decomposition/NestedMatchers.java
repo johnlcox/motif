@@ -1,6 +1,6 @@
 package com.leacox.motif.decomposition;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.ArrayList;
 import java.util.List;

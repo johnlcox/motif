@@ -9,7 +9,7 @@ import com.leacox.motif.decomposition.MatchesAny;
 import com.leacox.motif.extractor.Extractor1;
 import com.leacox.motif.extractor.FieldExtractor;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.ArrayList;
 import java.util.List;

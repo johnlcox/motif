@@ -5,8 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
   <modules>
     <module>motif</module>
-    <module>examples</module>
     <module>benchmarks</module>
+    <module>examples</module>
+    <module>hamcrest</module>
   </modules>
 
   <groupId>com.leacox.motif</groupId>
@@ -45,6 +46,11 @@
         <artifactId>auto-value</artifactId>
         <version>1.1</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.leacox.motif</groupId>
+        <artifactId>motif</artifactId>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.openjdk.jmh</groupId>

@@ -3,7 +3,7 @@ package com.leacox.motif.matching;
 import com.leacox.motif.extractor.Extractor3;
 import com.leacox.motif.function.Function3;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 /**
  * @author John Leacox

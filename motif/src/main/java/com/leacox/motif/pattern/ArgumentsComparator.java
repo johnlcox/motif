@@ -1,6 +1,6 @@
 package com.leacox.motif.pattern;
 
-import com.leacox.motif.matchers.ArgumentMatcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ class ArgumentsComparator {
   private ArgumentsComparator() {
   }
 
-  public static boolean argumentsMatch(ArgumentMatcher[] matchers, List<Object> args) {
+  public static boolean argumentsMatch(Matcher[] matchers, List<Object> args) {
     if (matchers.length != args.size()) {
       return false;
     }

@@ -1,12 +1,12 @@
-package com.leacox.motif.cases;
+package com.leacox.motif.hamcrest;
 
-import static com.leacox.motif.matchers.ArgumentMatchers.eq;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
 import com.leacox.motif.extractor.Extractor1;
 import com.leacox.motif.extractor.FieldExtractor;
-
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
+import com.leacox.motif.util.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +50,31 @@ public class CaseThatCases {
     }
   }
 
-  public static <T> DecomposableMatchBuilder1<T, T> caseThat(Matcher<T> matcher) {
-    List<Matcher<Object>> matchers = new ArrayList<>();
-    matchers.add((Matcher<Object>) matcher);
+  private static class HamcrestMatcher<T> implements Matcher<T> {
+    private final org.hamcrest.Matcher<T> matcher;
+
+    private HamcrestMatcher(org.hamcrest.Matcher<T> matcher) {
+      this.matcher = matcher;
+    }
+
+    static <T> HamcrestMatcher<T> of(org.hamcrest.Matcher<T> matcher) {
+      return new HamcrestMatcher<>(matcher);
+    }
+
+    @Override
+    public boolean matches(Object arg) {
+      return matcher.matches(arg);
+    }
+  }
+
+  public static <T> DecomposableMatchBuilder1<T, T> caseThat(org.hamcrest.Matcher<T> matcher) {
+    @SuppressWarnings("unchecked")
+    List<Matcher<Object>> matchers = Lists.of((Matcher<Object>) HamcrestMatcher.of(matcher));
 
     return new DecomposableMatchBuilder1<>(matchers, 0, new IdentityFieldExtractor<>());
   }
 
   public static <T> DecomposableMatchBuilder1<T, T> caseEq(T o) {
-    return caseThat(eq(o));
+    return caseThat(equalTo(o));
   }
 }

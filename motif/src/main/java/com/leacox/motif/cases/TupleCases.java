@@ -16,7 +16,7 @@ import com.leacox.motif.tuple.Tuple2;
 import com.leacox.motif.tuple.Tuple3;
 import com.leacox.motif.util.Lists;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.List;
 import java.util.Optional;

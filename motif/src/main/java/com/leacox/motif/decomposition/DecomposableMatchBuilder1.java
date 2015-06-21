@@ -3,7 +3,7 @@ package com.leacox.motif.decomposition;
 import com.leacox.motif.extractor.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.List;
 import java.util.Objects;

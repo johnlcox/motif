@@ -13,7 +13,7 @@ import com.leacox.motif.extractor.Extractor2;
 import com.leacox.motif.extractor.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 
-import org.hamcrest.Matcher;
+import com.leacox.motif.matchers.Matcher;
 
 import java.util.ArrayList;
 import java.util.Collections;

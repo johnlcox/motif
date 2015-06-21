@@ -1,8 +1,8 @@
-package com.leacox.motif.pattern;
+package com.leacox.motif.hamcrest;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.CaseThatCases.caseEq;
+import static com.leacox.motif.hamcrest.CaseThatCases.caseEq;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
