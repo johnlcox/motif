@@ -1,8 +1,8 @@
 package com.leacox.motif.example.superhero;
 
+import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.CaseClassCases.case3;
-import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -46,9 +46,7 @@ public class SuperHeroExample {
     return match(character)
         //.when(case2(Animal.class, eq("Cat"), eq(4)))
         //.when(case3(SuperHero.class, any(), any(), eq(Optional.of(alterEgo)))).get(
-        .when(case3(SuperHero.class, eq(""), eq(ImmutableList.of()), eq(Optional.of(alterEgo))))
-        .get(
-            (n, p, a) -> Optional.of(p))
+        .when(case3(SuperHero.class, "", any(), Optional.of(alterEgo))).get(p -> Optional.of(p))
         .orElse(Optional.empty())
         .getMatch();
   }

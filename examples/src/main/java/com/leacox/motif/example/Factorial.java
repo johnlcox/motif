@@ -2,7 +2,7 @@ package com.leacox.motif.example;
 
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.PrimitiveCases.caseLong;
-import static com.leacox.motif.decomposition.MatchesAny.any;
+import static com.leacox.motif.MatchesAny.any;
 
 /**
  * @author John Leacox

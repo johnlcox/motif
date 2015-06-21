@@ -1,8 +1,9 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
+import com.leacox.motif.extraction.DecomposableMatchBuilder0;
+import com.leacox.motif.extraction.DecomposableMatchBuilder1;
+import com.leacox.motif.extraction.DecomposableMatchBuilder2;
+import com.leacox.motif.extraction.DecomposableMatchBuilder3;
 
 /**
  * @author John Leacox
@@ -30,9 +31,7 @@ public final class FluentMatching<T> {
   }
 
   public <U extends T, A, B, C> InitialMatching3<T, U, A, B, C> when(
-      MatchingExtractor3<U, A, B, C> matchingExtractor) {
-    return new InitialMatching3<>(
-        matchingExtractor.extractor, value, matchingExtractor.toMatchA, matchingExtractor.toMatchB,
-        matchingExtractor.toMatchC);
+      DecomposableMatchBuilder3<U, A, B, C> decomposableMatchBuilder) {
+    return new InitialMatching3<>(decomposableMatchBuilder.build(), value);
   }
 }

@@ -3,15 +3,15 @@ package com.leacox.motif.cases;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
-import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
-import com.leacox.motif.decomposition.MatchesAny;
-import com.leacox.motif.extractor.Extractor0;
-import com.leacox.motif.extractor.Extractor1;
-import com.leacox.motif.extractor.FieldExtractor;
-
+import com.leacox.motif.MatchesAny;
+import com.leacox.motif.extraction.DecomposableMatchBuilder0;
+import com.leacox.motif.extraction.DecomposableMatchBuilder1;
+import com.leacox.motif.extraction.DecomposableMatchBuilder2;
+import com.leacox.motif.extraction.Extractor0;
+import com.leacox.motif.extraction.Extractor1;
+import com.leacox.motif.extraction.FieldExtractor;
 import com.leacox.motif.matchers.Matcher;
+import com.leacox.motif.util.Lists;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,11 +26,6 @@ public final class OptionalCases {
   }
 
   private static class OptionalExtractor<T> implements Extractor1<Optional<T>, T> {
-    //@Override
-    //public Optional<T> apply(T t) {
-    //  return Optional.ofNullable(t);
-    //}
-
     @Override
     public Optional<T> unapply(Optional<T> t) {
       if (t.isPresent()) {
@@ -112,6 +107,13 @@ public final class OptionalCases {
     return new DecomposableMatchBuilder1<>(matchers, 0, new OptionalFieldExtractor<>());
   }
 
+  public static <T> DecomposableMatchBuilder0<Optional<T>> some(DecomposableMatchBuilder0<T> a) {
+    List<Matcher<Object>> matchers = Lists.of(any());
+
+    return new DecomposableMatchBuilder1<Optional<T>, T>(
+        matchers, 0, new OptionalFieldExtractor<>()).decomposeFirst(a);
+  }
+
   public static <T, A> DecomposableMatchBuilder1<Optional<T>, A> some(
       DecomposableMatchBuilder1<T, A> a) {
     List<Matcher<Object>> matchers = new ArrayList<>();
@@ -129,37 +131,6 @@ public final class OptionalCases {
     return new DecomposableMatchBuilder1<Optional<T>, T>(
         matchers, 0, new OptionalFieldExtractor<>()).decomposeFirst(a);
   }
-
-  //public static <T, A, B> MatchingExtractor2<Optional<T>, A, B> some(
-  //    MatchingExtractor2<T, A, B> nestedExtractor) {
-  //
-  //  Extractor2<Optional<T>, A, B> extractor1 =
-  //      new OptionalExtractor<T>().decomposeFirst(nestedExtractor.extractor);
-  //
-  //  return MatchingExtractor2
-  //      .create(extractor1, nestedExtractor.toMatchA, nestedExtractor.toMatchB);
-  //}
-
-  //public static <T> MatchingExtractor0<Optional<T>> caseNone() {
-  //  Extractor0<Optional<T>> extractor = new Extractor0<Optional<T>>() {
-  //    //@Override
-  //    //public Optional<T> apply() {
-  //    //  return Optional.empty();
-  //    //}
-  //
-  //    @Override
-  //    public boolean unapply(Optional<T> t) {
-  //      return !t.isPresent();
-  //    }
-  //
-  //    @Override
-  //    public Class<Optional> getExtractorClass() {
-  //      return Optional.class;
-  //    }
-  //  };
-  //
-  //  return MatchingExtractor0.create(extractor);
-  //}
 
   public static <T> DecomposableMatchBuilder0<Optional<T>> none() {
     return new DecomposableMatchBuilder0<>(Collections.emptyList(), new NoneFieldExtractor<>());

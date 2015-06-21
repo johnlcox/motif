@@ -1,10 +1,8 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extractor.Extractor3;
+import com.leacox.motif.extraction.Extractor3;
 import com.leacox.motif.function.Consumer3;
 import com.leacox.motif.function.Function3;
-
-import com.leacox.motif.matchers.Matcher;
 
 /**
  * @author John Leacox
@@ -12,10 +10,8 @@ import com.leacox.motif.matchers.Matcher;
 public final class InitialMatching3<T, U extends T, A, B, C> extends Matching3<T, U, A, B, C> {
   private final T value;
 
-  InitialMatching3(
-      Extractor3<U, A, B, C> extractor, T value, Matcher<A> toMatchA, Matcher<B> toMatchB,
-      Matcher<C> toMatchC) {
-    super(extractor, toMatchA, toMatchB, toMatchC);
+  InitialMatching3(Extractor3<U, A, B, C> extractor, T value) {
+    super(extractor);
 
     this.value = value;
   }

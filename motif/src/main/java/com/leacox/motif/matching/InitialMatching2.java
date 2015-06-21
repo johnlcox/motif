@@ -1,6 +1,6 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extractor.Extractor2;
+import com.leacox.motif.extraction.Extractor2;
 import com.leacox.motif.function.Consumer2;
 import com.leacox.motif.function.Function2;
 
@@ -10,8 +10,7 @@ import com.leacox.motif.function.Function2;
 public final class InitialMatching2<T, U extends T, A, B> extends Matching2<T, U, A, B> {
   private final T value;
 
-  InitialMatching2(
-      Extractor2<U, A, B> extractor, T value) {
+  InitialMatching2(Extractor2<U, A, B> extractor, T value) {
     super(extractor);
 
     this.value = value;

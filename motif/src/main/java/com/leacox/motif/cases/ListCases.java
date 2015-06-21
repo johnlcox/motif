@@ -3,14 +3,14 @@ package com.leacox.motif.cases;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
-import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
-import com.leacox.motif.decomposition.MatchesAny;
-import com.leacox.motif.extractor.Extractor0;
-import com.leacox.motif.extractor.Extractor1;
-import com.leacox.motif.extractor.Extractor2;
-import com.leacox.motif.extractor.FieldExtractor;
+import com.leacox.motif.extraction.DecomposableMatchBuilder0;
+import com.leacox.motif.extraction.DecomposableMatchBuilder1;
+import com.leacox.motif.extraction.DecomposableMatchBuilder2;
+import com.leacox.motif.MatchesAny;
+import com.leacox.motif.extraction.Extractor0;
+import com.leacox.motif.extraction.Extractor1;
+import com.leacox.motif.extraction.Extractor2;
+import com.leacox.motif.extraction.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 
 import com.leacox.motif.matchers.Matcher;

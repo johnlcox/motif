@@ -1,9 +1,7 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extractor.Extractor3;
+import com.leacox.motif.extraction.Extractor3;
 import com.leacox.motif.function.Consumer3;
-
-import com.leacox.motif.matchers.Matcher;
 
 /**
  * @author John Leacox
@@ -11,10 +9,8 @@ import com.leacox.motif.matchers.Matcher;
 public class OngoingMatchingC3<T, U extends T, A, B, C> extends Matching3<T, U, A, B, C> {
   private final FluentMatchingC<T> fluentMatchingC;
 
-  OngoingMatchingC3(
-      FluentMatchingC<T> fluentMatchingC, Extractor3<U, A, B, C> extractor, Matcher<A> toMatchA,
-      Matcher<B> toMatchB, Matcher<C> toMatchC) {
-    super(extractor, toMatchA, toMatchB, toMatchC);
+  OngoingMatchingC3(FluentMatchingC<T> fluentMatchingC, Extractor3<U, A, B, C> extractor) {
+    super(extractor);
 
     this.fluentMatchingC = fluentMatchingC;
   }

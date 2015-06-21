@@ -2,9 +2,9 @@ package com.leacox.motif.hamcrest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
-import com.leacox.motif.extractor.Extractor1;
-import com.leacox.motif.extractor.FieldExtractor;
+import com.leacox.motif.extraction.DecomposableMatchBuilder1;
+import com.leacox.motif.extraction.Extractor1;
+import com.leacox.motif.extraction.FieldExtractor;
 import com.leacox.motif.matchers.Matcher;
 import com.leacox.motif.util.Lists;
 

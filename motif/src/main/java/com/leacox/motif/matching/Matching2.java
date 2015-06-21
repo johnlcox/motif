@@ -1,10 +1,8 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extractor.Extractor2;
+import com.leacox.motif.extraction.Extractor2;
 import com.leacox.motif.function.Consumer2;
 import com.leacox.motif.function.Function2;
-import com.leacox.motif.pattern.ConsumablePattern;
-import com.leacox.motif.pattern.Pattern;
 import com.leacox.motif.tuple.Tuple2;
 
 /**
@@ -13,8 +11,7 @@ import com.leacox.motif.tuple.Tuple2;
 abstract class Matching2<T, U extends T, A, B> {
   private final Extractor2<U, A, B> extractor;
 
-  Matching2(
-      Extractor2<U, A, B> extractor) {
+  Matching2(Extractor2<U, A, B> extractor) {
     this.extractor = extractor;
   }
 

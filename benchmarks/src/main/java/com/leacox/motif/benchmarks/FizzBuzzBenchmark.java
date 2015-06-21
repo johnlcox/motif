@@ -1,8 +1,8 @@
 package com.leacox.motif.benchmarks;
 
+import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.TupleCases.tuple2;
-import static com.leacox.motif.decomposition.MatchesAny.any;
+import static com.leacox.motif.cases.Tuple2Cases.tuple2;
 
 import com.leacox.motif.tuple.Tuple2;
 

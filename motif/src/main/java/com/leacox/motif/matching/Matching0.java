@@ -1,9 +1,7 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extractor.Extractor0;
+import com.leacox.motif.extraction.Extractor0;
 import com.leacox.motif.function.Consumer0;
-import com.leacox.motif.pattern.ConsumablePattern;
-import com.leacox.motif.pattern.Pattern;
 
 import java.util.function.Supplier;
 

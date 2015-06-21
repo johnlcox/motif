@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A utility class for quickly building lists for internal motif and extension usage.
+ *
+ * <p>Caution: This class is not meant to be used outside of internal motif and motif extensions.
+ * In general {@code Guava} should be used instead of this.
+ *
  * @author John Leacox
  */
 public final class Lists {

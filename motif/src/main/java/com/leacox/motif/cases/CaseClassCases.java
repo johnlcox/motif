@@ -3,20 +3,19 @@ package com.leacox.motif.cases;
 import static com.leacox.motif.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.matchers.ArgumentMatchers.eq;
 
+import com.leacox.motif.MatchesAny;
 import com.leacox.motif.caseclass.Case2;
 import com.leacox.motif.caseclass.Case3;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder0;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder1;
-import com.leacox.motif.decomposition.DecomposableMatchBuilder2;
-import com.leacox.motif.decomposition.MatchesAny;
-import com.leacox.motif.extractor.Extractor2;
-import com.leacox.motif.extractor.Extractor3;
-import com.leacox.motif.extractor.FieldExtractor;
-import com.leacox.motif.matching.MatchingExtractor3;
+import com.leacox.motif.extraction.DecomposableMatchBuilder0;
+import com.leacox.motif.extraction.DecomposableMatchBuilder1;
+import com.leacox.motif.extraction.DecomposableMatchBuilder2;
+import com.leacox.motif.extraction.Extractor2;
+import com.leacox.motif.extraction.Extractor3;
+import com.leacox.motif.extraction.FieldExtractor;
+import com.leacox.motif.matchers.Matcher;
 import com.leacox.motif.tuple.Tuple2;
 import com.leacox.motif.tuple.Tuple3;
-
-import com.leacox.motif.matchers.Matcher;
+import com.leacox.motif.util.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,10 +100,29 @@ public final class CaseClassCases {
     }
   }
 
-  //public static <T extends Case2<A, B>, A, B> MatchingExtractor2<T, A, B> case2(
-  //    Class<T> clazz, Matcher<A> a, Matcher<B> b) {
-  //  return MatchingExtractor2.create(new Case2Extractor<>(clazz), a, b);
-  //}
+  private static class Case3FieldExtractor<T extends Case3<A, B, C>, A, B, C>
+      implements FieldExtractor<T> {
+    private final Case3Extractor<T, A, B, C> case3Extractor;
+
+    Case3FieldExtractor(Class<T> caseClazz) {
+      this.case3Extractor = new Case3Extractor<>(caseClazz);
+    }
+
+    @Override
+    public Optional<List<Object>> unapply(T value) {
+      Optional<Tuple3<A, B, C>> opt = case3Extractor.unapply(value);
+      if (!opt.isPresent()) {
+        return Optional.empty();
+      }
+
+      return Optional.of(opt.get().toList());
+    }
+
+    @Override
+    public Class<?> getExtractorClass() {
+      return case3Extractor.getExtractorClass();
+    }
+  }
 
   public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder0<T> case2(
       Class<T> clazz, A a, B b) {
@@ -143,8 +161,23 @@ public final class CaseClassCases {
         matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz));
   }
 
-  public static <T extends Case3<A, B, C>, A, B, C> MatchingExtractor3<T, A, B, C> case3(
-      Class<T> clazz, Matcher<A> a, Matcher<B> b, Matcher<C> c) {
-    return MatchingExtractor3.create(new Case3Extractor<>(clazz), a, b, c);
+  public static <T extends Case3<A, B, C>, A, B, C> DecomposableMatchBuilder0<T> case3(
+      Class<T> clazz, A a, B b, C c) {
+    List<Matcher<Object>> matchers = Lists.of(eq(a), eq(b));
+
+    return new DecomposableMatchBuilder0<>(matchers, new Case3FieldExtractor<>(clazz));
   }
+
+  //public static <T extends Case3<A, B, C>, A, B, C> DecomposableMatchBuilder1<T, A> case3(
+  //    Class<T> clazz, MatchesAny a, B b, C c);
+
+  public static <T extends Case3<A, B, C>, A, B, C> DecomposableMatchBuilder1<T, B> case3(
+      Class<T> clazz, A a, MatchesAny b, C c) {
+    List<Matcher<Object>> matchers = Lists.of(eq(a), any(), eq(c));
+
+    return new DecomposableMatchBuilder1<>(matchers, 1, new Case3FieldExtractor<>(clazz));
+  }
+
+  //public static <T extends Case3<A, B, C>, A, B, C> DecomposableMatchBuilder0<T, C> case3(
+  //    Class<T> clazz, A a, B b, MatchesAny c);
 }

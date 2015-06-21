@@ -1,6 +1,5 @@
 package com.leacox.motif;
 
-import com.leacox.motif.decomposition.MatchesAny;
 import com.leacox.motif.matching.FluentMatching;
 
 /**
@@ -19,7 +18,7 @@ public final class Motif {
    *
    * <p>This is the entry point into the fluent pattern matching API. References <strong>should
    * not</strong> be created to the returned objects from the fluent API. The only reference that
-   * should be created it is from the result of {@code getMatch()}.
+   * should be created is from the result of {@code getMatch()}.
    *
    * <p>Motif provides many built in matching cases, including:
    * <ul>
@@ -33,11 +32,12 @@ public final class Motif {
    *
    * <p>In addition the matching case API is extremely extensible. All that is needed to create a
    * new matching case is to implement one of the {@code ExtractorN} (e.g.
-   * {@link com.leacox.motif.extractor.Extractor1 Extractor1}) for your type, and then create a new
-   * instance of {@code MatchingExtractorN} with the extractor for your type and the args to match
-   * on. The easiest way to do this is to create a static method that can be imported like
-   * {@link com.leacox.motif.cases.OptionalCases#some(MatchesAny)
-   * OptionalCases#some(ArgumentMatcher)}.
+   * {@link com.leacox.motif.extraction.Extractor1 Extractor1}) and
+   * {@link com.leacox.motif.extraction.FieldExtractor} for your type, and then create a new
+   * instance of {@code DecomposableMatchBuilderN} with the field extractor for your type and the
+   * args to match on. The easiest way to do this is to create a static method that can be imported
+   * like {@link com.leacox.motif.cases.OptionalCases#some(MatchesAny)
+   * OptionalCases#some(MatchesAny)}.
    *
    * <p>The following are some basic pattern matching examples:
    * <pre>
@@ -47,7 +47,7 @@ public final class Motif {
    * Optional<Person> personOpt = getPerson();
    * match(personOpt)
    *     .when(some(any())).then(person -> doStuff(person))
-   *     .when(caseNone()).then(() -> System.out.println("Person not found"))
+   *     .when(none()).then(() -> System.out.println("Person not found"))
    *     .doMatch();
    * }
    * </pre>
@@ -59,9 +59,9 @@ public final class Motif {
    * IntStream.range(0, 101).forEach(
    *     n -> System.out.println(
    *         match(Tuple2.of(n % 3, n % 5))
-   *             .when(caseTuple2(eq(0), eq(0))).get((x, y) -> "FizzBuzz")
-   *             .when(caseTuple2(eq(0), any())).get((x, y) -> "Fizz")
-   *             .when(caseTuple2(any(), eq(0))).get((x, y) -> "Buzz")
+   *             .when(tuple2(0, 0)).get(() -> "FizzBuzz")
+   *             .when(tuple2(0, any())).get(y -> "Fizz")
+   *             .when(tuple2(any(), 0)).get(x -> "Buzz")
    *             .orElse(String.valueOf(n))
    *             .getMatch()
    *     )

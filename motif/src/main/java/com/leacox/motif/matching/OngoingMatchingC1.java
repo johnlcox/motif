@@ -1,6 +1,6 @@
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extractor.Extractor1;
+import com.leacox.motif.extraction.Extractor1;
 
 import java.util.function.Consumer;
 
@@ -10,8 +10,7 @@ import java.util.function.Consumer;
 public final class OngoingMatchingC1<T, U extends T, A> extends Matching1<T, U, A> {
   private final FluentMatchingC<T> fluentMatchingC;
 
-  OngoingMatchingC1(
-      FluentMatchingC<T> fluentMatchingC, Extractor1<U, A> extractor) {
+  OngoingMatchingC1(FluentMatchingC<T> fluentMatchingC, Extractor1<U, A> extractor) {
     super(extractor);
 
     this.fluentMatchingC = fluentMatchingC;

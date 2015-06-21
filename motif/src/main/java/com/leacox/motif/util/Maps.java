@@ -3,6 +3,11 @@ package com.leacox.motif.util;
 import java.util.TreeMap;
 
 /**
+ * A utility class for quickly building maps for internal motif and extension usage.
+ *
+ * <p>Caution: This class is not meant to be used outside of internal motif and motif extensions.
+ * In general {@code Guava} should be used instead of this.
+ *
  * @author John Leacox
  */
 public final class Maps {
