@@ -8,6 +8,7 @@
     <module>benchmarks</module>
     <module>examples</module>
     <module>hamcrest</module>
+    <module>generator</module>
   </modules>
 
   <groupId>com.leacox.motif</groupId>
@@ -51,6 +52,11 @@
         <groupId>com.leacox.motif</groupId>
         <artifactId>motif</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup</groupId>
+        <artifactId>javapoet</artifactId>
+        <version>1.1.0</version>
       </dependency>
       <dependency>
         <groupId>org.openjdk.jmh</groupId>

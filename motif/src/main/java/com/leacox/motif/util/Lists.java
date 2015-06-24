@@ -35,4 +35,13 @@ public final class Lists {
     list.add(e3);
     return list;
   }
+
+  public static <E> List<E> of(E e1, E e2, E e3, E e4) {
+    List<E> list = new ArrayList<>();
+    list.add(e1);
+    list.add(e2);
+    list.add(e3);
+    list.add(e4);
+    return list;
+  }
 }

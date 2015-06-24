@@ -9,7 +9,7 @@ import java.util.TreeMap;
 /**
  * @author John Leacox
  */
-abstract class DecomposableMatchBuilder<T> {
+public abstract class DecomposableMatchBuilder<T> {
   final List<Matcher<Object>> fieldMatchers;
   final FieldExtractor<T> fieldExtractor;
 

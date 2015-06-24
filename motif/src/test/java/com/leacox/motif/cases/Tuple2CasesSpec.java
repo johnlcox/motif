@@ -3,7 +3,6 @@ package com.leacox.motif.cases;
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.OptionalCases.none;
 import static com.leacox.motif.cases.OptionalCases.some;
 import static com.leacox.motif.cases.Tuple2Cases.tuple2;
 
@@ -24,27 +23,88 @@ public class Tuple2CasesSpec {
     describe(
         "the tuple2 pattern", it -> {
           it.should(
-              "decompose second, match first and extract down to none", expect -> {
-                Tuple2<Optional<String>, Optional<String>> tuple2 =
-                    Tuple2.of(Optional.of("A"), Optional.of("B"));
+              "match exact values", expect -> {
+                Tuple2<String, String> tuple2 = Tuple2.of("A", "B");
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(Optional.of("A"), some("B"))).get(() -> "Yep")
+                    //.when(tuple2("B", "A")).get(() -> "Nope")
+                    //.when(tuple2("A", "C")).get(() -> "Nope")
+                    //.when(tuple2("C", "B")).get(() -> "Nope")
+                    .when(tuple2("A", "B")).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
               });
 
           it.should(
-              "decompose first, match second and extract down to none", expect -> {
+              "extract first and match second", expect -> {
+                Tuple2<String, String> tuple2 = Tuple2.of("A", "B");
+
+                String result = match(tuple2)
+                    //.when(tuple2(any(), "A")).get(a -> "Nope")
+                    //.when(tuple2(any(), "C")).get(a -> "Nope")
+                    .when(tuple2(any(), "B")).get(a -> a)
+                    .getMatch();
+
+                expect.that(result).is("A");
+              });
+
+          it.should(
+              "match first and extract second", expect -> {
+                Tuple2<String, String> tuple2 = Tuple2.of("A", "B");
+
+                String result = match(tuple2)
+                    //.when(tuple2("C", any())).get(b -> "Nope")
+                    //.when(tuple2("B", any())).get(b -> "Nope")
+                    .when(tuple2("A", any())).get(b -> b)
+                    .getMatch();
+
+                expect.that(result).is("B");
+              });
+
+          it.should(
+              "extract first and extract second", expect -> {
+                Tuple2<String, String> tuple2 = Tuple2.of("A", "B");
+
+                String result = match(tuple2)
+                    //.when(tuple2("C", any())).get(b -> "Nope")
+                    //.when(tuple2("B", any())).get(b -> "Nope")
+                    .when(tuple2(any(), any())).get((a, b) -> "(" + a + ", " + b + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B)");
+              });
+
+          it.should(
+              "match first to 0 and decompose second to 2 and extract 2", expect -> {
+                Tuple2<String, Tuple2<String, String>> tuple2 = Tuple2.of("A", Tuple2.of("B", "C"));
+
+                String result = match(tuple2)
+                    .when(tuple2("A", tuple2(any(), any()))).get((b, c) -> "(" + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(B, C)");
+              });
+
+          it.should(
+              "match first to 0 and decompose second to 3 and extract 3", expect -> {
+                Tuple2<String, Tuple2<Tuple2<String, String>, String>> tuple2 =
+                    Tuple2.of("A", Tuple2.of(Tuple2.of("B", "C"), "D"));
+
+                String result = match(tuple2)
+                    .when(tuple2("A", tuple2(tuple2(any(), any()), any()))).get(
+                        (b, c, d) -> "(" + b + ", " + c + ", " + d + ")")
+                    .getMatch();
+
+                expect.that(result).is("(B, C, D)");
+              });
+
+          it.should(
+              "decompose first to 0 and match second to 0 and extract none", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
                     .when(tuple2(some("A"), Optional.of("B"))).get(() -> "Yep")
                     .getMatch();
 
@@ -52,27 +112,11 @@ public class Tuple2CasesSpec {
               });
 
           it.should(
-              "decompose second and extract down to first only", expect -> {
+              "decompose first to 0 and match second to 1 and extract to 1", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(any(), some("B"))).get(x -> "Yep")
-                    .getMatch();
-
-                expect.that(result).is("Yep");
-              });
-
-          it.should(
-              "decompose first and extract down to second only", expect -> {
-                Tuple2<Optional<String>, Optional<String>> tuple2 =
-                    Tuple2.of(Optional.of("A"), Optional.of("B"));
-
-                String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
                     .when(tuple2(some("A"), any())).get(x -> "Yep")
                     .getMatch();
 
@@ -80,41 +124,35 @@ public class Tuple2CasesSpec {
               });
 
           it.should(
-              "decompose first and extract decomposed first and un-decomposed second", expect -> {
+              "match first to 0 and decompose second to 0 and extract to 0", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(any(), some(any()))).get((aOpt, b) -> "Yep")
+                    .when(tuple2(Optional.of("A"), some("B"))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
               });
 
           it.should(
-              "decompose second and extract undecomposed first and decomposed second", expect -> {
+              "match first to 0 and decompose second to 1 and extract to 1", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(some(any()), any())).get((a, bOpt) -> "Yep")
+                    .when(tuple2(Optional.of("A"), some(any()))).get(b -> b)
                     .getMatch();
 
-                expect.that(result).is("Yep");
+                expect.that(result).is("B");
               });
 
           it.should(
-              "decompose two", expect -> {
+              "decompose first to 0 and decompose second to 0 and extract to 0", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
                     .when(tuple2(some("A"), some("B"))).get(() -> "Yep")
                     .getMatch();
 
@@ -122,55 +160,11 @@ public class Tuple2CasesSpec {
               });
 
           it.should(
-              "decompose second, match first and extract second", expect -> {
+              "decompose first to 0 and decompose second to 1 and extract to 1", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(Optional.of("A"), some(any()))).get(b -> "Yep")
-                    .getMatch();
-
-                expect.that(result).is("Yep");
-              });
-
-          it.should(
-              "decompose first, match second and extract first", expect -> {
-                Tuple2<Optional<String>, Optional<String>> tuple2 =
-                    Tuple2.of(Optional.of("A"), Optional.of("B"));
-
-                String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(some(any()), Optional.of("B"))).get(a -> a)
-                    .getMatch();
-
-                expect.that(result).is("A");
-              });
-
-          it.should(
-              "decompose two and extract first", expect -> {
-                Tuple2<Optional<String>, Optional<String>> tuple2 =
-                    Tuple2.of(Optional.of("A"), Optional.of("B"));
-
-                String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
-                    .when(tuple2(some(any()), some("B"))).get(a -> a)
-                    .getMatch();
-
-                expect.that(result).is("A");
-              });
-
-          it.should(
-              "decompose two and extract second", expect -> {
-                Tuple2<Optional<String>, Optional<String>> tuple2 =
-                    Tuple2.of(Optional.of("A"), Optional.of("B"));
-
-                String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
                     .when(tuple2(some("A"), some(any()))).get(b -> b)
                     .getMatch();
 
@@ -178,48 +172,194 @@ public class Tuple2CasesSpec {
               });
 
           it.should(
-              "decompose two and extract both", expect -> {
+              "decompose first to 0 and decompose second to 2 and extract to 2", expect -> {
+                Tuple2<Optional<String>, Tuple2<String, String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Tuple2.of("B", "C"));
+
+                String result = match(tuple2)
+                    .when(tuple2(some("A"), tuple2(any(), any()))).get(
+                        (b, c) -> "(" + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(B, C)");
+              });
+
+          it.should(
+              "decompose first to 0 and decompose second to 3 and extract to 3", expect -> {
+                Tuple2<Optional<String>, Tuple2<Tuple2<String, String>, String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Tuple2.of(Tuple2.of("B", "C"), "D"));
+
+                String result = match(tuple2)
+                    .when(tuple2(some("A"), tuple2(tuple2(any(), any()), any()))).get(
+                        (b, c, d) -> "(" + b + ", " + c + ", " + d + ")")
+                    .getMatch();
+
+                expect.that(result).is("(B, C, D)");
+              });
+
+          it.should(
+              "match first to 1 and decompose second to 0 and extract to 1", expect -> {
                 Tuple2<Optional<String>, Optional<String>> tuple2 =
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), none())).get(() -> "Nope")
-                    .when(tuple2(none(), some("B"))).get(() -> "Nope")
+                    .when(tuple2(any(), some("B"))).get(x -> "Yep")
+                    .getMatch();
+
+                expect.that(result).is("Yep");
+              });
+
+          it.should(
+              "match first to 1 and decompose second to 1 and extract to 2", expect -> {
+                Tuple2<Optional<String>, Optional<String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Optional.of("B"));
+
+                String result = match(tuple2)
+                    .when(tuple2(any(), some(any()))).get((aOpt, b) -> "Yep")
+                    .getMatch();
+
+                expect.that(result).is("Yep");
+              });
+
+          it.should(
+              "match first to 1 and decompose second to 2 and extract to 3", expect -> {
+                Tuple2<String, Tuple2<String, String>> tuple2 =
+                    Tuple2.of("A", Tuple2.of("B", "C"));
+
+                String result = match(tuple2)
+                    .when(tuple2(any(), tuple2(any(), any()))).get(
+                        (a, b, c) -> "(" + a + ", " + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B, C)");
+              });
+
+          it.should(
+              "decompose first to 1 and match second to 0 and extract to 1", expect -> {
+                Tuple2<Optional<String>, Optional<String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Optional.of("B"));
+
+                String result = match(tuple2)
+                    .when(tuple2(some(any()), Optional.of("B"))).get(a -> a)
+                    .getMatch();
+
+                expect.that(result).is("A");
+              });
+
+          it.should(
+              "decompose first to 1 and match second to 1 and extract to 2", expect -> {
+                Tuple2<Optional<String>, Optional<String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Optional.of("B"));
+
+                String result = match(tuple2)
+                    .when(tuple2(some(any()), any())).get((a, bOpt) -> "Yep")
+                    .getMatch();
+
+                expect.that(result).is("Yep");
+              });
+
+          it.should(
+              "decompose first to 1 and decompose second to 0 and extract to 1", expect -> {
+                Tuple2<Optional<String>, Optional<String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Optional.of("B"));
+
+                String result = match(tuple2)
+                    .when(tuple2(some(any()), some("B"))).get(a -> a)
+                    .getMatch();
+
+                expect.that(result).is("A");
+              });
+
+          it.should(
+              "decompose first to 1 and decompose second to 1 and extract to 2", expect -> {
+                Tuple2<Optional<String>, Optional<String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Optional.of("B"));
+
+                String result = match(tuple2)
                     .when(tuple2(some(any()), some(any()))).get((a, b) -> "(" + a + ", " + b + ")")
                     .getMatch();
 
                 expect.that(result).is("(A, B)");
               });
+
+          it.should(
+              "decompose first to 1 and decompose second to 2 and extract to 3", expect -> {
+                Tuple2<Optional<String>, Tuple2<String, String>> tuple2 =
+                    Tuple2.of(Optional.of("A"), Tuple2.of("B", "C"));
+
+                String result = match(tuple2)
+                    .when(tuple2(some(any()), tuple2(any(), any()))).get(
+                        (a, b, c) -> "(" + a + ", " + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B, C)");
+              });
+
+          it.should(
+              "decompose first to 2 and match second to 0 and extract to 2", expect -> {
+                Tuple2<Tuple2<String, String>, String> tuple2 = Tuple2.of(
+                    Tuple2.of("A", "B"), "C");
+
+                String result = match(tuple2)
+                    .when(tuple2(tuple2(any(), any()), "C")).get(
+                        (a, b) -> "(" + a + ", " + b + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B)");
+              });
+
+          it.should(
+              "decompose first to 2 and decompose second to 0 and extract to 2", expect -> {
+                Tuple2<Tuple2<String, String>, Optional<String>> tuple2 = Tuple2.of(
+                    Tuple2.of("A", "B"), Optional.of("C"));
+
+                String result = match(tuple2)
+                    .when(tuple2(tuple2(any(), any()), some("C"))).get(
+                        (a, b) -> "(" + a + ", " + b + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B)");
+              });
+
+          it.should(
+              "decompose first to 2 and decompose second to 1 and extract to 3", expect -> {
+                Tuple2<Tuple2<String, String>, Optional<String>> tuple2 = Tuple2.of(
+                    Tuple2.of("A", "B"), Optional.of("C"));
+
+                String result = match(tuple2)
+                    .when(tuple2(tuple2(any(), any()), some(any()))).get(
+                        (a, b, c) -> "(" + a + ", " + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B, C)");
+              });
+
+          it.should(
+              "decompose first to 3 and match second to 0 and extract to 3", expect -> {
+                Tuple2<Tuple2<Tuple2<String, String>, String>, String> tuple2 = Tuple2.of(
+                    Tuple2.of(Tuple2.of("A", "B"), "C"), "D");
+
+                String result = match(tuple2)
+                    .when(tuple2(tuple2(tuple2(any(), any()), any()), "D")).get(
+                        (a, b, c) -> "(" + a + ", " + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B, C)");
+              });
+
+          it.should(
+              "decompose first to 3 and decompose second to 0 and extract to 3", expect -> {
+                Tuple2<Tuple2<Tuple2<String, String>, String>, Optional<String>> tuple2 = Tuple2.of(
+                    Tuple2.of(Tuple2.of("A", "B"), "C"), Optional.of("D"));
+
+                String result = match(tuple2)
+                    .when(tuple2(tuple2(tuple2(any(), any()), any()), some("D"))).get(
+                        (a, b, c) -> "(" + a + ", " + b + ", " + c + ")")
+                    .getMatch();
+
+                expect.that(result).is("(A, B, C)");
+              });
         }
     );
-    //Optional<Tuple2<String, String>> doubleNested = Optional.of(
-
-    //    Tuple2.of("nest1", "nest2"));
-    //
-    //String result2 = match(doubleNested)
-    //    .when(some(tuple2(any(), any()))).get((x, y) -> y)
-    //    .getMatch();
-    //
-    //expect.that(result2).is("nest2");
-    //
-    //expect.that(result).is("nested");
-    //
-    ////Tuple2<String, Tuple2<String, String>> tupled = Tuple2.of("A", Tuple2.of("C", "D"));
-    //
-    //Tuple2<Tuple2<String, String>, Tuple2<String, String>> tupled = Tuple2.of(
-    //    Tuple2.of("A", "B"), Tuple2.of("C", "D"));
-    //
-    //String result3 = match(tupled)
-    //    .when(tuple2(tuple2(any(), "B"), tuple2("C", any()))).get(
-    //        (a, d) -> "(" + a + ", " + d + ")")
-    //    .getMatch();
-    //
-    //expect.that(result3).is("(A, D)");
-    //
-    //String result4 = match(tupled)
-    //    .when(tuple2(tuple2("A", "B"), tuple2(any(), "D"))).get(c -> c)
-    //    .getMatch();
-    //
-    //expect.that(result4).is("C");
   }
 }

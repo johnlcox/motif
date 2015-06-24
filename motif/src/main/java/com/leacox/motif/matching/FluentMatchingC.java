@@ -71,4 +71,12 @@ public final class FluentMatchingC<T> {
     patterns.add(ConsumablePattern.of(t -> true, t -> consumer.accept()));
     return this;
   }
+
+  public FluentMatchingC<T> orElse() {
+    patterns.add(ConsumablePattern.of(t -> true, t -> doNothing()));
+    return this;
+  }
+
+  private void doNothing() {
+  }
 }

@@ -3,7 +3,7 @@ package com.leacox.motif;
 /**
  * @author John Leacox
  */
-public class MatchesAny {
+public class MatchesAny<T> {
   private MatchesAny() {
   }
 
@@ -11,7 +11,11 @@ public class MatchesAny {
 
   public static MatchesAny __ = ANY;
 
-  public static MatchesAny any() {
+  public static <T> MatchesAny<T> any() {
+    return ANY;
+  }
+
+  public static <T> MatchesAny<T> any(Class<T> clazz) {
     return ANY;
   }
 }

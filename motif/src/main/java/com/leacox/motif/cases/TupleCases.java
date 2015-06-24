@@ -51,7 +51,7 @@ public final class TupleCases {
 
     @Override
     public Class<?> getExtractorClass() {
-      return null;
+      return tuple1Extractor.getExtractorClass();
     }
   }
 

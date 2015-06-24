@@ -100,7 +100,7 @@ public final class OptionalCases {
     return new DecomposableMatchBuilder0<>(matchers, new OptionalFieldExtractor<>());
   }
 
-  public static <T> DecomposableMatchBuilder1<Optional<T>, T> some(MatchesAny a) {
+  public static <T> DecomposableMatchBuilder1<Optional<T>, T> some(MatchesAny<T> a) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(any());
 
