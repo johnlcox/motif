@@ -16,9 +16,13 @@
 package com.leacox.motif.extraction;
 
 import com.leacox.motif.matchers.Matcher;
+import com.leacox.motif.tuple.Tuple2;
+import com.leacox.motif.tuple.Tuple3;
+import com.leacox.motif.util.Maps;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 /**

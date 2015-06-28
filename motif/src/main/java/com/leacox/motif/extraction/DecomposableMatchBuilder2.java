@@ -43,11 +43,11 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
   }
 
   // Decomposes the first extracted value and drops it down to a match on only the second value.
-  public DecomposableMatchBuilder1<T, B> decomposeFirst(DecomposableMatchBuilder0<A> first) {
-    Objects.requireNonNull(first);
+  public DecomposableMatchBuilder1<T, B> decomposeFirst(DecomposableMatchBuilder0<A> a) {
+    Objects.requireNonNull(a);
 
     Map<Integer, DecomposableMatchBuilder> buildersByIndex =
-        Maps.treeMapOf(extractedIndexes.first(), first);
+        Maps.treeMapOf(extractedIndexes.first(), a);
 
     List<Matcher<Object>> matchers = getChildMatchers(buildersByIndex);
 
@@ -58,17 +58,17 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
   }
 
   public <A1> DecomposableMatchBuilder2<T, A1, B> decomposeFirst(
-      DecomposableMatchBuilder1<A, A1> first) {
-    Objects.requireNonNull(first);
+      DecomposableMatchBuilder1<A, A1> a) {
+    Objects.requireNonNull(a);
 
     Map<Integer, DecomposableMatchBuilder> buildersByIndex =
-        Maps.treeMapOf(extractedIndexes.first(), first);
+        Maps.treeMapOf(extractedIndexes.first(), a);
 
     List<Matcher<Object>> matchers = getChildMatchers(buildersByIndex);
 
     Tuple2<Integer, Integer> newIndexes =
         Tuple2.of(
-            this.extractedIndexes.first() + first.extractedIndex, this.extractedIndexes.second());
+            this.extractedIndexes.first() + a.extractedIndex, this.extractedIndexes.second());
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
@@ -94,6 +94,43 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
 
     return new DecomposableMatchBuilder3<>(matchers, newIndexes, nestedFieldExtractor);
   }
+
+  // TODO: Is there a good way to avoid all the duplication and pull all the decomposeFirst methods
+  // up to the parent class and let the children generate the correct indexes?
+  //private <U extends DecomposableMatchBuilder<T>, A1, A2> U decomposeFirst(Class<U> clazz, DecomposableMatchBuilder a) {
+  //  Objects.requireNonNull(a);
+  //
+  //  Map<Integer, DecomposableMatchBuilder> buildersByIndex =
+  //      Maps.treeMapOf(extractedIndexes.first(), a);
+  //
+  //  List<Matcher<Object>> matchers = getChildMatchers(buildersByIndex);
+  //
+  //  NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
+  //
+  //  if (a instanceof DecomposableMatchBuilder0) {
+  //    return clazz.cast(new DecomposableMatchBuilder1<>(matchers, extractedIndexes.second(), nestedFieldExtractor));
+  //  } else if (a instanceof DecomposableMatchBuilder1) {
+  //    DecomposableMatchBuilder1<A, A1> x = (DecomposableMatchBuilder1<A, A1>) a;
+  //
+  //    Tuple2<Integer, Integer> newIndexes =
+  //        Tuple2.of(
+  //            this.extractedIndexes.first() + x.extractedIndex, this.extractedIndexes.second());
+  //
+  //    return clazz.cast(new DecomposableMatchBuilder2<>(matchers, newIndexes, nestedFieldExtractor));
+  //  } else if (a instanceof DecomposableMatchBuilder2) {
+  //    DecomposableMatchBuilder2<A, A1, A2> x = (DecomposableMatchBuilder2<A, A1, A2>) a;
+  //
+  //    Tuple3<Integer, Integer, Integer> newIndexes =
+  //        Tuple3.of(
+  //            this.extractedIndexes.first() + x.extractedIndexes.first(),
+  //            this.extractedIndexes.first() + x.extractedIndexes.second(),
+  //            a.fieldMatchers.size() - 1 + this.extractedIndexes.second());
+  //
+  //    return clazz.cast(new DecomposableMatchBuilder3<>(matchers, newIndexes, nestedFieldExtractor));
+  //  }
+  //
+  //  throw new IllegalStateException("Unknown Decomposition pattern");
+  //}
 
   // Decomposes the second extracted value and drops it down to a match on only the first value.
   public DecomposableMatchBuilder1<T, A> decomposeSecond(DecomposableMatchBuilder0<B> second) {
@@ -175,7 +212,8 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
-    return new DecomposableMatchBuilder1<>(matchers, first.extractedIndex, nestedFieldExtractor);
+    return new DecomposableMatchBuilder1<>(
+        matchers, extractedIndexes.first() + first.extractedIndex, nestedFieldExtractor);
   }
 
   public <B1> DecomposableMatchBuilder1<T, B1> decomposeFirstAndSecond(
@@ -191,7 +229,7 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 1 + second.extractedIndex, nestedFieldExtractor);
+        matchers, extractedIndexes.second() + second.extractedIndex, nestedFieldExtractor);
   }
 
   public <A1, A2> DecomposableMatchBuilder2<T, A1, A2> decomposeFirstAndSecond(
@@ -209,7 +247,7 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
     Tuple2<Integer, Integer> newIndexes =
         Tuple2.of(
             extractedIndexes.first() + a.extractedIndexes.first(),
-            extractedIndexes.first() + /*a.fieldMatchers.size() +*/ a.extractedIndexes.second());
+            extractedIndexes.first() + a.extractedIndexes.second());
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
@@ -231,7 +269,7 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
     Tuple2<Integer, Integer> newIndexes =
         Tuple2.of(
             extractedIndexes.second() + b.extractedIndexes.first(),
-            extractedIndexes.second() + /*a.fieldMatchers.size() +*/ b.extractedIndexes.second());
+            extractedIndexes.second() + b.extractedIndexes.second());
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
@@ -239,12 +277,12 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
   }
 
   public <A1, B1> DecomposableMatchBuilder2<T, A1, B1> decomposeFirstAndSecond(
-      DecomposableMatchBuilder1<A, A1> first, DecomposableMatchBuilder1<B, B1> second) {
-    Objects.requireNonNull(first);
-    Objects.requireNonNull(second);
+      DecomposableMatchBuilder1<A, A1> a, DecomposableMatchBuilder1<B, B1> b) {
+    Objects.requireNonNull(a);
+    Objects.requireNonNull(b);
 
     Map<Integer, DecomposableMatchBuilder> buildersByIndex =
-        Maps.treeMapOf(extractedIndexes.first(), first, extractedIndexes.second(), second);
+        Maps.treeMapOf(extractedIndexes.first(), a, extractedIndexes.second(), b);
 
     List<Matcher<Object>> matchers = getChildMatchers(buildersByIndex);
 
@@ -252,8 +290,8 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
     // decomposition of the 'second'.
     Tuple2<Integer, Integer> newIndexes =
         Tuple2.of(
-            extractedIndexes.first() + first.extractedIndex,
-            extractedIndexes.first() + first.fieldMatchers.size() + second.extractedIndex);
+            extractedIndexes.first() + a.extractedIndex,
+            a.fieldMatchers.size() - 1 + extractedIndexes.second() + b.extractedIndex);
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
@@ -322,7 +360,7 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
         Tuple3.of(
             extractedIndexes.first() + a.extractedIndexes.first(),
             extractedIndexes.first() + a.extractedIndexes.second(),
-            extractedIndexes.first() + a.fieldMatchers.size() + b.extractedIndex);
+            a.fieldMatchers.size() - 1 + extractedIndexes.second() + b.extractedIndex);
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
@@ -344,8 +382,8 @@ public final class DecomposableMatchBuilder2<T, A, B> extends DecomposableMatchB
     Tuple3<Integer, Integer, Integer> newIndexes =
         Tuple3.of(
             extractedIndexes.first() + a.extractedIndex,
-            extractedIndexes.first() + a.fieldMatchers.size() + b.extractedIndexes.first(),
-            extractedIndexes.first() + a.fieldMatchers.size() + b.extractedIndexes.second());
+            a.fieldMatchers.size() - 1 + extractedIndexes.second() + b.extractedIndexes.first(),
+            a.fieldMatchers.size() - 1 + extractedIndexes.second() + b.extractedIndexes.second());
 
     NestedFieldExtractor<T> nestedFieldExtractor = getNestedFieldExtractor(buildersByIndex);
 
