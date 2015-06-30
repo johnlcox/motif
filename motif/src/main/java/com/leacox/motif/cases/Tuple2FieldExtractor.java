@@ -15,7 +15,7 @@
  */
 package com.leacox.motif.cases;
 
-import com.leacox.motif.extraction.FieldExtractor;
+import com.leacox.motif.extract.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-public class Tuple2FieldExtractor<A, B> implements FieldExtractor<Tuple2<A, B>> {
+class Tuple2FieldExtractor<A, B> implements FieldExtractor<Tuple2<A, B>> {
   Tuple2Extractor<A, B> tuple2Extractor = new Tuple2Extractor<>();
 
   @Override

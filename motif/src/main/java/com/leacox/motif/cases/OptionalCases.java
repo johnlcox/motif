@@ -15,18 +15,18 @@
  */
 package com.leacox.motif.cases;
 
-import static com.leacox.motif.matchers.ArgumentMatchers.any;
-import static com.leacox.motif.matchers.ArgumentMatchers.eq;
+import static com.leacox.motif.extract.matchers.ArgumentMatchers.any;
+import static com.leacox.motif.extract.matchers.ArgumentMatchers.eq;
 
 import com.leacox.motif.MatchesAny;
-import com.leacox.motif.extraction.DecomposableMatchBuilder0;
-import com.leacox.motif.extraction.DecomposableMatchBuilder1;
-import com.leacox.motif.extraction.DecomposableMatchBuilder2;
-import com.leacox.motif.extraction.Extractor0;
-import com.leacox.motif.extraction.Extractor1;
-import com.leacox.motif.extraction.FieldExtractor;
-import com.leacox.motif.matchers.Matcher;
-import com.leacox.motif.util.Lists;
+import com.leacox.motif.extract.DecomposableMatchBuilder0;
+import com.leacox.motif.extract.DecomposableMatchBuilder1;
+import com.leacox.motif.extract.DecomposableMatchBuilder2;
+import com.leacox.motif.extract.Extractor0;
+import com.leacox.motif.extract.Extractor1;
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.extract.matchers.Matcher;
+import com.leacox.motif.extract.util.Lists;
 
 import java.util.ArrayList;
 import java.util.Collections;

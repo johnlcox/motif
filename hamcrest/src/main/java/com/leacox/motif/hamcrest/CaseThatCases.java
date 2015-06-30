@@ -17,11 +17,11 @@ package com.leacox.motif.hamcrest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import com.leacox.motif.extraction.DecomposableMatchBuilder1;
-import com.leacox.motif.extraction.Extractor1;
-import com.leacox.motif.extraction.FieldExtractor;
-import com.leacox.motif.matchers.Matcher;
-import com.leacox.motif.util.Lists;
+import com.leacox.motif.extract.DecomposableMatchBuilder1;
+import com.leacox.motif.extract.Extractor1;
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.extract.matchers.Matcher;
+import com.leacox.motif.extract.util.Lists;
 
 import java.util.ArrayList;
 import java.util.List;

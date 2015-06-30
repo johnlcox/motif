@@ -15,7 +15,7 @@
  */
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extraction.Extractor1;
+import com.leacox.motif.extract.Extractor1;
 
 import java.util.function.Consumer;
 

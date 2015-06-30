@@ -15,7 +15,7 @@
  */
 package com.leacox.motif.matching;
 
-import com.leacox.motif.extraction.Extractor2;
+import com.leacox.motif.extract.Extractor2;
 import com.leacox.motif.function.Function2;
 
 /**

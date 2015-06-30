@@ -16,10 +16,10 @@
 package com.leacox.motif.matching;
 
 import com.leacox.motif.MatchException;
-import com.leacox.motif.extraction.DecomposableMatchBuilder0;
-import com.leacox.motif.extraction.DecomposableMatchBuilder1;
-import com.leacox.motif.extraction.DecomposableMatchBuilder2;
-import com.leacox.motif.extraction.DecomposableMatchBuilder3;
+import com.leacox.motif.extract.DecomposableMatchBuilder0;
+import com.leacox.motif.extract.DecomposableMatchBuilder1;
+import com.leacox.motif.extract.DecomposableMatchBuilder2;
+import com.leacox.motif.extract.DecomposableMatchBuilder3;
 
 import java.util.ArrayList;
 import java.util.List;

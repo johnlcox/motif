@@ -19,14 +19,14 @@ package com.leacox.motif.cases;
  * @author John Leacox
  */
 
-import com.leacox.motif.extraction.FieldExtractor;
+import com.leacox.motif.extract.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
+class HeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
   private final ListExtractor<A> listExtractor = new ListExtractor<>();
 
   @Override

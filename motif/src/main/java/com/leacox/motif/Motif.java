@@ -47,8 +47,8 @@ public final class Motif {
    *
    * <p>In addition the matching case API is extremely extensible. All that is needed to create a
    * new matching case is to implement one of the {@code ExtractorN} (e.g.
-   * {@link com.leacox.motif.extraction.Extractor1 Extractor1}) and
-   * {@link com.leacox.motif.extraction.FieldExtractor} for your type, and then create a new
+   * {@link com.leacox.motif.extract.Extractor1 Extractor1}) and
+   * {@link com.leacox.motif.extract.FieldExtractor} for your type, and then create a new
    * instance of {@code DecomposableMatchBuilderN} with the field extractor for your type and the
    * args to match on. The easiest way to do this is to create a static method that can be imported
    * like {@link com.leacox.motif.cases.OptionalCases#some(MatchesAny)

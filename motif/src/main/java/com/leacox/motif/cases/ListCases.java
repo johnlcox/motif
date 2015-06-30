@@ -15,18 +15,18 @@
  */
 package com.leacox.motif.cases;
 
-import static com.leacox.motif.matchers.ArgumentMatchers.any;
-import static com.leacox.motif.matchers.ArgumentMatchers.eq;
+import static com.leacox.motif.extract.matchers.ArgumentMatchers.any;
+import static com.leacox.motif.extract.matchers.ArgumentMatchers.eq;
 
 import com.leacox.motif.MatchesAny;
-import com.leacox.motif.extraction.DecomposableMatchBuilder0;
-import com.leacox.motif.extraction.DecomposableMatchBuilder1;
-import com.leacox.motif.extraction.DecomposableMatchBuilder2;
-import com.leacox.motif.extraction.Extractor0;
-import com.leacox.motif.extraction.Extractor1;
-import com.leacox.motif.extraction.Extractor2;
-import com.leacox.motif.extraction.FieldExtractor;
-import com.leacox.motif.matchers.Matcher;
+import com.leacox.motif.extract.DecomposableMatchBuilder0;
+import com.leacox.motif.extract.DecomposableMatchBuilder1;
+import com.leacox.motif.extract.DecomposableMatchBuilder2;
+import com.leacox.motif.extract.Extractor0;
+import com.leacox.motif.extract.Extractor1;
+import com.leacox.motif.extract.Extractor2;
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.extract.matchers.Matcher;
 import com.leacox.motif.tuple.Tuple2;
 
 import java.util.ArrayList;
@@ -42,13 +42,6 @@ public final class ListCases {
   }
 
   private static class HeadExtractor<A> implements Extractor1<List<A>, A> {
-    //@Override
-    //public List<A> apply(A head) {
-    //  List<A> list = new ArrayList<>();
-    //  list.add(head);
-    //  return list;
-    //}
-
     @Override
     public Optional<A> unapply(List<A> list) {
       if (list.size() == 1) {
@@ -86,59 +79,8 @@ public final class ListCases {
     }
   }
 
-  private static class ListExtractor<A> implements Extractor2<List<A>, A, List<A>> {
-    //@Override
-    //public List<A> apply(A head, List<A> tail) {
-    //  List<A> list = new ArrayList<>();
-    //  list.add(head);
-    //  list.addAll(tail);
-    //  return list;
-    //}
-
-    @Override
-    public Optional<Tuple2<A, List<A>>> unapply(List<A> list) {
-      if (list.isEmpty()) {
-        return Optional.empty();
-      }
-
-      return Optional.of(Tuple2.of(list.get(0), list.subList(1, list.size())));
-    }
-
-    @Override
-    public Class<List> getExtractorClass() {
-      return List.class;
-    }
-  }
-
-  private static class HeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
-    private final ListExtractor<A> listExtractor = new ListExtractor<>();
-
-    @Override
-    public Optional<List<Object>> unapply(List<A> value) {
-      Optional<Tuple2<A, List<A>>> opt = listExtractor.unapply(value);
-      if (!opt.isPresent()) {
-        return Optional.empty();
-      }
-
-      List<Object> fields = new ArrayList<>();
-      fields.add(opt.get().first());
-      fields.add(opt.get().second());
-
-      return Optional.of(fields);
-    }
-
-    @Override
-    public Class<?> getExtractorClass() {
-      return listExtractor.getExtractorClass();
-    }
-  }
 
   private static class EmptyListExtractor<A> implements Extractor0<List<A>> {
-    //@Override
-    //public List<A> apply() {
-    //  return Collections.emptyList();
-    //}
-
     @Override
     public boolean unapply(List<A> list) {
       return list.isEmpty();

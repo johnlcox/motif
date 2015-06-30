@@ -15,7 +15,7 @@
  */
 package com.leacox.motif.cases;
 
-import com.leacox.motif.extraction.Extractor2;
+import com.leacox.motif.extract.Extractor2;
 import com.leacox.motif.tuple.Tuple2;
 
 import java.util.Optional;
