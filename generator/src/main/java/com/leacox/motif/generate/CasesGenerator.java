@@ -34,11 +34,13 @@ import javax.lang.model.element.Modifier;
 public final class CasesGenerator {
   private final String packageName;
   private final String className;
+  private final List<String> javadocs;
   private final List<MethodSpec> methods;
 
   private CasesGenerator(Builder builder) {
     this.packageName = builder.packageName;
     this.className = builder.className;
+    this.javadocs = builder.javadocs;
     this.methods = builder.getAllMethods();
   }
 
@@ -52,11 +54,16 @@ public final class CasesGenerator {
         .addModifiers(Modifier.PRIVATE)
         .build();
 
-    TypeSpec casesClass = TypeSpec.classBuilder(className)
+    TypeSpec.Builder casesClassBuilder = TypeSpec.classBuilder(className)
         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
         .addMethod(privateConstructor)
-        .addMethods(methods)
-        .build();
+        .addMethods(methods);
+
+    for (String javadoc : javadocs) {
+      casesClassBuilder.addJavadoc(javadoc);
+    }
+
+    TypeSpec casesClass = casesClassBuilder.build();
 
     JavaFile javaFile = JavaFile.builder(packageName, casesClass).build();
     return javaFile;
@@ -69,6 +76,7 @@ public final class CasesGenerator {
     private final String className;
     private final TypeName matchType;
 
+    private final List<String> javadocs = Lists.newArrayList();
     private final List<MethodSpec> match0Methods = Lists.newArrayList();
     private final List<MethodSpec> match1Methods = Lists.newArrayList();
     private final List<MethodSpec> match2Methods = Lists.newArrayList();
@@ -80,10 +88,17 @@ public final class CasesGenerator {
       this.matchType = matchType;
     }
 
+    public Builder addJavadoc(String javadoc) {
+      javadocs.add(javadoc);
+
+      return this;
+    }
+
     public Builder addMatch0Method(Match0MethodSpec match0MethodSpec) {
       match0Methods.addAll(
           new Match0MethodPermutationBuilder(
-              matchType, match0MethodSpec.matchExtractor(), match0MethodSpec.name())
+              matchType, match0MethodSpec.matchExtractor(), match0MethodSpec.summaryJavadoc(),
+              match0MethodSpec.name())
               .build());
 
       return this;
@@ -92,7 +107,8 @@ public final class CasesGenerator {
     public Builder addMatch1Method(Match1MethodSpec match1MethodSpec) {
       match1Methods.addAll(
           new Match1MethodPermutationBuilder(
-              matchType, match1MethodSpec.matchExtractor(), match1MethodSpec.name(),
+              matchType, match1MethodSpec.matchExtractor(), match1MethodSpec.summaryJavadoc(),
+              match1MethodSpec.name(),
               match1MethodSpec.paramAType(), match1MethodSpec.paramAName(), MAX_ARITY)
               .build());
 
@@ -102,7 +118,8 @@ public final class CasesGenerator {
     public Builder addMatch2Method(Match2MethodSpec match2MethodSpec) {
       match2Methods.addAll(
           new Match2MethodPermutationBuilder(
-              matchType, match2MethodSpec.matchExtractor(), match2MethodSpec.name(),
+              matchType, match2MethodSpec.matchExtractor(), match2MethodSpec.summaryJavadoc(),
+              match2MethodSpec.name(),
               match2MethodSpec.paramAType(), match2MethodSpec.paramAName(),
               match2MethodSpec.paramBType(), match2MethodSpec.paramBName(), MAX_ARITY)
               .build());
@@ -113,7 +130,8 @@ public final class CasesGenerator {
     public Builder addMatch3Method(Match3MethodSpec match3MethodSpec) {
       match3Methods.addAll(
           new Match3MethodPermutationBuilder(
-              matchType, match3MethodSpec.matchExtractor(), match3MethodSpec.name(),
+              matchType, match3MethodSpec.matchExtractor(), match3MethodSpec.summaryJavadoc(),
+              match3MethodSpec.name(),
               match3MethodSpec.paramAType(), match3MethodSpec.paramAName(),
               match3MethodSpec.paramBType(), match3MethodSpec.paramBName(),
               match3MethodSpec.paramCType(), match3MethodSpec.paramCName(), MAX_ARITY)

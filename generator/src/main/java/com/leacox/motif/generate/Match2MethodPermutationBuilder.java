@@ -38,6 +38,7 @@ import javax.lang.model.element.Modifier;
 final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
   private final TypeName input;
   private final TypeName fieldExtractor;
+  private final String summaryJavadoc;
   private final String methodName;
   private final TypeName a;
   private final String aName;
@@ -48,10 +49,12 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
   private final List<TypeNameWithArity> typeBPermutations;
 
   Match2MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String methodName, TypeName a,
+      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
+      String methodName, TypeName a,
       String aName, TypeName b, String bName, int maxArity) {
     this.input = input;
     this.fieldExtractor = TypeName.get(inputExtractor);
+    this.summaryJavadoc = summaryJavadoc;
     this.methodName = methodName;
     this.a = a;
     this.aName = aName;
@@ -77,6 +80,8 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
                 .map(
                     b -> MethodSpec.methodBuilder(methodName)
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addJavadoc(summaryJavadoc)
+                        .addJavadoc(getJavadoc(a, b))
                         .returns(getReturnType(inputType, a, b))
                         .addTypeVariables(getTypeVariables(inputType, a, b))
                         .addParameter(a.typeName, aName)
@@ -86,6 +91,44 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
                             getReturnStatement(a, b), getReturnStatementArgs(inputType, a, b))
                         .build()))
         .collect(Collectors.toList());
+  }
+
+  private String getJavadoc(TypeNameWithArity a, TypeNameWithArity b) {
+    MatchType firstMatch = getMatchType(a.typeName);
+    MatchType secondMatch = getMatchType(b.typeName);
+
+    StringBuilder sb = new StringBuilder();
+
+    if (firstMatch != MatchType.EXACT || secondMatch != MatchType.EXACT) {
+      sb.append("\n");
+      sb.append("<p>If matched, ");
+    }
+
+    if (firstMatch == MatchType.DECOMPOSE) {
+      sb.append("the {@code ").append(aName).append("} value is decomposed to ").append(a.arity);
+    } else if (firstMatch == MatchType.ANY) {
+      sb.append("the {@code ").append(aName).append("} value is extracted");
+    }
+
+    if (secondMatch == MatchType.DECOMPOSE) {
+      sb.append(" and ");
+      sb.append("the {@code ").append(bName).append("} value is decomposed to ").append(b.arity);
+    } else if (secondMatch == MatchType.ANY) {
+      sb.append(" and ");
+      sb.append("the {@code ").append(bName).append("} value is extracted");
+    }
+
+    if (firstMatch != MatchType.EXACT || secondMatch != MatchType.EXACT) {
+      sb.append(".");
+      sb.append("\n");
+    }
+
+    int i = 0;
+    while ((i = sb.indexOf(" ", i + 100)) != -1) {
+      sb.replace(i, i + 1, "\n");
+    }
+
+    return sb.toString();
   }
 
   private TypeName getReturnType(TypeName inputType, TypeNameWithArity a, TypeNameWithArity b) {

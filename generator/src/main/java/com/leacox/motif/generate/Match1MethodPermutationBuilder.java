@@ -37,6 +37,7 @@ import javax.lang.model.element.Modifier;
 final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
   private final TypeName input;
   private final TypeName fieldExtractor;
+  private final String summaryJavadoc;
   private final String methodName;
   private final TypeName a;
   private final String aName;
@@ -44,10 +45,12 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
   private final List<TypeNameWithArity> typeAPermutations;
 
   Match1MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String methodName, TypeName a,
+      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
+      String methodName, TypeName a,
       String aName, int maxArity) {
     this.input = input;
     this.fieldExtractor = TypeName.get(inputExtractor);
+    this.summaryJavadoc = summaryJavadoc;
     this.methodName = methodName;
     this.a = a;
     this.aName = aName;
@@ -67,6 +70,8 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
         .map(
             a -> MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addJavadoc(summaryJavadoc)
+                .addJavadoc(getJavadoc(a))
                 .returns(getReturnType(inputType, a))
                 .addTypeVariables(getTypeVariables(inputType, a))
                 .addParameter(a.typeName, aName)
@@ -74,6 +79,35 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
                 .addStatement(getReturnStatement(a), getReturnStatementArgs(inputType, a))
                 .build())
         .collect(Collectors.toList());
+  }
+
+  private String getJavadoc(TypeNameWithArity a) {
+    MatchType firstMatch = getMatchType(a.typeName);
+
+    StringBuilder sb = new StringBuilder();
+
+    if (firstMatch != MatchType.EXACT) {
+      sb.append("\n");
+      sb.append("<p>If matched, ");
+    }
+
+    if (firstMatch == MatchType.DECOMPOSE) {
+      sb.append("the {@code ").append(aName).append("} value is decomposed to ").append(a.arity);
+    } else if (firstMatch == MatchType.ANY) {
+      sb.append("the {@code ").append(aName).append("} value is extracted");
+    }
+
+    if (firstMatch != MatchType.EXACT) {
+      sb.append(".");
+      sb.append("\n");
+    }
+
+    int i = 0;
+    while ((i = sb.indexOf(" ", i + 100)) != -1) {
+      sb.replace(i, i + 1, "\n");
+    }
+
+    return sb.toString();
   }
 
   private TypeName getReturnType(TypeName inputType, TypeNameWithArity a) {

@@ -40,6 +40,7 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
   private final TypeName input;
   private final TypeName fieldExtractor;
+  private final String summaryJavadoc;
   private final String methodName;
   private final TypeName a;
   private final String aName;
@@ -53,10 +54,12 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
   private final List<TypeNameWithArity> typeCPermutations;
 
   Match3MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String methodName, TypeName a,
+      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
+      String methodName, TypeName a,
       String aName, TypeName b, String bName, TypeName c, String cName, int maxArity) {
     this.input = input;
     this.fieldExtractor = TypeName.get(inputExtractor);
+    this.summaryJavadoc = summaryJavadoc;
     this.methodName = methodName;
     this.a = a;
     this.aName = aName;
@@ -68,10 +71,6 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     this.typeAPermutations = createTypeArityList(a, "A", maxArity);
     this.typeBPermutations = createTypeArityList(b, "B", maxArity);
     this.typeCPermutations = createTypeArityList(c, "C", maxArity);
-
-    //this.typeAPermutations = ImmutableList.of(TypeNameWithArity.of(a, 0));
-    //this.typeBPermutations = ImmutableList.of(TypeNameWithArity.of(MATCH_ANY, 1));
-    //this.typeCPermutations = ImmutableList.of(TypeNameWithArity.of(ParameterizedTypeName.get(ClassName.get(DecomposableMatchBuilder0.class), c), 0));
   }
 
   public List<MethodSpec> build() {
@@ -91,6 +90,8 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
                         .map(
                             c -> MethodSpec.methodBuilder(methodName)
                                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                                .addJavadoc(summaryJavadoc)
+                                .addJavadoc(getJavadoc(a, b, c))
                                 .returns(getReturnType(inputType, a, b, c))
                                 .addTypeVariables(getTypeVariables(inputType, a, b, c))
                                 .addParameter(a.typeName, aName)
@@ -103,6 +104,57 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
                                     getReturnStatementArgs(inputType, a, b, c))
                                 .build())))
         .collect(Collectors.toList());
+  }
+
+  private String getJavadoc(TypeNameWithArity a, TypeNameWithArity b, TypeNameWithArity c) {
+    MatchType firstMatch = getMatchType(a.typeName);
+    MatchType secondMatch = getMatchType(b.typeName);
+    MatchType thirdMatch = getMatchType(c.typeName);
+
+    StringBuilder sb = new StringBuilder();
+
+    if (firstMatch != MatchType.EXACT || secondMatch != MatchType.EXACT
+        || thirdMatch != MatchType.EXACT) {
+      sb.append("\n");
+      sb.append("<p>If matched, ");
+    }
+
+    if (firstMatch == MatchType.DECOMPOSE) {
+      sb.append("the {@code ").append(aName).append("} value is decomposed to ").append(a.arity);
+    } else if (firstMatch == MatchType.ANY) {
+      sb.append("the {@code ").append(aName).append("} is extracted");
+    }
+
+    if (secondMatch == MatchType.DECOMPOSE) {
+      sb.append(" and ");
+      sb.append("the {@code ").append(bName).append("} value is decomposed to ").append(b.arity);
+    } else if (secondMatch == MatchType.ANY) {
+      sb.append(" and ");
+      sb.append("the {@code ").append(bName).append("} value is extracted");
+    }
+
+    if (thirdMatch == MatchType.DECOMPOSE) {
+      sb.append(" and ");
+      sb.append("the {@code ").append(cName).append("} value is decomposed to ").append(c.arity);
+    } else if (thirdMatch == MatchType.ANY) {
+      sb.append(" and ");
+      sb.append("the {@code ").append(cName).append("} value is extracted");
+    }
+
+    if (firstMatch != MatchType.EXACT || secondMatch != MatchType.EXACT
+        || thirdMatch != MatchType.EXACT) {
+      sb.append(".");
+      sb.append("\n");
+    }
+
+    int i = 0;
+    while ((i = sb.indexOf(" ", i + 100)) != -1) {
+      sb.replace(i, i + 1, "\n");
+    }
+
+    sb.append("\n");
+
+    return sb.toString();
   }
 
   private TypeName getReturnType(
@@ -158,7 +210,6 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     TypeName[] typeVariables =
         Stream.of(ImmutableList.of(inputType), extractA, extractB, extractC)
             .map(x -> x).flatMap(l -> l.stream()).toArray(s -> new TypeName[s]);
-
 
     int arity = a.arity + b.arity + c.arity;
     TypeName returnType = ParameterizedTypeName
@@ -237,13 +288,17 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
       return ".decomposeFirstAndSecondAndThird(" + aName + ", " + bName + ", " + cName + ")";
     } else if (firstMatch == MatchType.DECOMPOSE && secondMatch == MatchType.DECOMPOSE) {
       return ".decomposeFirstAndSecond(" + aName + ", " + bName + ")";
-    } else if(firstMatch == MatchType.EXACT && secondMatch == MatchType.DECOMPOSE && thirdMatch == MatchType.DECOMPOSE) {
+    } else if (firstMatch == MatchType.EXACT && secondMatch == MatchType.DECOMPOSE
+        && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeFirstAndSecond(" + bName + ", " + cName + ")";
-    } else if (firstMatch == MatchType.DECOMPOSE && secondMatch == MatchType.EXACT && thirdMatch == MatchType.DECOMPOSE) {
+    } else if (firstMatch == MatchType.DECOMPOSE && secondMatch == MatchType.EXACT
+        && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeFirstAndSecond(" + aName + ", " + cName + ")";
-    } else if (firstMatch == MatchType.DECOMPOSE && secondMatch == MatchType.ANY && thirdMatch == MatchType.DECOMPOSE) {
+    } else if (firstMatch == MatchType.DECOMPOSE && secondMatch == MatchType.ANY
+        && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeFirstAndThird(" + aName + ", " + cName + ")";
-    } else if (firstMatch == MatchType.ANY && secondMatch == MatchType.DECOMPOSE && thirdMatch == MatchType.DECOMPOSE) {
+    } else if (firstMatch == MatchType.ANY && secondMatch == MatchType.DECOMPOSE
+        && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeSecondAndThird(" + bName + ", " + cName + ")";
     } else if (firstMatch == MatchType.DECOMPOSE) {
       return ".decomposeFirst(" + aName + ")";
@@ -257,9 +312,11 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     } else if (firstMatch == MatchType.EXACT && secondMatch == MatchType.EXACT
         && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeFirst(" + cName + ")";
-    } else if (firstMatch == MatchType.EXACT && secondMatch == MatchType.ANY && thirdMatch == MatchType.DECOMPOSE){
+    } else if (firstMatch == MatchType.EXACT && secondMatch == MatchType.ANY
+        && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeSecond(" + cName + ")";
-    } else if (firstMatch == MatchType.ANY && secondMatch == MatchType.EXACT && thirdMatch == MatchType.DECOMPOSE){
+    } else if (firstMatch == MatchType.ANY && secondMatch == MatchType.EXACT
+        && thirdMatch == MatchType.DECOMPOSE) {
       return ".decomposeSecond(" + cName + ")";
     } else {
       return "";

@@ -29,6 +29,8 @@ public abstract class Match1MethodSpec {
 
   public abstract Class<? extends FieldExtractor> matchExtractor();
 
+  public abstract String summaryJavadoc();
+
   public abstract TypeName paramAType();
 
   public abstract String paramAName();
@@ -42,6 +44,8 @@ public abstract class Match1MethodSpec {
     public abstract Builder name(String methodName);
 
     public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+
+    public abstract Builder summaryJavadoc(String summaryJavadoc);
 
     public abstract Builder paramAType(TypeName aType);
 

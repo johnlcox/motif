@@ -28,6 +28,8 @@ public abstract class Match0MethodSpec {
 
   public abstract Class<? extends FieldExtractor> matchExtractor();
 
+  public abstract String summaryJavadoc();
+
   public static Builder builder() {
     return new AutoValue_Match0MethodSpec.Builder();
   }
@@ -37,6 +39,8 @@ public abstract class Match0MethodSpec {
     public abstract Builder name(String methodName);
 
     public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+
+    public abstract Builder summaryJavadoc(String summaryJavadoc);
 
     public abstract Match0MethodSpec build();
   }

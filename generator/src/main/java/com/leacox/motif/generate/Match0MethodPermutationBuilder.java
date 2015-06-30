@@ -34,12 +34,15 @@ import javax.lang.model.element.Modifier;
 public class Match0MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
   private final TypeName input;
   private final TypeName fieldExtractor;
+  private final String summaryJavadoc;
   private final String methodName;
 
   Match0MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String methodName) {
+      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
+      String methodName) {
     this.input = input;
     this.fieldExtractor = TypeName.get(inputExtractor);
+    this.summaryJavadoc = summaryJavadoc;
     this.methodName = methodName;
   }
 
@@ -52,6 +55,7 @@ public class Match0MethodPermutationBuilder extends BaseMatchMethodPermutationBu
     return ImmutableList.of(
         MethodSpec.methodBuilder(methodName)
             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            .addJavadoc(summaryJavadoc)
             .returns(getReturnType(inputType))
             .addTypeVariables(getTypeVariables(inputType))
             .addStatement(getMatcherStatement(), getMatcherStatementArgs(0))

@@ -41,17 +41,21 @@ final class ListConsCasesGenerator {
     TypeName l = ParameterizedTypeName.get(ClassName.get(List.class), E);
 
     Match0MethodSpec nilMatch = Match0MethodSpec.builder()
-        .name("nil").matchExtractor(ListConsNilFieldExtractor.class).build();
+        .name("nil").matchExtractor(ListConsNilFieldExtractor.class)
+        .summaryJavadoc("Matches an empty list.\n").build();
 
     Match1MethodSpec headNilMatch = Match1MethodSpec.builder()
-        .name("headNil").matchExtractor(ListConsHeadFieldExtractor.class).paramAType(E)
+        .name("headNil").matchExtractor(ListConsHeadFieldExtractor.class)
+        .summaryJavadoc("Matches a list with exactly one element.\n").paramAType(E)
         .paramAName("head").build();
 
     Match2MethodSpec headTailMatch = Match2MethodSpec.builder()
-        .name("headTail").matchExtractor(ListConsHeadTailFieldExtractor.class).paramAType(E)
-        .paramAName("head").paramBType(l).paramBName("tail").build();
+        .name("headTail").matchExtractor(ListConsHeadTailFieldExtractor.class)
+        .summaryJavadoc("Matches a list with a head element and a tail of remaining elements.\n")
+        .paramAType(E).paramAName("head").paramBType(l).paramBName("tail").build();
 
     JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListConsCases", l)
+        .addJavadoc("Motif cases for matching a {@link List} with cons.\n")
         .addMatch0Method(nilMatch)
         .addMatch1Method(headNilMatch)
         .addMatch2Method(headTailMatch)

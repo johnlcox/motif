@@ -31,7 +31,8 @@ import java.io.IOException;
  * @author John Leacox
  */
 final class Tuple3CasesGenerator {
-  private Tuple3CasesGenerator() {}
+  private Tuple3CasesGenerator() {
+  }
 
   public static void main(String[] args) {
     TypeName A = TypeVariableName.get("A");
@@ -40,11 +41,14 @@ final class Tuple3CasesGenerator {
     TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple3.class), A, B, C);
 
     Match3MethodSpec tuple3Match = Match3MethodSpec.builder()
-        .name("tuple3").matchExtractor(Tuple3FieldExtractor.class).paramAType(A).paramAName("a")
-        .paramBType(B).paramBName("b").paramCType(C).paramCName("c").build();
+        .name("tuple3").matchExtractor(Tuple3FieldExtractor.class)
+        .summaryJavadoc("Matches a tuple of 2 elements.\n")
+        .paramAType(A).paramAName("a").paramBType(B).paramBName("b").paramCType(C).paramCName("c")
+        .build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple3Cases", t)
+        .addJavadoc("Motif cases for matching a {@link Tuple3}.\n")
         .addMatch3Method(tuple3Match)
         .build().generate();
 

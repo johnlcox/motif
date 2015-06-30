@@ -39,11 +39,13 @@ final class Tuple2CasesGenerator {
     TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple2.class), A, B);
 
     Match2MethodSpec tuple2Match = Match2MethodSpec.builder()
-        .name("tuple2").matchExtractor(Tuple2FieldExtractor.class).paramAType(A).paramAName("a")
-        .paramBType(B).paramBName("b").build();
+        .name("tuple2").matchExtractor(Tuple2FieldExtractor.class)
+        .summaryJavadoc("Matches a tuple of 2 elements.\n")
+        .paramAType(A).paramAName("a").paramBType(B).paramBName("b").build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple2Cases", t)
+        .addJavadoc("Motif cases for matching a {@link Tuple2}.\n")
         .addMatch2Method(tuple2Match)
         .build().generate();
 
