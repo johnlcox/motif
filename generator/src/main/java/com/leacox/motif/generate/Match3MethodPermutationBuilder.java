@@ -18,7 +18,6 @@ package com.leacox.motif.generate;
 import com.leacox.motif.extract.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
 import com.leacox.motif.tuple.Tuple3;
-import com.leacox.motif.extract.util.Lists;
 
 import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
@@ -125,7 +124,7 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
   private Iterable<TypeVariableName> getTypeVariables(
       TypeName inputType, TypeNameWithArity a, TypeNameWithArity b, TypeNameWithArity c) {
-    return Lists.of(inputType, a.typeName, b.typeName, c.typeName).stream()
+    return ImmutableList.of(inputType, a.typeName, b.typeName, c.typeName).stream()
         .map(t -> getTypeVariables(t))
         .flatMap(l -> l.stream())
         .distinct()

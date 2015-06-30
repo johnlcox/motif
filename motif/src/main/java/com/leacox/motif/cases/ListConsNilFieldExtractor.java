@@ -15,36 +15,29 @@
  */
 package com.leacox.motif.cases;
 
-/**
- * @author John Leacox
- */
-
 import com.leacox.motif.extract.FieldExtractor;
-import com.leacox.motif.tuple.Tuple2;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-class HeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
-  private final ListExtractor<A> listExtractor = new ListExtractor<>();
+/**
+ * @author John Leacox
+ */
+final class ListConsNilFieldExtractor<A> implements FieldExtractor<List<A>> {
+  private final ListConsNilExtractor<A> emptyListExtractor = new ListConsNilExtractor<>();
 
   @Override
   public Optional<List<Object>> unapply(List<A> value) {
-    Optional<Tuple2<A, List<A>>> opt = listExtractor.unapply(value);
-    if (!opt.isPresent()) {
+    if (!emptyListExtractor.unapply(value)) {
       return Optional.empty();
     }
 
-    List<Object> fields = new ArrayList<>();
-    fields.add(opt.get().first());
-    fields.add(opt.get().second());
-
-    return Optional.of(fields);
+    return Optional.of(Collections.emptyList());
   }
 
   @Override
   public Class<?> getExtractorClass() {
-    return listExtractor.getExtractorClass();
+    return emptyListExtractor.getExtractorClass();
   }
 }

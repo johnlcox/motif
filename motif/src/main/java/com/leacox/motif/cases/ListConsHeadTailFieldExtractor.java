@@ -15,30 +15,36 @@
  */
 package com.leacox.motif.cases;
 
-import com.leacox.motif.extract.FieldExtractor;
-import com.leacox.motif.tuple.Tuple2;
-
-import java.util.List;
-import java.util.Optional;
-
 /**
  * @author John Leacox
  */
-final class Tuple2FieldExtractor<A, B> implements FieldExtractor<Tuple2<A, B>> {
-  Tuple2Extractor<A, B> tuple2Extractor = new Tuple2Extractor<>();
+
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+final class ListConsHeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
+  private final ListConsHeadTailExtractor<A> listExtractor = new ListConsHeadTailExtractor<>();
 
   @Override
-  public Optional<List<Object>> unapply(Tuple2<A, B> value) {
-    Optional<Tuple2<A, B>> tuple2Opt = tuple2Extractor.unapply(value);
-    if (!tuple2Opt.isPresent()) {
+  public Optional<List<Object>> unapply(List<A> value) {
+    Optional<Tuple2<A, List<A>>> opt = listExtractor.unapply(value);
+    if (!opt.isPresent()) {
       return Optional.empty();
     }
 
-    return Optional.of(value.toList());
+    List<Object> fields = new ArrayList<>();
+    fields.add(opt.get().first());
+    fields.add(opt.get().second());
+
+    return Optional.of(fields);
   }
 
   @Override
   public Class<?> getExtractorClass() {
-    return tuple2Extractor.getExtractorClass();
+    return listExtractor.getExtractorClass();
   }
 }

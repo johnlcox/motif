@@ -16,6 +16,8 @@
 package com.leacox.motif.cases;
 
 import com.leacox.motif.generate.CasesGenerator;
+import com.leacox.motif.generate.Match0MethodSpec;
+import com.leacox.motif.generate.Match1MethodSpec;
 import com.leacox.motif.generate.Match2MethodSpec;
 
 import com.squareup.javapoet.ClassName;
@@ -31,17 +33,27 @@ import java.util.List;
  * @author John Leacox
  */
 final class ListConsCasesGenerator {
-  private ListConsCasesGenerator(){}
+  private ListConsCasesGenerator() {
+  }
 
   public static void main(String[] args) {
     TypeName E = TypeVariableName.get("T");
     TypeName l = ParameterizedTypeName.get(ClassName.get(List.class), E);
 
+    Match0MethodSpec nilMatch = Match0MethodSpec.builder()
+        .name("nil").matchExtractor(ListConsNilFieldExtractor.class).build();
+
+    Match1MethodSpec headNilMatch = Match1MethodSpec.builder()
+        .name("headNil").matchExtractor(ListConsHeadFieldExtractor.class).paramAType(E)
+        .paramAName("head").build();
+
     Match2MethodSpec headTailMatch = Match2MethodSpec.builder()
-        .name("headTail").matchExtractor(HeadTailFieldExtractor.class).paramAType(E)
+        .name("headTail").matchExtractor(ListConsHeadTailFieldExtractor.class).paramAType(E)
         .paramAName("head").paramBType(l).paramBName("tail").build();
 
-    JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListCases", l)
+    JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListConsCases", l)
+        .withMatch0Method(nilMatch)
+        .withMatch1Method(headNilMatch)
         .withMatch2Method(headTailMatch)
         .build().generate();
 

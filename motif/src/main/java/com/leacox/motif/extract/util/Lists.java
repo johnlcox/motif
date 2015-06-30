@@ -16,6 +16,7 @@
 package com.leacox.motif.extract.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,10 @@ import java.util.List;
  */
 public final class Lists {
   private Lists() {
+  }
+
+  public static <E> List<E> of() {
+    return Collections.emptyList();
   }
 
   public static <E> List<E> of(E e1) {

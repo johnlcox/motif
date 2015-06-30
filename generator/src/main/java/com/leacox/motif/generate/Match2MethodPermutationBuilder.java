@@ -17,7 +17,6 @@ package com.leacox.motif.generate;
 
 import com.leacox.motif.extract.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
-import com.leacox.motif.extract.util.Lists;
 
 import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
@@ -37,7 +36,6 @@ import javax.lang.model.element.Modifier;
  * @author John Leacox
  */
 final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
-
   private final TypeName input;
   private final TypeName fieldExtractor;
   private final String methodName;
@@ -51,8 +49,7 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
   Match2MethodPermutationBuilder(
       TypeName input, Class<? extends FieldExtractor> inputExtractor, String methodName, TypeName a,
-      String aName,
-      TypeName b, String bName, int maxArity) {
+      String aName, TypeName b, String bName, int maxArity) {
     this.input = input;
     this.fieldExtractor = TypeName.get(inputExtractor);
     this.methodName = methodName;
@@ -91,8 +88,7 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
         .collect(Collectors.toList());
   }
 
-  private TypeName getReturnType(
-      TypeName inputType, TypeNameWithArity a, TypeNameWithArity b) {
+  private TypeName getReturnType(TypeName inputType, TypeNameWithArity a, TypeNameWithArity b) {
     int arity = a.arity + b.arity;
     ClassName unparameterizedType = ClassName.get(getDecomposableBuilderByArity(arity));
 
@@ -109,7 +105,7 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
   private Iterable<TypeVariableName> getTypeVariables(
       TypeName inputType, TypeNameWithArity a, TypeNameWithArity b) {
-    return Lists.of(inputType, a.typeName, b.typeName).stream()
+    return ImmutableList.of(inputType, a.typeName, b.typeName).stream()
         .map(t -> getTypeVariables(t))
         .flatMap(l -> l.stream())
         .distinct()

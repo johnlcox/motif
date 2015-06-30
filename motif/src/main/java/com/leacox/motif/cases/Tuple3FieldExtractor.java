@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-class Tuple3FieldExtractor<A, B, C> implements FieldExtractor<Tuple3<A, B, C>> {
+final class Tuple3FieldExtractor<A, B, C> implements FieldExtractor<Tuple3<A, B, C>> {
   Tuple3Extractor<A, B, C> tuple3Extractor = new Tuple3Extractor<>();
 
   @Override

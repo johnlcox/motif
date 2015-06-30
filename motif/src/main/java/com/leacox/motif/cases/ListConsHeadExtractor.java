@@ -15,8 +15,7 @@
  */
 package com.leacox.motif.cases;
 
-import com.leacox.motif.extract.Extractor2;
-import com.leacox.motif.tuple.Tuple2;
+import com.leacox.motif.extract.Extractor1;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,14 +23,14 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-public class ListExtractor<A> implements Extractor2<List<A>, A, List<A>> {
+public class ListConsHeadExtractor<A> implements Extractor1<List<A>, A> {
   @Override
-  public Optional<Tuple2<A, List<A>>> unapply(List<A> list) {
-    if (list.isEmpty()) {
-      return Optional.empty();
+  public Optional<A> unapply(List<A> list) {
+    if (list.size() == 1) {
+      return Optional.of(list.get(0));
     }
 
-    return Optional.of(Tuple2.of(list.get(0), list.subList(1, list.size())));
+    return Optional.empty();
   }
 
   @Override

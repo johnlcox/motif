@@ -35,7 +35,7 @@ public final class CasesGenerator {
   private final String className;
   private final List<MethodSpec> methods;
 
-  CasesGenerator(Builder builder) {
+  private CasesGenerator(Builder builder) {
     this.packageName = builder.packageName;
     this.className = builder.className;
     this.methods = builder.getAllMethods();
@@ -79,17 +79,24 @@ public final class CasesGenerator {
       this.matchType = matchType;
     }
 
-    public Builder withArity0Match() {
+    public Builder withMatch0Method(Match0MethodSpec match0MethodSpec) {
+      this.match0Methods = new Match0MethodPermutationBuilder(
+          matchType, match0MethodSpec.matchExtractor(), match0MethodSpec.name())
+          .build();
+
       return this;
     }
 
-    public Builder withArity1Match() {
+    public Builder withMatch1Method(Match1MethodSpec match1MethodSpec) {
+      this.match1Methods = new Match1MethodPermutationBuilder(
+          matchType, match1MethodSpec.matchExtractor(), match1MethodSpec.name(),
+          match1MethodSpec.paramAType(), match1MethodSpec.paramAName(), MAX_ARITY)
+          .build();
+
       return this;
     }
 
-    // TODO: This is a scary method signature. Maybe there should be a builder for this too?
     public Builder withMatch2Method(Match2MethodSpec match2MethodSpec) {
-
       this.match2Methods =
           new Match2MethodPermutationBuilder(
               matchType, match2MethodSpec.matchExtractor(), match2MethodSpec.name(),
@@ -106,7 +113,7 @@ public final class CasesGenerator {
           match3MethodSpec.paramAType(), match3MethodSpec.paramAName(),
           match3MethodSpec.paramBType(), match3MethodSpec.paramBName(),
           match3MethodSpec.paramCType(), match3MethodSpec.paramCName(), MAX_ARITY)
-      .build();
+          .build();
 
       return this;
     }

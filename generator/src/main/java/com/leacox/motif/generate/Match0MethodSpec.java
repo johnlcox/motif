@@ -13,32 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.leacox.motif.cases;
+package com.leacox.motif.generate;
 
 import com.leacox.motif.extract.FieldExtractor;
-import com.leacox.motif.tuple.Tuple2;
 
-import java.util.List;
-import java.util.Optional;
+import com.google.auto.value.AutoValue;
 
 /**
  * @author John Leacox
  */
-final class Tuple2FieldExtractor<A, B> implements FieldExtractor<Tuple2<A, B>> {
-  Tuple2Extractor<A, B> tuple2Extractor = new Tuple2Extractor<>();
+@AutoValue
+public abstract class Match0MethodSpec {
+  public abstract String name();
 
-  @Override
-  public Optional<List<Object>> unapply(Tuple2<A, B> value) {
-    Optional<Tuple2<A, B>> tuple2Opt = tuple2Extractor.unapply(value);
-    if (!tuple2Opt.isPresent()) {
-      return Optional.empty();
-    }
+  public abstract Class<? extends FieldExtractor> matchExtractor();
 
-    return Optional.of(value.toList());
+  public static Builder builder() {
+    return new AutoValue_Match0MethodSpec.Builder();
   }
 
-  @Override
-  public Class<?> getExtractorClass() {
-    return tuple2Extractor.getExtractorClass();
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder name(String methodName);
+
+    public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+
+    public abstract Match0MethodSpec build();
   }
 }
