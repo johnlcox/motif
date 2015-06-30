@@ -31,7 +31,7 @@ public class GeneratorTesting {
     //
     //JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
     //    "com.leacox.motif.cases", "Tuple2Cases", t)
-    //    .withMatch2Method(tuple2Match)
+    //    .addMatch2Method(tuple2Match)
     //    .build().generate();
     //
     //try {
@@ -52,7 +52,7 @@ public class GeneratorTesting {
     //
     //JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
     //    "com.leacox.motif.cases", "Tuple3Cases", t)
-    //    .withMatch3Method(tuple3Match)
+    //    .addMatch3Method(tuple3Match)
     //    .build().generate();
     //
     //try {
@@ -66,7 +66,7 @@ public class GeneratorTesting {
     //TypeName l = ParameterizedTypeName.get(ClassName.get(List.class), E);
     //
     //JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListCases", l)
-    //    .withMatch2Method("headTail", HeadTailFieldExtractor.class, E, "head", l, "tail")
+    //    .addMatch2Method("headTail", HeadTailFieldExtractor.class, E, "head", l, "tail")
     //    .build().generate();
     //
     //try {

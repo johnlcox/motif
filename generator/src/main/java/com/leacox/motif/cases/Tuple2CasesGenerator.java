@@ -44,7 +44,7 @@ final class Tuple2CasesGenerator {
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple2Cases", t)
-        .withMatch2Method(tuple2Match)
+        .addMatch2Method(tuple2Match)
         .build().generate();
 
     try {

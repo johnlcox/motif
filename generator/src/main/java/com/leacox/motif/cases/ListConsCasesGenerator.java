@@ -52,9 +52,9 @@ final class ListConsCasesGenerator {
         .paramAName("head").paramBType(l).paramBName("tail").build();
 
     JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListConsCases", l)
-        .withMatch0Method(nilMatch)
-        .withMatch1Method(headNilMatch)
-        .withMatch2Method(headTailMatch)
+        .addMatch0Method(nilMatch)
+        .addMatch1Method(headNilMatch)
+        .addMatch2Method(headTailMatch)
         .build().generate();
 
     try {

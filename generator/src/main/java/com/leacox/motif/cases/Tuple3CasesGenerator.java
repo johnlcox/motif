@@ -45,7 +45,7 @@ final class Tuple3CasesGenerator {
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple3Cases", t)
-        .withMatch3Method(tuple3Match)
+        .addMatch3Method(tuple3Match)
         .build().generate();
 
     try {

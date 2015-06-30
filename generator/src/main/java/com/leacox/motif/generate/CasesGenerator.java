@@ -15,6 +15,7 @@
  */
 package com.leacox.motif.generate;
 
+import com.google.common.collect.Lists;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -68,10 +69,10 @@ public final class CasesGenerator {
     private final String className;
     private final TypeName matchType;
 
-    private List<MethodSpec> match0Methods;
-    private List<MethodSpec> match1Methods;
-    private List<MethodSpec> match2Methods;
-    private List<MethodSpec> match3Methods;
+    private final List<MethodSpec> match0Methods = Lists.newArrayList();
+    private final List<MethodSpec> match1Methods = Lists.newArrayList();
+    private final List<MethodSpec> match2Methods = Lists.newArrayList();
+    private final List<MethodSpec> match3Methods = Lists.newArrayList();
 
     private Builder(String packageName, String className, TypeName matchType) {
       this.packageName = packageName;
@@ -79,41 +80,44 @@ public final class CasesGenerator {
       this.matchType = matchType;
     }
 
-    public Builder withMatch0Method(Match0MethodSpec match0MethodSpec) {
-      this.match0Methods = new Match0MethodPermutationBuilder(
-          matchType, match0MethodSpec.matchExtractor(), match0MethodSpec.name())
-          .build();
+    public Builder addMatch0Method(Match0MethodSpec match0MethodSpec) {
+      match0Methods.addAll(
+          new Match0MethodPermutationBuilder(
+              matchType, match0MethodSpec.matchExtractor(), match0MethodSpec.name())
+              .build());
 
       return this;
     }
 
-    public Builder withMatch1Method(Match1MethodSpec match1MethodSpec) {
-      this.match1Methods = new Match1MethodPermutationBuilder(
-          matchType, match1MethodSpec.matchExtractor(), match1MethodSpec.name(),
-          match1MethodSpec.paramAType(), match1MethodSpec.paramAName(), MAX_ARITY)
-          .build();
+    public Builder addMatch1Method(Match1MethodSpec match1MethodSpec) {
+      match1Methods.addAll(
+          new Match1MethodPermutationBuilder(
+              matchType, match1MethodSpec.matchExtractor(), match1MethodSpec.name(),
+              match1MethodSpec.paramAType(), match1MethodSpec.paramAName(), MAX_ARITY)
+              .build());
 
       return this;
     }
 
-    public Builder withMatch2Method(Match2MethodSpec match2MethodSpec) {
-      this.match2Methods =
+    public Builder addMatch2Method(Match2MethodSpec match2MethodSpec) {
+      match2Methods.addAll(
           new Match2MethodPermutationBuilder(
               matchType, match2MethodSpec.matchExtractor(), match2MethodSpec.name(),
               match2MethodSpec.paramAType(), match2MethodSpec.paramAName(),
               match2MethodSpec.paramBType(), match2MethodSpec.paramBName(), MAX_ARITY)
-              .build();
+              .build());
 
       return this;
     }
 
-    public Builder withMatch3Method(Match3MethodSpec match3MethodSpec) {
-      this.match3Methods = new Match3MethodPermutationBuilder(
-          matchType, match3MethodSpec.matchExtractor(), match3MethodSpec.name(),
-          match3MethodSpec.paramAType(), match3MethodSpec.paramAName(),
-          match3MethodSpec.paramBType(), match3MethodSpec.paramBName(),
-          match3MethodSpec.paramCType(), match3MethodSpec.paramCName(), MAX_ARITY)
-          .build();
+    public Builder addMatch3Method(Match3MethodSpec match3MethodSpec) {
+      match3Methods.addAll(
+          new Match3MethodPermutationBuilder(
+              matchType, match3MethodSpec.matchExtractor(), match3MethodSpec.name(),
+              match3MethodSpec.paramAType(), match3MethodSpec.paramAName(),
+              match3MethodSpec.paramBType(), match3MethodSpec.paramBName(),
+              match3MethodSpec.paramCType(), match3MethodSpec.paramCName(), MAX_ARITY)
+              .build());
 
       return this;
     }
