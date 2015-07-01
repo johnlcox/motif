@@ -9,6 +9,8 @@ branches:
 
 sudo: required
 
-script:
-  - sudo apt-get update && sudo apt-get install oracle-java8-installer
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install --only-upgrade -y oracle-java8-installer
   - java -version
+  - mvn --version
