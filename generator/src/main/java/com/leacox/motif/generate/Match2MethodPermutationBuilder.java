@@ -27,6 +27,7 @@ import com.squareup.javapoet.TypeVariableName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,7 +38,10 @@ import javax.lang.model.element.Modifier;
  */
 final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
   private final TypeName input;
+  private final TypeName nonMatchParamType;
+  private final String nonMatchParamName;
   private final TypeName fieldExtractor;
+  private final ImmutableList<String> extractorArgs;
   private final String summaryJavadoc;
   private final String methodName;
   private final TypeName a;
@@ -49,11 +53,15 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
   private final List<TypeNameWithArity> typeBPermutations;
 
   Match2MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
-      String methodName, TypeName a,
-      String aName, TypeName b, String bName, int maxArity) {
+      TypeName input, TypeName nonMatchParamType, String nonMatchParamName,
+      Class<? extends FieldExtractor> inputExtractor, ImmutableList<String> extractorArgs,
+      String summaryJavadoc, String methodName, TypeName a, String aName,
+      TypeName b, String bName, int maxArity) {
     this.input = input;
+    this.nonMatchParamType = nonMatchParamType;
+    this.nonMatchParamName = nonMatchParamName;
     this.fieldExtractor = TypeName.get(inputExtractor);
+    this.extractorArgs = extractorArgs;
     this.summaryJavadoc = summaryJavadoc;
     this.methodName = methodName;
     this.a = a;
@@ -78,18 +86,27 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
             a -> paramTypesB.stream()
                 .filter(b -> a.arity + b.arity <= maxArity)
                 .map(
-                    b -> MethodSpec.methodBuilder(methodName)
-                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .addJavadoc(summaryJavadoc)
-                        .addJavadoc(getJavadoc(a, b))
-                        .returns(getReturnType(inputType, a, b))
-                        .addTypeVariables(getTypeVariables(inputType, a, b))
-                        .addParameter(a.typeName, aName)
-                        .addParameter(b.typeName, bName)
-                        .addStatement(getMatcherStatement(a, b), getMatcherStatementArgs(2))
-                        .addStatement(
-                            getReturnStatement(a, b), getReturnStatementArgs(inputType, a, b))
-                        .build()))
+                    b -> {
+                      MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
+                          .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                          .addJavadoc(summaryJavadoc)
+                          .addJavadoc(getJavadoc(a, b))
+                          .returns(getReturnType(inputType, a, b))
+                          .addTypeVariables(getTypeVariables(inputType, a, b));
+
+                      if (nonMatchParamType != null && nonMatchParamName != null) {
+                        methodBuilder.addParameter(nonMatchParamType, nonMatchParamName);
+                      }
+
+                      return methodBuilder.addParameter(a.typeName, aName)
+                          .addParameter(b.typeName, bName)
+                          .addStatement(getMatcherStatement(a, b), getMatcherStatementArgs(2))
+                          .addStatement(
+                              getReturnStatement(a, b), getReturnStatementArgs(inputType, a, b))
+                          .build();
+                    }
+                )
+        )
         .collect(Collectors.toList());
   }
 
@@ -212,7 +229,14 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     MatchType secondMatch = getMatchType(b.typeName);
 
     if (firstMatch == MatchType.EXACT && secondMatch == MatchType.EXACT) {
-      return "return new $T(matchers, new $T<>())" + decompose;
+      String args = "";
+      if (extractorArgs != null) {
+        args = extractorArgs.stream().collect(Collectors.joining(", "));
+      }
+      return "return new $T(matchers, new $T<>(" + args + "))" + decompose;
+    } else if (extractorArgs != null) {
+      String args = extractorArgs.stream().collect(Collectors.joining(", "));
+      return "return new $T(matchers, " + indexes + ", new $T<>(" + args + "))" + decompose;
     } else {
       return "return new $T(matchers, " + indexes + ", new $T<>())" + decompose;
     }

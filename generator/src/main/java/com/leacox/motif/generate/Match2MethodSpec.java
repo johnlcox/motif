@@ -15,10 +15,14 @@
  */
 package com.leacox.motif.generate;
 
+import com.leacox.motif.cases.Nullable;
 import com.leacox.motif.extract.FieldExtractor;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.TypeName;
+
+import java.util.List;
 
 /**
  * @author John Leacox
@@ -27,7 +31,16 @@ import com.squareup.javapoet.TypeName;
 public abstract class Match2MethodSpec {
   public abstract String name();
 
+  @Nullable
+  public abstract TypeName nonMatchParamType();
+
+  @Nullable
+  public abstract String nonMatchParamName();
+
   public abstract Class<? extends FieldExtractor> matchExtractor();
+
+  @Nullable
+  public abstract ImmutableList<String> matchExtractorArgs();
 
   public abstract String summaryJavadoc();
 
@@ -47,7 +60,16 @@ public abstract class Match2MethodSpec {
   public abstract static class Builder {
     public abstract Builder name(String methodName);
 
+    @Nullable
+    public abstract Builder nonMatchParamType(TypeName type);
+
+    @Nullable
+    public abstract Builder nonMatchParamName(String name);
+
     public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+
+    @Nullable
+    public abstract Builder matchExtractorArgs(List<String> args);
 
     public abstract Builder summaryJavadoc(String summaryJavadoc);
 

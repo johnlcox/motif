@@ -55,7 +55,18 @@ abstract class BaseMatchMethodPermutationBuilder {
 
   protected List<TypeVariableName> getTypeVariables(TypeName t) {
     return match(t)
-        .when(typeOf(TypeVariableName.class)).get(v -> Lists.of(v))
+        .when(typeOf(TypeVariableName.class)).get(
+            v -> {
+              if (v.bounds.isEmpty()) {
+                return ImmutableList.of(v);
+              } else {
+                return Stream.concat(
+                    Stream.of(v), v.bounds.stream()
+                        .map(b -> getTypeVariables(b))
+                        .flatMap(b -> b.stream()))
+                    .collect(Collectors.toList());
+              }
+            })
         .when(typeOf(ParameterizedTypeName.class)).get(
             p -> p.typeArguments.stream()
                 .map(v -> getTypeVariables(v))

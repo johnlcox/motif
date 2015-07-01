@@ -136,8 +136,9 @@ public final class CasesGenerator {
     public Builder addMatch2Method(Match2MethodSpec match2MethodSpec) {
       match2Methods.addAll(
           new Match2MethodPermutationBuilder(
-              matchType, match2MethodSpec.matchExtractor(), match2MethodSpec.summaryJavadoc(),
-              match2MethodSpec.name(),
+              matchType, match2MethodSpec.nonMatchParamType(), match2MethodSpec.nonMatchParamName(),
+              match2MethodSpec.matchExtractor(), match2MethodSpec.matchExtractorArgs(),
+              match2MethodSpec.summaryJavadoc(),match2MethodSpec.name(),
               match2MethodSpec.paramAType(), match2MethodSpec.paramAName(),
               match2MethodSpec.paramBType(), match2MethodSpec.paramBName(), MAX_ARITY)
               .build());

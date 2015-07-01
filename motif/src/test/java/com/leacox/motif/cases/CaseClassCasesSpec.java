@@ -18,7 +18,7 @@ package com.leacox.motif.cases;
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.CaseClassCases.case2;
+import static com.leacox.motif.cases.Case2Cases.case2;
 
 import com.leacox.motif.caseclass.Case2;
 
