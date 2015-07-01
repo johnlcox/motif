@@ -1,6 +1,8 @@
 Motif
 =====
 
+[![Build Status](https://travis-ci.org/johnlcox/motif.png)](https://travis-ci.org/johnlcox/motif)
+
 A pattern matching library for Java 8. Motif provides scala-like pattern matching in Java 8.
 
 ## Examples
