@@ -56,9 +56,9 @@
 <div class="highlight highlight-java"><pre><span class="pl-smi">IntStream</span><span class="pl-k">.</span>range(<span class="pl-c1">0</span>, <span class="pl-c1">101</span>)<span class="pl-k">.</span>forEach(
     n <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(
         match(<span class="pl-smi">Tuple2</span><span class="pl-k">.</span>of(n <span class="pl-k">%</span> <span class="pl-c1">3</span>, n <span class="pl-k">%</span> <span class="pl-c1">5</span>))
-            .when(caseTuple2(eq(<span class="pl-c1">0</span>), eq(<span class="pl-c1">0</span>)))<span class="pl-k">.</span>get((x, y) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>FizzBuzz<span class="pl-pds">"</span></span>)
-            .when(caseTuple2(eq(<span class="pl-c1">0</span>), any()))<span class="pl-k">.</span>get((x, y) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Fizz<span class="pl-pds">"</span></span>)
-            .when(caseTuple2(any(), eq(<span class="pl-c1">0</span>)))<span class="pl-k">.</span>get((x, y) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Buzz<span class="pl-pds">"</span></span>)
+            .when(tuple2(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>))<span class="pl-k">.</span>get(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>FizzBuzz<span class="pl-pds">"</span></span>)
+            .when(tuple2(<span class="pl-c1">0</span>, any()))<span class="pl-k">.</span>get(y <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Fizz<span class="pl-pds">"</span></span>)
+            .when(tuple2(any(), <span class="pl-c1">0</span>))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Buzz<span class="pl-pds">"</span></span>)
             .orElse(<span class="pl-smi">String</span><span class="pl-k">.</span>valueOf(n))
             .getMatch()
     )
@@ -69,8 +69,8 @@
 
 <div class="highlight highlight-java"><pre><span class="pl-k">Optional&lt;<span class="pl-smi">Person</span>&gt;</span> personOpt <span class="pl-k">=</span> getPerson();
 match(personOpt)
-    .when(caseSome(any()))<span class="pl-k">.</span>then(person <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(person))
-    .when(caseNone())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Person not found<span class="pl-pds">"</span></span>))
+    .when(some(any()))<span class="pl-k">.</span>then(person <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(person))
+    .when(none())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Person not found<span class="pl-pds">"</span></span>))
     .doMatch();</pre></div>
 
 <h3>
@@ -78,10 +78,32 @@ match(personOpt)
 
 <div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">long</span> factorial(<span class="pl-k">long</span> i) {
   <span class="pl-k">return</span> match(i)
-      .when(caseLong(<span class="pl-c1">0</span>))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-c1">1l</span>)
+      .when(caseLong(<span class="pl-c1">0</span>))<span class="pl-k">.</span>get(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-c1">1l</span>)
       .when(caseLong(any()))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> x <span class="pl-k">*</span> factorial(x <span class="pl-k">-</span> <span class="pl-c1">1</span>))
       .getMatch();
 }</pre></div>
+
+<h3>
+<a id="nested-matching" class="anchor" href="#nested-matching" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nested Matching</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">Optional&lt;<span class="pl-k">Tuple2&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span>&gt;</span> opt <span class="pl-k">=</span> <span class="pl-smi">Optional</span><span class="pl-k">.</span>of(<span class="pl-smi">Tuple2</span><span class="pl-k">.</span>of(<span class="pl-s"><span class="pl-pds">"</span>first<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>second<span class="pl-pds">"</span></span>));
+match(opt)
+    .when(some(tuple2(<span class="pl-s"><span class="pl-pds">"</span>third<span class="pl-pds">"</span></span>, any())))<span class="pl-k">.</span>then(b <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(b))
+    .when(some(tuple2(any(), <span class="pl-s"><span class="pl-pds">"</span>second<span class="pl-pds">"</span></span>)))<span class="pl-k">.</span>then(a <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(a))
+    .when(none())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Tuple not found<span class="pl-pds">"</span></span>))
+    .doMatch();</pre></div>
+
+<h3>
+<a id="list-cons-matching" class="anchor" href="#list-cons-matching" aria-hidden="true"><span class="octicon octicon-link"></span></a>List Cons Matching</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> list <span class="pl-k">=</span> <span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>d<span class="pl-pds">"</span></span>);
+match(list)
+    .when(nil())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Empty List<span class="pl-pds">"</span></span>))
+    .when(headNil(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>))<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Singleton List of 'b'<span class="pl-pds">"</span></span>))
+    .when(headNil(any()))<span class="pl-k">.</span>then(head <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Singleton List of <span class="pl-pds">"</span></span> <span class="pl-k">+</span> head))
+    .when(headTail(any(), any()))<span class="pl-k">.</span>then(
+        (head, tail) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>head: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> head <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> Remaining: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> tail))
+    .doMatch();</pre></div>
 
 <h2>
 <a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
