@@ -34,7 +34,7 @@ import java.util.Optional;
  * @author John Leacox
  */
 @RunWith(JunitSuiteRunner.class)
-public class OptionalPatternSpec {
+public class OptionalCasesSpec {
   {
     Optional<String> none = Optional.empty();
     Optional<String> some = Optional.of("a string");

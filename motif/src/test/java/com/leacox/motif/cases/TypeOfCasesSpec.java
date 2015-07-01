@@ -30,7 +30,7 @@ import java.time.ZoneOffset;
  * @author John Leacox
  */
 @RunWith(JunitSuiteRunner.class)
-public class TypeOfPatternSpec {
+public class TypeOfCasesSpec {
   {
     String myString = "string";
     Double pi = 3.14159;

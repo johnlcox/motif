@@ -39,9 +39,10 @@ public final class Motif {
    * <ul>
    *   <li>{@link com.leacox.motif.cases.PrimitiveCases Primitives}</li>
    *   <li>{@link com.leacox.motif.cases.OptionalCases Optional}</li>
-   *   <li>{@link com.leacox.motif.cases.ListCases Lists}</li>
+   *   <li>{@link com.leacox.motif.cases.ListConsCases Lists}</li>
    *   <li>{@link com.leacox.motif.cases.TypeOfCases TypeOf (instanceof)}</li>
-   *   <li>{@link com.leacox.motif.cases.TupleCases Tuples}</li>
+   *   <li>{@link com.leacox.motif.cases.Tuple2Cases Tuple2}</li>
+   *   <li>{@link com.leacox.motif.cases.Tuple3Cases Tuple3}</li>
    *   <li>{@link com.leacox.motif.cases.CaseClassCases Case classes}</li>
    * </ul>
    *

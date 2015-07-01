@@ -16,9 +16,9 @@
 package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
+import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.CaseClassCases.case2;
-import static com.leacox.motif.MatchesAny.any;
 
 import com.leacox.motif.caseclass.Case2;
 
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
  */
 
 @RunWith(JunitSuiteRunner.class)
-public class CasePatternSpec {
+public class CaseClassCasesSpec {
   {
     Case2 cat = Animal.create("Cat", 4);
     NotAnimal rock = NotAnimal.create("Rock", 0);

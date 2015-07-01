@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author John Leacox
  */
 @RunWith(JunitSuiteRunner.class)
-public class PrimitivePatternSpec {
+public class PrimitiveCasesSpec {
   {
     describe(
         "primitive patterns", it -> {

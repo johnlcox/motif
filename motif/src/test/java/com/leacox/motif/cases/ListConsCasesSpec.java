@@ -16,12 +16,12 @@
 package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.ListCases.headNil;
-import static com.leacox.motif.cases.ListCases.headTail;
-import static com.leacox.motif.cases.ListCases.nil;
 import static com.leacox.motif.MatchesAny.__;
 import static com.leacox.motif.MatchesAny.any;
+import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.ListConsCases.headNil;
+import static com.leacox.motif.cases.ListConsCases.headTail;
+import static com.leacox.motif.cases.ListConsCases.nil;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
 
@@ -34,7 +34,7 @@ import java.util.List;
  * @author John Leacox
  */
 @RunWith(JunitSuiteRunner.class)
-public class ListPatternSpec {
+public class ListConsCasesSpec {
   {
     List<String> emptyList = new ArrayList<>();
     List<String> oneItemList = new ArrayList<>();

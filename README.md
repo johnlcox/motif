@@ -11,9 +11,9 @@ A pattern matching library for Java 8. Motif provides scala-like pattern matchin
 IntStream.range(0, 101).forEach(
     n -> System.out.println(
         match(Tuple2.of(n % 3, n % 5))
-            .when(caseTuple2(eq(0), eq(0))).get((x, y) -> "FizzBuzz")
-            .when(caseTuple2(eq(0), any())).get((x, y) -> "Fizz")
-            .when(caseTuple2(any(), eq(0))).get((x, y) -> "Buzz")
+            .when(tuple2(0, 0)).get(() -> "FizzBuzz")
+            .when(tuple2(0, any())).get(y -> "Fizz")
+            .when(tuple2(any(), 0)).get(x -> "Buzz")
             .orElse(String.valueOf(n))
             .getMatch()
     )
@@ -25,8 +25,8 @@ IntStream.range(0, 101).forEach(
 ```java
 Optional<Person> personOpt = getPerson();
 match(personOpt)
-    .when(caseSome(any())).then(person -> doStuff(person))
-    .when(caseNone()).then(() -> System.out.println("Person not found"))
+    .when(some(any())).then(person -> doStuff(person))
+    .when(none()).then(() -> System.out.println("Person not found"))
     .doMatch();
 ```
 
@@ -35,10 +35,34 @@ match(personOpt)
 ```java
 public long factorial(long i) {
   return match(i)
-      .when(caseLong(0)).get(x -> 1l)
+      .when(caseLong(0)).get(() -> 1l)
       .when(caseLong(any())).get(x -> x * factorial(x - 1))
       .getMatch();
 }
+```
+
+### Nested Matching
+
+```java
+Optional<Tuple2<String, String>> opt = Optional.of(Tuple2.of("first", "second"));
+match(opt)
+    .when(some(tuple2("third", any()))).then(b -> doStuff(b))
+    .when(some(tuple2(any(), "second"))).then(a -> doStuff(a))
+    .when(none()).then(() -> System.out.println("Tuple not found"))
+    .doMatch();
+```
+
+### List Cons Matching
+
+```java
+List<String> list = Arrays.asList("a", "b", "c", "d");
+match(list)
+    .when(nil()).then(() -> System.out.println("Empty List"))
+    .when(headNil("b")).then(() -> System.out.println("Singleton List of 'b'"))
+    .when(headNil(any())).then(head -> System.out.println("Singleton List of " + head))
+    .when(headTail(any(), any())).then(
+        (head, tail) -> System.out.println("head: " + head + " Remaining: " + tail))
+    .doMatch();
 ```
 
 ## Download
