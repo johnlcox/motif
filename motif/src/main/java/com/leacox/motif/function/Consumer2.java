@@ -16,6 +16,11 @@
 package com.leacox.motif.function;
 
 /**
+ * An operation on two arguments that returns no result.
+ *
+ * @param <A> the type of argument one
+ * @param <B> the type of argument two
+ *
  * @author John Leacox
  */
 @FunctionalInterface

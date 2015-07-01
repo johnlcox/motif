@@ -55,6 +55,7 @@ final class ListConsCasesGenerator {
         .paramAType(E).paramAName("head").paramBType(l).paramBName("tail").build();
 
     JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListConsCases", l)
+        .addFileComment(Copyright.COPYRIGHT_NOTICE)
         .addJavadoc("Motif cases for matching a {@link List} with cons.\n")
         .addMatch0Method(nilMatch)
         .addMatch1Method(headNilMatch)

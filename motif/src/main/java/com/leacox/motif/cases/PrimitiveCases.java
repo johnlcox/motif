@@ -25,12 +25,15 @@ import com.leacox.motif.extract.Extractor1;
 import com.leacox.motif.extract.FieldExtractor;
 
 import com.leacox.motif.extract.matchers.Matcher;
+import com.leacox.motif.tuple.Tuple1;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
+ * Motif cases for matching primitives.
+ *
  * @author John Leacox
  */
 public final class PrimitiveCases {

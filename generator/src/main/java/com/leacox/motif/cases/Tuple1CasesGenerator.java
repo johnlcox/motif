@@ -16,8 +16,8 @@
 package com.leacox.motif.cases;
 
 import com.leacox.motif.generate.CasesGenerator;
-import com.leacox.motif.generate.Match2MethodSpec;
-import com.leacox.motif.tuple.Tuple2;
+import com.leacox.motif.generate.Match1MethodSpec;
+import com.leacox.motif.tuple.Tuple1;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -30,28 +30,28 @@ import java.io.IOException;
 /**
  * @author John Leacox
  */
-final class Tuple2CasesGenerator {
-  private Tuple2CasesGenerator() {}
+final class Tuple1CasesGenerator {
+  private Tuple1CasesGenerator() {
+  }
 
   public static void main(String[] args) {
     TypeName A = TypeVariableName.get("A");
-    TypeName B = TypeVariableName.get("B");
-    TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple2.class), A, B);
+    TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple1.class), A);
 
-    Match2MethodSpec tuple2Match = Match2MethodSpec.builder()
-        .name("tuple2").matchExtractor(Tuple2FieldExtractor.class)
-        .summaryJavadoc("Matches a tuple of 2 elements.\n")
-        .paramAType(A).paramAName("a").paramBType(B).paramBName("b").build();
+    Match1MethodSpec tuple1Match = Match1MethodSpec.builder()
+        .name("tuple1").matchExtractor(Tuple1FieldExtractor.class)
+        .summaryJavadoc("Matches a tuple of 1 element.\n")
+        .paramAType(A).paramAName("a").build();
 
-    JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
-        "com.leacox.motif.cases", "Tuple2Cases", t)
+    JavaFile tuple1CasesFile = CasesGenerator.newBuilder(
+        "com.leacox.motif.cases", "Tuple1Cases", t)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
-        .addJavadoc("Motif cases for matching a {@link Tuple2}.\n")
-        .addMatch2Method(tuple2Match)
+        .addJavadoc("Motif cases for matching a {@link Tuple1}.\n")
+        .addMatch1Method(tuple1Match)
         .build().generate();
 
     try {
-      tuple2CasesFile.writeTo(System.out);
+      tuple1CasesFile.writeTo(System.out);
     } catch (IOException e) {
       e.printStackTrace();
     }

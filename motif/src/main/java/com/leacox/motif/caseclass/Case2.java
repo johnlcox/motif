@@ -18,8 +18,15 @@ package com.leacox.motif.caseclass;
 import com.leacox.motif.tuple.Tuple2;
 
 /**
+ * Interface for a case class of 2 elements.
+ *
+ * <p>Case classes must be able to extract their elements into a {@code Tuple}.
+ *
  * @author John Leacox
  */
 public interface Case2<A, B> {
+  /**
+   * Extracts the case class fields into a {@link Tuple2}.
+   */
   Tuple2<A, B> extract();
 }

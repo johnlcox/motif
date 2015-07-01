@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Motif cases for matching on {@link Class} and extracting the value.
+ *
  * @author John Leacox
  */
 public final class TypeOfCases {
@@ -84,6 +86,11 @@ public final class TypeOfCases {
     }
   }
 
+  /**
+   * Matches a value on {@link Class}.
+   *
+   * <p>If matched, the value is extracted.
+   */
   public static <S, T> DecomposableMatchBuilder1<S, T> typeOf(Class<T> clazz) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(any()); // The extractor takes care of the matching

@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.leacox.motif.extract;
+package com.leacox.motif.cases;
+
+import com.leacox.motif.extract.Extractor1;
+import com.leacox.motif.tuple.Tuple1;
 
 import java.util.Optional;
 
 /**
  * @author John Leacox
  */
-public interface Extractor1<T, A> {
-  Optional<A> unapply(T t);
+public class Tuple1Extractor<A> implements Extractor1<Tuple1<A>, A> {
+  @Override
+  public Optional<A> unapply(Tuple1<A> tuple1) {
+    return tuple1.first() == null ? Optional.empty() : Optional.ofNullable(tuple1.first());
+  }
 
-  Class getExtractorClass();
+  @Override
+  public Class<Tuple1> getExtractorClass() {
+    return Tuple1.class;
+  }
 }

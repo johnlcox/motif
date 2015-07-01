@@ -16,6 +16,13 @@
 package com.leacox.motif.function;
 
 /**
+ * A function of three arguments.
+ *
+ * @param <A> the type of argument one
+ * @param <B> the type of argument two
+ * @param <C> the type of argument three
+ * @param <R> the type of the result
+ *
  * @author John Leacox
  */
 @FunctionalInterface

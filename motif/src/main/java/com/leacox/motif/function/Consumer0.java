@@ -16,6 +16,8 @@
 package com.leacox.motif.function;
 
 /**
+ * An operation on zero arguments that returns no result.
+ *
  * @author John Leacox
  */
 @FunctionalInterface

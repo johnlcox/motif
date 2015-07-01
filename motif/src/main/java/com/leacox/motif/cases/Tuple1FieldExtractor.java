@@ -13,15 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.leacox.motif.extract;
+package com.leacox.motif.cases;
 
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple1;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
  * @author John Leacox
  */
-public interface Extractor1<T, A> {
-  Optional<A> unapply(T t);
+final class Tuple1FieldExtractor<A> implements FieldExtractor<Tuple1<A>> {
+  private final Tuple1Extractor<A> tuple1Extractor = new Tuple1Extractor<>();
 
-  Class getExtractorClass();
+  @Override
+  public Optional<List<Object>> unapply(Tuple1<A> value) {
+    Optional<A> opt = tuple1Extractor.unapply(value);
+    if (!opt.isPresent()) {
+      return Optional.empty();
+    }
+
+    return Optional.of(value.toList());
+  }
+
+  @Override
+  public Class<?> getExtractorClass() {
+    return tuple1Extractor.getExtractorClass();
+  }
 }

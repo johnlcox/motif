@@ -48,6 +48,7 @@ final class Tuple3CasesGenerator {
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple3Cases", t)
+        .addFileComment(Copyright.COPYRIGHT_NOTICE)
         .addJavadoc("Motif cases for matching a {@link Tuple3}.\n")
         .addMatch3Method(tuple3Match)
         .build().generate();

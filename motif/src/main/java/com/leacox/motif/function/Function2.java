@@ -16,6 +16,11 @@
 package com.leacox.motif.function;
 
 /**
+ * A function of two arguments.
+ *
+ * @param <A> the type of argument one
+ * @param <B> the type of argument two
+ * @param <R> the type of the result
  * @author John Leacox
  */
 @FunctionalInterface
