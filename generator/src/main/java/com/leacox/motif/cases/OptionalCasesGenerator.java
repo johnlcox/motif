@@ -47,7 +47,7 @@ final class OptionalCasesGenerator {
         .withName("some").withSummaryJavadoc("Matches a non-empty {@link Optional}.\n")
         .withMatchExtractor(OptionalFieldExtractor.class).withParamA(T, "t").build();
 
-    JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "OptionalCases", o)
+    JavaFile optionalCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "OptionalCases", o)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
         .addJavadoc("Motif cases for matching an {@link Optional}.\n")
         .addMatch0Method(noneMatch)
@@ -55,7 +55,7 @@ final class OptionalCasesGenerator {
         .build().generate();
 
     try {
-      listCasesFile.writeTo(System.out);
+      optionalCasesFile.writeTo(System.out);
     } catch (IOException e) {
       e.printStackTrace();
     }

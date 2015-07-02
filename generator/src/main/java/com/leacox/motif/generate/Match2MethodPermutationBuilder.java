@@ -188,19 +188,8 @@ final class Match2MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     MatchType firstMatch = getMatchType(a.typeName);
     MatchType secondMatch = getMatchType(b.typeName);
 
-    List<TypeName> extractA;
-    if (firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) {
-      extractA = ImmutableList.of(paramA.type);
-    } else {
-      extractA = ImmutableList.of();
-    }
-
-    List<TypeName> extractB;
-    if (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY) {
-      extractB = ImmutableList.of(paramB.type);
-    } else {
-      extractB = ImmutableList.of();
-    }
+    List<TypeName> extractA = getReturnStatementArgs(firstMatch, paramA.type);
+    List<TypeName> extractB = getReturnStatementArgs(secondMatch, paramB.type);
 
     TypeName[] typeVariables =
         Stream.of(ImmutableList.of(inputType), extractA, extractB)

@@ -15,6 +15,8 @@
  */
 package com.leacox.motif.generate;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import com.google.common.collect.Lists;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -46,8 +48,7 @@ public final class CasesGenerator {
     this.methods = builder.getAllMethods();
   }
 
-  public static Builder newBuilder(
-      String packageName, String className, TypeName matchType) {
+  public static Builder newBuilder(String packageName, String className, TypeName matchType) {
     return new Builder(packageName, className, matchType);
   }
 
@@ -136,6 +137,33 @@ public final class CasesGenerator {
     public Builder addMatch3Method(Match3MethodSpec match3MethodSpec) {
       match3Methods.addAll(
           new Match3MethodPermutationBuilder(matchType, match3MethodSpec, MAX_ARITY).build());
+
+      return this;
+    }
+
+    public Builder addMatch1Method(Match1MethodSpec match1MethodSpec, int maxArity) {
+      checkArgument(
+          maxArity <= MAX_ARITY, "Arity greater than " + MAX_ARITY + "is not currently supported");
+      match1Methods.addAll(
+          new Match1MethodPermutationBuilder(matchType, match1MethodSpec, maxArity).build());
+
+      return this;
+    }
+
+    public Builder addMatch2Method(Match2MethodSpec match2MethodSpec, int maxArity) {
+      checkArgument(
+          maxArity <= MAX_ARITY, "Arity greater than " + MAX_ARITY + "is not currently supported");
+      match2Methods.addAll(
+          new Match2MethodPermutationBuilder(matchType, match2MethodSpec, maxArity).build());
+
+      return this;
+    }
+
+    public Builder addMatch3Method(Match3MethodSpec match3MethodSpec, int maxArity) {
+      checkArgument(
+          maxArity <= MAX_ARITY, "Arity greater than " + MAX_ARITY + "is not currently supported");
+      match3Methods.addAll(
+          new Match3MethodPermutationBuilder(matchType, match3MethodSpec, maxArity).build());
 
       return this;
     }

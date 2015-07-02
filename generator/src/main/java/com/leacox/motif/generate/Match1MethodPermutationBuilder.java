@@ -154,12 +154,7 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
   private Object[] getReturnStatementArgs(TypeName inputType, TypeNameWithArity a) {
     MatchType firstMatch = getMatchType(a.typeName);
 
-    List<TypeName> extractA;
-    if (firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) {
-      extractA = ImmutableList.of(paramA.type);
-    } else {
-      extractA = ImmutableList.of();
-    }
+    List<TypeName> extractA = getReturnStatementArgs(firstMatch, paramA.type);
 
     TypeName[] typeVariables =
         Stream.of(ImmutableList.of(inputType), extractA)

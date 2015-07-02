@@ -107,7 +107,7 @@ public class NestedCasesSpec {
                 List<List<String>> list = Lists.of(Lists.of("a", "b"), Lists.of("c"));
 
                 String result = match(list)
-                    .when(headTail(headTail(any(), any()), headNil(any()))).get(
+                    .when(headTail(headTail(any(), any()), headNil(headNil(any())))).get(
                         (a, b, c) -> "(" + a + ", " + b.get(0) + ", " + c + ")")
                     .getMatch();
 

@@ -18,18 +18,13 @@ package com.leacox.motif.cases;
 import static com.leacox.motif.extract.matchers.ArgumentMatchers.any;
 import static com.leacox.motif.extract.matchers.ArgumentMatchers.eq;
 
+import com.leacox.motif.MatchesAny;
 import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
-import com.leacox.motif.MatchesAny;
-import com.leacox.motif.extract.Extractor1;
-import com.leacox.motif.extract.FieldExtractor;
-
 import com.leacox.motif.extract.matchers.Matcher;
-import com.leacox.motif.tuple.Tuple1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Motif cases for matching primitives.
@@ -40,69 +35,25 @@ public final class PrimitiveCases {
   private PrimitiveCases() {
   }
 
-  private static class PrimitiveExtractor<T> implements Extractor1<T, T> {
-    private final Class<T> primitiveType;
-
-    PrimitiveExtractor(Class<T> primitiveType) {
-      this.primitiveType = primitiveType;
-    }
-
-    @Override
-    public Optional<T> unapply(T t) {
-      return Optional.ofNullable(t);
-    }
-
-    @Override
-    public Class getExtractorClass() {
-      return primitiveType;
-    }
-  }
-
-  private static class PrimitiveFieldsExtractor<T> implements FieldExtractor<T> {
-    private final PrimitiveExtractor<T> primitiveExtractor;
-
-    PrimitiveFieldsExtractor(Class<T> primitiveType) {
-      this.primitiveExtractor = new PrimitiveExtractor<>(primitiveType);
-    }
-
-    @Override
-    public Optional<List<Object>> unapply(T t) {
-      Optional<T> opt = primitiveExtractor.unapply(t);
-      if (!opt.isPresent()) {
-        return Optional.empty();
-      }
-
-      List<Object> fields = new ArrayList<>();
-      fields.add(opt.get());
-
-      return Optional.of(fields);
-    }
-
-    @Override
-    public Class getExtractorClass() {
-      return primitiveExtractor.getExtractorClass();
-    }
-  }
-
   public static DecomposableMatchBuilder0<Byte> caseByte(byte b) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(b));
 
-    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldsExtractor<>(Byte.class));
+    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Byte.class));
   }
 
   public static DecomposableMatchBuilder1<Byte, Byte> caseByte(MatchesAny b) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(any());
 
-    return new DecomposableMatchBuilder1<>(matchers, 0, new PrimitiveFieldsExtractor<>(Byte.class));
+    return new DecomposableMatchBuilder1<>(matchers, 0, new PrimitiveFieldExtractor<>(Byte.class));
   }
 
   public static DecomposableMatchBuilder0<Short> caseShort(short s) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(s));
 
-    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldsExtractor<>(Short.class));
+    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Short.class));
   }
 
   public static DecomposableMatchBuilder1<Short, Short> caseShort(MatchesAny s) {
@@ -110,14 +61,14 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(Short.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(Short.class));
   }
 
   public static DecomposableMatchBuilder0<Integer> caseInt(int i) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(i));
 
-    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldsExtractor<>(Integer.class));
+    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Integer.class));
   }
 
   public static DecomposableMatchBuilder1<Integer, Integer> caseInt(MatchesAny i) {
@@ -125,28 +76,28 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(Integer.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(Integer.class));
   }
 
   public static DecomposableMatchBuilder0<Long> caseLong(long l) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(l));
 
-    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldsExtractor<>(Long.class));
+    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Long.class));
   }
 
   public static DecomposableMatchBuilder1<Long, Long> caseLong(MatchesAny b) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(any());
 
-    return new DecomposableMatchBuilder1<>(matchers, 0, new PrimitiveFieldsExtractor<>(Long.class));
+    return new DecomposableMatchBuilder1<>(matchers, 0, new PrimitiveFieldExtractor<>(Long.class));
   }
 
   public static DecomposableMatchBuilder0<Float> caseFloat(float f) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(f));
 
-    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldsExtractor<>(Float.class));
+    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Float.class));
   }
 
   public static DecomposableMatchBuilder1<Float, Float> caseFloat(MatchesAny F) {
@@ -154,14 +105,14 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(Float.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(Float.class));
   }
 
   public static DecomposableMatchBuilder0<Double> caseDouble(double d) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(d));
 
-    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldsExtractor<>(Double.class));
+    return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Double.class));
   }
 
   public static DecomposableMatchBuilder1<Double, Double> caseDouble(MatchesAny d) {
@@ -169,7 +120,7 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(Double.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(Double.class));
   }
 
   public static DecomposableMatchBuilder0<Character> caseChar(char c) {
@@ -177,7 +128,7 @@ public final class PrimitiveCases {
     matchers.add(eq(c));
 
     return new DecomposableMatchBuilder0<>(
-        matchers, new PrimitiveFieldsExtractor<>(Character.class));
+        matchers, new PrimitiveFieldExtractor<>(Character.class));
   }
 
   public static DecomposableMatchBuilder1<Character, Character> caseChar(MatchesAny c) {
@@ -185,7 +136,7 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(Character.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(Character.class));
   }
 
   public static DecomposableMatchBuilder0<String> caseString(String s) {
@@ -193,7 +144,7 @@ public final class PrimitiveCases {
     matchers.add(eq(s));
 
     return new DecomposableMatchBuilder0<>(
-        matchers, new PrimitiveFieldsExtractor<>(String.class));
+        matchers, new PrimitiveFieldExtractor<>(String.class));
   }
 
   public static DecomposableMatchBuilder1<String, String> caseString(MatchesAny s) {
@@ -201,7 +152,7 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(String.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(String.class));
   }
 
   public static DecomposableMatchBuilder0<Boolean> caseBoolean(boolean b) {
@@ -209,7 +160,7 @@ public final class PrimitiveCases {
     matchers.add(eq(b));
 
     return new DecomposableMatchBuilder0<>(
-        matchers, new PrimitiveFieldsExtractor<>(Boolean.class));
+        matchers, new PrimitiveFieldExtractor<>(Boolean.class));
   }
 
   public static DecomposableMatchBuilder1<Boolean, Boolean> caseBoolean(MatchesAny b) {
@@ -217,6 +168,6 @@ public final class PrimitiveCases {
     matchers.add(any());
 
     return new DecomposableMatchBuilder1<>(
-        matchers, 0, new PrimitiveFieldsExtractor<>(Boolean.class));
+        matchers, 0, new PrimitiveFieldExtractor<>(Boolean.class));
   }
 }

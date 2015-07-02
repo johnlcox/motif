@@ -45,7 +45,7 @@ final class Tuple3CasesGenerator {
         .withMatchExtractor(Tuple3FieldExtractor.class).withParamA(A, "a")
         .withParamB(B, "b").withParamC(C, "c").build();
 
-    JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
+    JavaFile tuple3CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple3Cases", t)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
         .addJavadoc("Motif cases for matching a {@link Tuple3}.\n")
@@ -53,7 +53,7 @@ final class Tuple3CasesGenerator {
         .build().generate();
 
     try {
-      tuple2CasesFile.writeTo(System.out);
+      tuple3CasesFile.writeTo(System.out);
     } catch (IOException e) {
       e.printStackTrace();
     }

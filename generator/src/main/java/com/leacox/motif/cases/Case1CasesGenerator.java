@@ -47,7 +47,7 @@ final class Case1CasesGenerator {
         .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case1FieldExtractor.class, "clazz")
         .withParamA(A, "a").build();
 
-    JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
+    JavaFile cases1CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Case1Cases", t)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
         .addJavadoc("Motif cases for matching a {@link Case1}.\n")
@@ -55,7 +55,7 @@ final class Case1CasesGenerator {
         .build().generate();
 
     try {
-      tuple2CasesFile.writeTo(System.out);
+      cases1CasesFile.writeTo(System.out);
     } catch (IOException e) {
       e.printStackTrace();
     }
