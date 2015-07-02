@@ -26,29 +26,25 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author John Leacox
  */
 final class Case2CasesGenerator {
-  private Case2CasesGenerator() {}
+  private Case2CasesGenerator() {
+  }
 
   public static void main(String[] args) {
     TypeName A = TypeVariableName.get("A");
     TypeName B = TypeVariableName.get("B");
-    //TypeName t = ParameterizedTypeName.get(ClassName.get(Case2.class), A, B);
     TypeName bounds = ParameterizedTypeName.get(ClassName.get(Case2.class), A, B);
     TypeName t = TypeVariableName.get("T", bounds);
     TypeName clazz = ParameterizedTypeName.get(ClassName.get(Class.class), t);
 
     Match2MethodSpec tuple2Match = Match2MethodSpec.builder()
-        .name("case2").nonMatchParamType(clazz).nonMatchParamName("clazz")
-        .matchExtractor(Case2FieldExtractor.class).matchExtractorArgs(
-            Collections.singletonList("clazz"))
-        .summaryJavadoc("Matches a case class of two elements.\n")
-        .paramAType(A).paramAName("a").paramBType(B).paramBName("b").build();
+        .withName("case2").withSummaryJavadoc("Matches a case class of two elements.\n")
+        .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case2FieldExtractor.class, "clazz")
+        .withParamA(A, "a").withParamB(B, "b").build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Case2Cases", t)

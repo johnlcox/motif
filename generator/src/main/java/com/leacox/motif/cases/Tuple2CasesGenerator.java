@@ -31,7 +31,8 @@ import java.io.IOException;
  * @author John Leacox
  */
 final class Tuple2CasesGenerator {
-  private Tuple2CasesGenerator() {}
+  private Tuple2CasesGenerator() {
+  }
 
   public static void main(String[] args) {
     TypeName A = TypeVariableName.get("A");
@@ -39,9 +40,9 @@ final class Tuple2CasesGenerator {
     TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple2.class), A, B);
 
     Match2MethodSpec tuple2Match = Match2MethodSpec.builder()
-        .name("tuple2").matchExtractor(Tuple2FieldExtractor.class)
-        .summaryJavadoc("Matches a tuple of 2 elements.\n")
-        .paramAType(A).paramAName("a").paramBType(B).paramBName("b").build();
+        .withName("tuple2").withSummaryJavadoc("Matches a tuple of 2 elements.\n")
+        .withMatchExtractor(Tuple2FieldExtractor.class).withParamA(A, "a").withParamB(B, "b")
+        .build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple2Cases", t)

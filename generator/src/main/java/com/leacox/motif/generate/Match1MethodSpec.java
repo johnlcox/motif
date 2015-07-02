@@ -15,42 +15,78 @@
  */
 package com.leacox.motif.generate;
 
-import com.leacox.motif.extract.FieldExtractor;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.google.auto.value.AutoValue;
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple2;
+
+import com.google.common.collect.Lists;
 import com.squareup.javapoet.TypeName;
+
+import java.util.List;
 
 /**
  * @author John Leacox
  */
-@AutoValue
-public abstract class Match1MethodSpec {
-  public abstract String name();
 
-  public abstract Class<? extends FieldExtractor> matchExtractor();
+public final class Match1MethodSpec {
+  final String name;
+  final List<MethodParam> nonMatchParams;
+  final Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+  final String summaryJavadoc;
+  final MethodParam paramA;
 
-  public abstract String summaryJavadoc();
-
-  public abstract TypeName paramAType();
-
-  public abstract String paramAName();
-
-  public static Builder builder() {
-    return new AutoValue_Match1MethodSpec.Builder();
+  private Match1MethodSpec(Builder builder) {
+    this.name = builder.name;
+    this.nonMatchParams = builder.nonMatchParams;
+    this.fieldExtractorWithArgs = builder.fieldExtractorWithArgs;
+    this.summaryJavadoc = builder.summaryJavadoc;
+    this.paramA = builder.paramA;
   }
 
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder name(String methodName);
+  public static Builder builder() {
+    return new Builder();
+  }
 
-    public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+  public static class Builder {
+    private String name;
+    private final List<MethodParam> nonMatchParams = Lists.newArrayList();
+    private Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+    private String summaryJavadoc;
+    private MethodParam paramA;
 
-    public abstract Builder summaryJavadoc(String summaryJavadoc);
+    public Builder withName(String methodName) {
+      this.name = methodName;
+      return this;
+    }
 
-    public abstract Builder paramAType(TypeName aType);
+    public Builder addNonMatchParam(TypeName type, String name) {
+      nonMatchParams.add(MethodParam.create(type, name));
+      return this;
+    }
 
-    public abstract Builder paramAName(String aName);
+    public Builder withMatchExtractor(
+        Class<? extends FieldExtractor> matchExtractor, Object... args) {
+      fieldExtractorWithArgs = Tuple2.of(matchExtractor, args);
+      return this;
+    }
 
-    public abstract Match1MethodSpec build();
+    public Builder withSummaryJavadoc(String summaryJavadoc) {
+      this.summaryJavadoc = summaryJavadoc;
+      return this;
+    }
+
+    public Builder withParamA(TypeName type, String name) {
+      this.paramA = MethodParam.create(type, name);
+      return this;
+    }
+
+    public Match1MethodSpec build() {
+      checkNotNull(name, "name == null");
+      checkNotNull(fieldExtractorWithArgs, "matchExtractor == null");
+      checkNotNull(paramA, "paramA == null");
+
+      return new Match1MethodSpec(this);
+    }
   }
 }

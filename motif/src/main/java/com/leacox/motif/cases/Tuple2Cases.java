@@ -41,57 +41,57 @@ public final class Tuple2Cases {
    * Matches a tuple of 2 elements.
    */
   public static <A, B> DecomposableMatchBuilder0<Tuple2<A, B>> tuple2(A a, B b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a) , ArgumentMatchers.eq(b));
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder0<Tuple2<A, B>>(matchers, new Tuple2FieldExtractor<>());
   }
 
   /**
    * Matches a tuple of 2 elements.
    *
-   * <p>If matched,  and the {@code b} value is extracted.
+   * <p>If matched, the {@code b} value is extracted.
    */
   public static <A, B> DecomposableMatchBuilder1<Tuple2<A, B>, B> tuple2(A a, MatchesAny b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a) , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<Tuple2<A, B>, B>(matchers, 1, new Tuple2FieldExtractor<>());
   }
 
   /**
    * Matches a tuple of 2 elements.
    *
-   * <p>If matched,  and the {@code b} value is decomposed to 0.
+   * <p>If matched, the {@code b} value is decomposed to 0.
    */
   public static <A, B> DecomposableMatchBuilder0<Tuple2<A, B>> tuple2(A a, DecomposableMatchBuilder0<B> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a) , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<Tuple2<A, B>, B>(matchers, 1, new Tuple2FieldExtractor<>()).decomposeFirst(b);
   }
 
   /**
    * Matches a tuple of 2 elements.
    *
-   * <p>If matched,  and the {@code b} value is decomposed to 1.
+   * <p>If matched, the {@code b} value is decomposed to 1.
    */
   public static <A, B, B1> DecomposableMatchBuilder1<Tuple2<A, B>, B1> tuple2(A a, DecomposableMatchBuilder1<B, B1> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a) , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<Tuple2<A, B>, B>(matchers, 1, new Tuple2FieldExtractor<>()).decomposeFirst(b);
   }
 
   /**
    * Matches a tuple of 2 elements.
    *
-   * <p>If matched,  and the {@code b} value is decomposed to 2.
+   * <p>If matched, the {@code b} value is decomposed to 2.
    */
   public static <A, B, B1, B2> DecomposableMatchBuilder2<Tuple2<A, B>, B1, B2> tuple2(A a, DecomposableMatchBuilder2<B, B1, B2> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a) , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<Tuple2<A, B>, B>(matchers, 1, new Tuple2FieldExtractor<>()).decomposeFirst(b);
   }
 
   /**
    * Matches a tuple of 2 elements.
    *
-   * <p>If matched,  and the {@code b} value is decomposed to 3.
+   * <p>If matched, the {@code b} value is decomposed to 3.
    */
   public static <A, B, B1, B2, B3> DecomposableMatchBuilder3<Tuple2<A, B>, B1, B2, B3> tuple2(A a, DecomposableMatchBuilder3<B, B1, B2, B3> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a) , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<Tuple2<A, B>, B>(matchers, 1, new Tuple2FieldExtractor<>()).decomposeFirst(b);
   }
 
@@ -101,7 +101,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is extracted.
    */
   public static <A, B> DecomposableMatchBuilder1<Tuple2<A, B>, A> tuple2(MatchesAny a, B b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.eq(b));
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder1<Tuple2<A, B>, A>(matchers, 0, new Tuple2FieldExtractor<>());
   }
 
@@ -111,7 +111,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is extracted.
    */
   public static <A, B> DecomposableMatchBuilder2<Tuple2<A, B>, A, B> tuple2(MatchesAny a, MatchesAny b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>());
   }
 
@@ -121,7 +121,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is decomposed to 0.
    */
   public static <A, B> DecomposableMatchBuilder1<Tuple2<A, B>, A> tuple2(MatchesAny a, DecomposableMatchBuilder0<B> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeSecond(b);
   }
 
@@ -131,7 +131,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is decomposed to 1.
    */
   public static <A, B, B1> DecomposableMatchBuilder2<Tuple2<A, B>, A, B1> tuple2(MatchesAny a, DecomposableMatchBuilder1<B, B1> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeSecond(b);
   }
 
@@ -141,7 +141,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is decomposed to 2.
    */
   public static <A, B, B1, B2> DecomposableMatchBuilder3<Tuple2<A, B>, A, B1, B2> tuple2(MatchesAny a, DecomposableMatchBuilder2<B, B1, B2> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeSecond(b);
   }
 
@@ -151,7 +151,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 0.
    */
   public static <A, B> DecomposableMatchBuilder0<Tuple2<A, B>> tuple2(DecomposableMatchBuilder0<A> a, B b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.eq(b));
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder1<Tuple2<A, B>, A>(matchers, 0, new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -161,7 +161,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 0 and the {@code b} value is extracted.
    */
   public static <A, B> DecomposableMatchBuilder1<Tuple2<A, B>, B> tuple2(DecomposableMatchBuilder0<A> a, MatchesAny b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -171,7 +171,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 0 and the {@code b} value is decomposed to 0.
    */
   public static <A, B> DecomposableMatchBuilder0<Tuple2<A, B>> tuple2(DecomposableMatchBuilder0<A> a, DecomposableMatchBuilder0<B> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -181,7 +181,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 0 and the {@code b} value is decomposed to 1.
    */
   public static <A, B, B1> DecomposableMatchBuilder1<Tuple2<A, B>, B1> tuple2(DecomposableMatchBuilder0<A> a, DecomposableMatchBuilder1<B, B1> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -191,7 +191,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 0 and the {@code b} value is decomposed to 2.
    */
   public static <A, B, B1, B2> DecomposableMatchBuilder2<Tuple2<A, B>, B1, B2> tuple2(DecomposableMatchBuilder0<A> a, DecomposableMatchBuilder2<B, B1, B2> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -201,7 +201,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 0 and the {@code b} value is decomposed to 3.
    */
   public static <A, B, B1, B2, B3> DecomposableMatchBuilder3<Tuple2<A, B>, B1, B2, B3> tuple2(DecomposableMatchBuilder0<A> a, DecomposableMatchBuilder3<B, B1, B2, B3> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -211,7 +211,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 1.
    */
   public static <A, B, A1> DecomposableMatchBuilder1<Tuple2<A, B>, A1> tuple2(DecomposableMatchBuilder1<A, A1> a, B b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.eq(b));
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder1<Tuple2<A, B>, A>(matchers, 0, new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -221,7 +221,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 1 and the {@code b} value is extracted.
    */
   public static <A, B, A1> DecomposableMatchBuilder2<Tuple2<A, B>, A1, B> tuple2(DecomposableMatchBuilder1<A, A1> a, MatchesAny b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -231,7 +231,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 1 and the {@code b} value is decomposed to 0.
    */
   public static <A, B, A1> DecomposableMatchBuilder1<Tuple2<A, B>, A1> tuple2(DecomposableMatchBuilder1<A, A1> a, DecomposableMatchBuilder0<B> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -241,7 +241,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 1 and the {@code b} value is decomposed to 1.
    */
   public static <A, B, A1, B1> DecomposableMatchBuilder2<Tuple2<A, B>, A1, B1> tuple2(DecomposableMatchBuilder1<A, A1> a, DecomposableMatchBuilder1<B, B1> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -251,7 +251,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 1 and the {@code b} value is decomposed to 2.
    */
   public static <A, B, A1, B1, B2> DecomposableMatchBuilder3<Tuple2<A, B>, A1, B1, B2> tuple2(DecomposableMatchBuilder1<A, A1> a, DecomposableMatchBuilder2<B, B1, B2> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -261,7 +261,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 2.
    */
   public static <A, B, A1, A2> DecomposableMatchBuilder2<Tuple2<A, B>, A1, A2> tuple2(DecomposableMatchBuilder2<A, A1, A2> a, B b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.eq(b));
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder1<Tuple2<A, B>, A>(matchers, 0, new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -271,7 +271,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 2 and the {@code b} value is extracted.
    */
   public static <A, B, A1, A2> DecomposableMatchBuilder3<Tuple2<A, B>, A1, A2, B> tuple2(DecomposableMatchBuilder2<A, A1, A2> a, MatchesAny b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -281,7 +281,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 2 and the {@code b} value is decomposed to 0.
    */
   public static <A, B, A1, A2> DecomposableMatchBuilder2<Tuple2<A, B>, A1, A2> tuple2(DecomposableMatchBuilder2<A, A1, A2> a, DecomposableMatchBuilder0<B> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -291,7 +291,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 2 and the {@code b} value is decomposed to 1.
    */
   public static <A, B, A1, A2, B1> DecomposableMatchBuilder3<Tuple2<A, B>, A1, A2, B1> tuple2(DecomposableMatchBuilder2<A, A1, A2> a, DecomposableMatchBuilder1<B, B1> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 
@@ -301,7 +301,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 3.
    */
   public static <A, B, A1, A2, A3> DecomposableMatchBuilder3<Tuple2<A, B>, A1, A2, A3> tuple2(DecomposableMatchBuilder3<A, A1, A2, A3> a, B b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.eq(b));
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder1<Tuple2<A, B>, A>(matchers, 0, new Tuple2FieldExtractor<>()).decomposeFirst(a);
   }
 
@@ -311,7 +311,7 @@ public final class Tuple2Cases {
    * <p>If matched, the {@code a} value is decomposed to 3 and the {@code b} value is decomposed to 0.
    */
   public static <A, B, A1, A2, A3> DecomposableMatchBuilder3<Tuple2<A, B>, A1, A2, A3> tuple2(DecomposableMatchBuilder3<A, A1, A2, A3> a, DecomposableMatchBuilder0<B> b) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any() , ArgumentMatchers.any());
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>()).decomposeFirstAndSecond(a, b);
   }
 }

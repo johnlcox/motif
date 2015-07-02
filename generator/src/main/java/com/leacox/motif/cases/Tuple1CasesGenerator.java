@@ -39,9 +39,8 @@ final class Tuple1CasesGenerator {
     TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple1.class), A);
 
     Match1MethodSpec tuple1Match = Match1MethodSpec.builder()
-        .name("tuple1").matchExtractor(Tuple1FieldExtractor.class)
-        .summaryJavadoc("Matches a tuple of 1 element.\n")
-        .paramAType(A).paramAName("a").build();
+        .withName("tuple1").withSummaryJavadoc("Matches a tuple of 1 element.\n")
+        .withMatchExtractor(Tuple1FieldExtractor.class).withParamA(A, "a").build();
 
     JavaFile tuple1CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple1Cases", t)

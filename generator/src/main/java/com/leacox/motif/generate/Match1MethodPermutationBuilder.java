@@ -16,6 +16,7 @@
 package com.leacox.motif.generate;
 
 import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple2;
 
 import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
@@ -25,6 +26,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,26 +38,24 @@ import javax.lang.model.element.Modifier;
  */
 final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
   private final TypeName input;
-  private final TypeName fieldExtractor;
-  private final String summaryJavadoc;
   private final String methodName;
-  private final TypeName a;
-  private final String aName;
+  private final String summaryJavadoc;
+  private final List<MethodParam> nonMatchParams;
+  private final Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+  private final MethodParam paramA;
   private final int maxArity;
   private final List<TypeNameWithArity> typeAPermutations;
 
   Match1MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
-      String methodName, TypeName a,
-      String aName, int maxArity) {
+      TypeName input, Match1MethodSpec match1MethodSpec, int maxArity) {
     this.input = input;
-    this.fieldExtractor = TypeName.get(inputExtractor);
-    this.summaryJavadoc = summaryJavadoc;
-    this.methodName = methodName;
-    this.a = a;
-    this.aName = aName;
+    this.methodName = match1MethodSpec.name;
+    this.summaryJavadoc = match1MethodSpec.summaryJavadoc;
+    this.nonMatchParams = match1MethodSpec.nonMatchParams;
+    this.fieldExtractorWithArgs = match1MethodSpec.fieldExtractorWithArgs;
+    this.paramA = match1MethodSpec.paramA;
     this.maxArity = maxArity;
-    this.typeAPermutations = createTypeArityList(a, "A", maxArity);
+    this.typeAPermutations = createTypeArityList(paramA.type, "A", maxArity);
   }
 
   public List<MethodSpec> build() {
@@ -68,16 +68,26 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     return paramTypesA.stream()
         .filter(a -> a.arity <= maxArity)
         .map(
-            a -> MethodSpec.methodBuilder(methodName)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addJavadoc(summaryJavadoc)
-                .addJavadoc(getJavadoc(a))
-                .returns(getReturnType(inputType, a))
-                .addTypeVariables(getTypeVariables(inputType, a))
-                .addParameter(a.typeName, aName)
-                .addStatement(getMatcherStatement(a), getMatcherStatementArgs(1))
-                .addStatement(getReturnStatement(a), getReturnStatementArgs(inputType, a))
-                .build())
+            a -> {
+              MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
+                  .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                  .addJavadoc(summaryJavadoc)
+                  .addJavadoc(getJavadoc(a))
+                  .returns(getReturnType(inputType, a))
+                  .addTypeVariables(getTypeVariables(inputType, a));
+
+              if (nonMatchParams != null && !nonMatchParams.isEmpty()) {
+                nonMatchParams.stream().forEach(
+                    p -> methodBuilder.addParameter(p.type, p.name));
+              }
+
+              return methodBuilder.addParameter(a.typeName, paramA.name)
+                  .addStatement(getMatcherStatement(a), getMatcherStatementArgs(1))
+                  .addStatement(
+                      getReturnStatement(a), getReturnStatementArgs(inputType, a))
+                  .build();
+            }
+        )
         .collect(Collectors.toList());
   }
 
@@ -92,9 +102,10 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     }
 
     if (firstMatch == MatchType.DECOMPOSE) {
-      sb.append("the {@code ").append(aName).append("} value is decomposed to ").append(a.arity);
+      sb.append("the {@code ").append(paramA.name).append("} value is decomposed to ")
+          .append(a.arity);
     } else if (firstMatch == MatchType.ANY) {
-      sb.append("the {@code ").append(aName).append("} value is extracted");
+      sb.append("the {@code ").append(paramA.name).append("} value is extracted");
     }
 
     if (firstMatch != MatchType.EXACT) {
@@ -114,7 +125,7 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     int arity = a.arity;
     ClassName unparameterizedType = ClassName.get(getDecomposableBuilderByArity(arity));
 
-    List<TypeName> extractedATypes = getExtractedTypes(a.typeName, this.a);
+    List<TypeName> extractedATypes = getExtractedTypes(a.typeName, paramA.type);
 
     TypeName[] typeVariables =
         Stream.of(ImmutableList.of(inputType), extractedATypes)
@@ -135,7 +146,7 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
   private String getMatcherStatement(TypeNameWithArity a) {
     MatchType firstMatch = getMatchType(a.typeName);
 
-    String matchA = getMatcherString(firstMatch, aName);
+    String matchA = getMatcherString(firstMatch, paramA.name);
 
     return "$T matchers = $T.of($T." + matchA + ")";
   }
@@ -145,7 +156,7 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
     List<TypeName> extractA;
     if (firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) {
-      extractA = ImmutableList.of(this.a);
+      extractA = ImmutableList.of(paramA.type);
     } else {
       extractA = ImmutableList.of();
     }
@@ -161,7 +172,7 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
     List<Object> statementArgs = new ArrayList<>();
     statementArgs.add(returnType);
-    statementArgs.add(fieldExtractor);
+    statementArgs.add(fieldExtractorWithArgs.first());
 
     return statementArgs.toArray(new Object[statementArgs.size()]);
   }
@@ -172,10 +183,17 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
 
     MatchType firstMatch = getMatchType(a.typeName);
 
+    String args = "";
+    if (fieldExtractorWithArgs.second().length > 0) {
+      args = Arrays.stream(fieldExtractorWithArgs.second())
+          .map(x -> x.toString())
+          .collect(Collectors.joining(", "));
+    }
+
     if (firstMatch == MatchType.EXACT) {
-      return "return new $T(matchers, new $T<>())" + decompose;
+      return "return new $T(matchers, new $T<>(" + args + "))" + decompose;
     } else {
-      return "return new $T(matchers, " + indexes + ", new $T<>())" + decompose;
+      return "return new $T(matchers, " + indexes + ", new $T<>(" + args + "))" + decompose;
     }
   }
 
@@ -193,7 +211,7 @@ final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     MatchType firstMatch = getMatchType(a.typeName);
 
     if (firstMatch == MatchType.DECOMPOSE) {
-      return ".decomposeFirst(" + aName + ")";
+      return ".decomposeFirst(" + paramA.name + ")";
     } else {
       return "";
     }

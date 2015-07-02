@@ -15,33 +15,68 @@
  */
 package com.leacox.motif.generate;
 
-import com.leacox.motif.extract.FieldExtractor;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.google.auto.value.AutoValue;
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple2;
+
+import com.google.common.collect.Lists;
+import com.squareup.javapoet.TypeName;
+
+import java.util.List;
 
 /**
  * @author John Leacox
  */
-@AutoValue
-public abstract class Match0MethodSpec {
-  public abstract String name();
+public final class Match0MethodSpec {
+  final String name;
+  final List<MethodParam> nonMatchParams;
+  final Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+  final String summaryJavadoc;
 
-  public abstract Class<? extends FieldExtractor> matchExtractor();
-
-  public abstract String summaryJavadoc();
-
-  public static Builder builder() {
-    return new AutoValue_Match0MethodSpec.Builder();
+  private Match0MethodSpec(Builder builder) {
+    this.name = builder.name;
+    this.nonMatchParams = builder.nonMatchParams;
+    this.fieldExtractorWithArgs = builder.fieldExtractorWithArgs;
+    this.summaryJavadoc = builder.summaryJavadoc;
   }
 
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder name(String methodName);
+  public static Builder builder() {
+    return new Builder();
+  }
 
-    public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+  public static class Builder {
+    private String name;
+    private final List<MethodParam> nonMatchParams = Lists.newArrayList();
+    private Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+    private String summaryJavadoc;
 
-    public abstract Builder summaryJavadoc(String summaryJavadoc);
+    public Builder withName(String methodName) {
+      this.name = methodName;
+      return this;
+    }
 
-    public abstract Match0MethodSpec build();
+    public Builder addNonMatchParam(TypeName type, String name) {
+      nonMatchParams.add(MethodParam.create(type, name));
+      return this;
+    }
+
+    public Builder withMatchExtractor(
+        Class<? extends FieldExtractor> matchExtractor, Object... args) {
+      fieldExtractorWithArgs = Tuple2.of(matchExtractor, args);
+      return this;
+    }
+
+    public Builder withSummaryJavadoc(String summaryJavadoc) {
+      this.summaryJavadoc = summaryJavadoc;
+      return this;
+    }
+
+    public Match0MethodSpec build() {
+      checkNotNull(name, "name == null");
+      checkNotNull(fieldExtractorWithArgs, "matchExtractor == null");
+
+      return new Match0MethodSpec(this);
+    }
   }
 }

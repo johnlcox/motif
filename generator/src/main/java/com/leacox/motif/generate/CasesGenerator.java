@@ -114,47 +114,28 @@ public final class CasesGenerator {
 
     public Builder addMatch0Method(Match0MethodSpec match0MethodSpec) {
       match0Methods.addAll(
-          new Match0MethodPermutationBuilder(
-              matchType, match0MethodSpec.matchExtractor(), match0MethodSpec.summaryJavadoc(),
-              match0MethodSpec.name())
-              .build());
+          new Match0MethodPermutationBuilder(matchType, match0MethodSpec).build());
 
       return this;
     }
 
     public Builder addMatch1Method(Match1MethodSpec match1MethodSpec) {
       match1Methods.addAll(
-          new Match1MethodPermutationBuilder(
-              matchType, match1MethodSpec.matchExtractor(), match1MethodSpec.summaryJavadoc(),
-              match1MethodSpec.name(),
-              match1MethodSpec.paramAType(), match1MethodSpec.paramAName(), MAX_ARITY)
-              .build());
+          new Match1MethodPermutationBuilder(matchType, match1MethodSpec, MAX_ARITY).build());
 
       return this;
     }
 
     public Builder addMatch2Method(Match2MethodSpec match2MethodSpec) {
       match2Methods.addAll(
-          new Match2MethodPermutationBuilder(
-              matchType, match2MethodSpec.nonMatchParamType(), match2MethodSpec.nonMatchParamName(),
-              match2MethodSpec.matchExtractor(), match2MethodSpec.matchExtractorArgs(),
-              match2MethodSpec.summaryJavadoc(),match2MethodSpec.name(),
-              match2MethodSpec.paramAType(), match2MethodSpec.paramAName(),
-              match2MethodSpec.paramBType(), match2MethodSpec.paramBName(), MAX_ARITY)
-              .build());
+          new Match2MethodPermutationBuilder(matchType, match2MethodSpec, MAX_ARITY).build());
 
       return this;
     }
 
     public Builder addMatch3Method(Match3MethodSpec match3MethodSpec) {
       match3Methods.addAll(
-          new Match3MethodPermutationBuilder(
-              matchType, match3MethodSpec.matchExtractor(), match3MethodSpec.summaryJavadoc(),
-              match3MethodSpec.name(),
-              match3MethodSpec.paramAType(), match3MethodSpec.paramAName(),
-              match3MethodSpec.paramBType(), match3MethodSpec.paramBName(),
-              match3MethodSpec.paramCType(), match3MethodSpec.paramCName(), MAX_ARITY)
-              .build());
+          new Match3MethodPermutationBuilder(matchType, match3MethodSpec, MAX_ARITY).build());
 
       return this;
     }

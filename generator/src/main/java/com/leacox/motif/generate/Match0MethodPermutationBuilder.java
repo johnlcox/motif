@@ -16,6 +16,7 @@
 package com.leacox.motif.generate;
 
 import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple2;
 
 import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
@@ -24,7 +25,9 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.lang.model.element.Modifier;
 
@@ -33,17 +36,17 @@ import javax.lang.model.element.Modifier;
  */
 public class Match0MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
   private final TypeName input;
-  private final TypeName fieldExtractor;
-  private final String summaryJavadoc;
   private final String methodName;
+  private final String summaryJavadoc;
+  private final List<MethodParam> nonMatchParams;
+  private final Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
 
-  Match0MethodPermutationBuilder(
-      TypeName input, Class<? extends FieldExtractor> inputExtractor, String summaryJavadoc,
-      String methodName) {
+  Match0MethodPermutationBuilder(TypeName input, Match0MethodSpec match0MethodSpec) {
     this.input = input;
-    this.fieldExtractor = TypeName.get(inputExtractor);
-    this.summaryJavadoc = summaryJavadoc;
-    this.methodName = methodName;
+    this.methodName = match0MethodSpec.name;
+    this.summaryJavadoc = match0MethodSpec.summaryJavadoc;
+    this.nonMatchParams = match0MethodSpec.nonMatchParams;
+    this.fieldExtractorWithArgs = match0MethodSpec.fieldExtractorWithArgs;
   }
 
   public List<MethodSpec> build() {
@@ -51,16 +54,23 @@ public class Match0MethodPermutationBuilder extends BaseMatchMethodPermutationBu
   }
 
   private List<MethodSpec> getMethodPermutations(TypeName inputType, String methodName) {
+    MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
+        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+        .addJavadoc(summaryJavadoc)
+        .returns(getReturnType(inputType))
+        .addTypeVariables(getTypeVariables(inputType));
 
-    return ImmutableList.of(
-        MethodSpec.methodBuilder(methodName)
-            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-            .addJavadoc(summaryJavadoc)
-            .returns(getReturnType(inputType))
-            .addTypeVariables(getTypeVariables(inputType))
-            .addStatement(getMatcherStatement(), getMatcherStatementArgs(0))
-            .addStatement(getReturnStatement(), getReturnStatementArgs(inputType))
-            .build());
+    if (nonMatchParams != null && !nonMatchParams.isEmpty()) {
+      nonMatchParams.stream().forEach(
+          p -> methodBuilder.addParameter(p.type, p.name));
+    }
+
+    MethodSpec methodSpec = methodBuilder.addStatement(
+        getMatcherStatement(), getMatcherStatementArgs(0))
+        .addStatement(getReturnStatement(), getReturnStatementArgs(inputType))
+        .build();
+
+    return ImmutableList.of(methodSpec);
   }
 
   private TypeName getReturnType(TypeName inputType) {
@@ -87,12 +97,19 @@ public class Match0MethodPermutationBuilder extends BaseMatchMethodPermutationBu
 
     List<Object> statementArgs = new ArrayList<>();
     statementArgs.add(returnType);
-    statementArgs.add(fieldExtractor);
+    statementArgs.add(fieldExtractorWithArgs.first());
 
     return statementArgs.stream().toArray(s -> new Object[s]);
   }
 
   private String getReturnStatement() {
-    return "return new $T(matchers, new $T<>())";
+    String args = "";
+    if (fieldExtractorWithArgs.second().length > 0) {
+      args = Arrays.stream(fieldExtractorWithArgs.second())
+          .map(x -> x.toString())
+          .collect(Collectors.joining(", "));
+    }
+
+    return "return new $T(matchers, new $T<>(" + args + "))";
   }
 }

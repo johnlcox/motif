@@ -15,11 +15,12 @@
  */
 package com.leacox.motif.generate;
 
-import com.leacox.motif.cases.Nullable;
-import com.leacox.motif.extract.FieldExtractor;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
+import com.leacox.motif.extract.FieldExtractor;
+import com.leacox.motif.tuple.Tuple2;
+
+import com.google.common.collect.Lists;
 import com.squareup.javapoet.TypeName;
 
 import java.util.List;
@@ -27,60 +28,73 @@ import java.util.List;
 /**
  * @author John Leacox
  */
-@AutoValue
-public abstract class Match2MethodSpec {
-  public abstract String name();
+public final class Match2MethodSpec {
+  final String name;
+  final List<MethodParam> nonMatchParams;
+  final Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+  final String summaryJavadoc;
+  final MethodParam paramA;
+  final MethodParam paramB;
 
-  @Nullable
-  public abstract TypeName nonMatchParamType();
-
-  @Nullable
-  public abstract String nonMatchParamName();
-
-  public abstract Class<? extends FieldExtractor> matchExtractor();
-
-  @Nullable
-  public abstract ImmutableList<String> matchExtractorArgs();
-
-  public abstract String summaryJavadoc();
-
-  public abstract TypeName paramAType();
-
-  public abstract String paramAName();
-
-  public abstract TypeName paramBType();
-
-  public abstract String paramBName();
-
-  public static Builder builder() {
-    return new AutoValue_Match2MethodSpec.Builder();
+  private Match2MethodSpec(Builder builder) {
+    this.name = builder.name;
+    this.nonMatchParams = builder.nonMatchParams;
+    this.fieldExtractorWithArgs = builder.fieldExtractorWithArgs;
+    this.summaryJavadoc = builder.summaryJavadoc;
+    this.paramA = builder.paramA;
+    this.paramB = builder.paramB;
   }
 
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder name(String methodName);
+  public static Builder builder() {
+    return new Builder();
+  }
 
-    @Nullable
-    public abstract Builder nonMatchParamType(TypeName type);
+  public static class Builder {
+    private String name;
+    private final List<MethodParam> nonMatchParams = Lists.newArrayList();
+    private Tuple2<Class<? extends FieldExtractor>, Object[]> fieldExtractorWithArgs;
+    private String summaryJavadoc;
+    private MethodParam paramA;
+    private MethodParam paramB;
 
-    @Nullable
-    public abstract Builder nonMatchParamName(String name);
+    public Builder withName(String methodName) {
+      this.name = methodName;
+      return this;
+    }
 
-    public abstract Builder matchExtractor(Class<? extends FieldExtractor> matchExtractor);
+    public Builder addNonMatchParam(TypeName type, String name) {
+      nonMatchParams.add(MethodParam.create(type, name));
+      return this;
+    }
 
-    @Nullable
-    public abstract Builder matchExtractorArgs(List<String> args);
+    public Builder withMatchExtractor(
+        Class<? extends FieldExtractor> matchExtractor, Object... args) {
+      fieldExtractorWithArgs = Tuple2.of(matchExtractor, args);
+      return this;
+    }
 
-    public abstract Builder summaryJavadoc(String summaryJavadoc);
+    public Builder withSummaryJavadoc(String summaryJavadoc) {
+      this.summaryJavadoc = summaryJavadoc;
+      return this;
+    }
 
-    public abstract Builder paramAType(TypeName aType);
+    public Builder withParamA(TypeName type, String name) {
+      this.paramA = MethodParam.create(type, name);
+      return this;
+    }
 
-    public abstract Builder paramAName(String aName);
+    public Builder withParamB(TypeName type, String name) {
+      this.paramB = MethodParam.create(type, name);
+      return this;
+    }
 
-    public abstract Builder paramBType(TypeName bType);
+    public Match2MethodSpec build() {
+      checkNotNull(name, "name == null");
+      checkNotNull(fieldExtractorWithArgs, "matchExtractor == null");
+      checkNotNull(paramA, "paramA == null");
+      checkNotNull(paramB, "paramB == null");
 
-    public abstract Builder paramBName(String bName);
-
-    public abstract Match2MethodSpec build();
+      return new Match2MethodSpec(this);
+    }
   }
 }

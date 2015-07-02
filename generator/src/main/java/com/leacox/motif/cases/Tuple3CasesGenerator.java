@@ -41,10 +41,9 @@ final class Tuple3CasesGenerator {
     TypeName t = ParameterizedTypeName.get(ClassName.get(Tuple3.class), A, B, C);
 
     Match3MethodSpec tuple3Match = Match3MethodSpec.builder()
-        .name("tuple3").matchExtractor(Tuple3FieldExtractor.class)
-        .summaryJavadoc("Matches a tuple of 2 elements.\n")
-        .paramAType(A).paramAName("a").paramBType(B).paramBName("b").paramCType(C).paramCName("c")
-        .build();
+        .withName("tuple3").withSummaryJavadoc("Matches a tuple of 2 elements.\n")
+        .withMatchExtractor(Tuple3FieldExtractor.class).withParamA(A, "a")
+        .withParamB(B, "b").withParamC(C, "c").build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "Tuple3Cases", t)

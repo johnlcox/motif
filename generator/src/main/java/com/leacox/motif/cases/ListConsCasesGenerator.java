@@ -41,18 +41,19 @@ final class ListConsCasesGenerator {
     TypeName l = ParameterizedTypeName.get(ClassName.get(List.class), E);
 
     Match0MethodSpec nilMatch = Match0MethodSpec.builder()
-        .name("nil").matchExtractor(ListConsNilFieldExtractor.class)
-        .summaryJavadoc("Matches an empty list.\n").build();
+        .withName("nil").withSummaryJavadoc("Matches an empty list.\n")
+        .withMatchExtractor(ListConsNilFieldExtractor.class).build();
 
     Match1MethodSpec headNilMatch = Match1MethodSpec.builder()
-        .name("headNil").matchExtractor(ListConsHeadFieldExtractor.class)
-        .summaryJavadoc("Matches a list with exactly one element.\n").paramAType(E)
-        .paramAName("head").build();
+        .withName("headNil").withSummaryJavadoc("Matches a list with exactly one element.\n")
+        .withMatchExtractor(ListConsHeadFieldExtractor.class).withParamA(E, "head").build();
 
     Match2MethodSpec headTailMatch = Match2MethodSpec.builder()
-        .name("headTail").matchExtractor(ListConsHeadTailFieldExtractor.class)
-        .summaryJavadoc("Matches a list with a head element and a tail of remaining elements.\n")
-        .paramAType(E).paramAName("head").paramBType(l).paramBName("tail").build();
+        .withName("headTail")
+        .withSummaryJavadoc(
+            "Matches a list with a head element and a tail of remaining elements.\n")
+        .withMatchExtractor(ListConsHeadTailFieldExtractor.class).withParamA(E, "head")
+        .withParamB(l, "tail").build();
 
     JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "ListConsCases", l)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
