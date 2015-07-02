@@ -16,8 +16,10 @@
 package com.leacox.motif.cases;
 
 import com.leacox.motif.caseclass.Case2;
+import com.leacox.motif.caseclass.Case3;
 import com.leacox.motif.generate.CasesGenerator;
 import com.leacox.motif.generate.Match2MethodSpec;
+import com.leacox.motif.generate.Match3MethodSpec;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -30,27 +32,28 @@ import java.io.IOException;
 /**
  * @author John Leacox
  */
-final class Case2CasesGenerator {
-  private Case2CasesGenerator() {
+final class Case3CasesGenerator {
+  private Case3CasesGenerator() {
   }
 
   public static void main(String[] args) {
     TypeName A = TypeVariableName.get("A");
     TypeName B = TypeVariableName.get("B");
-    TypeName bounds = ParameterizedTypeName.get(ClassName.get(Case2.class), A, B);
+    TypeName C = TypeVariableName.get("C");
+    TypeName bounds = ParameterizedTypeName.get(ClassName.get(Case3.class), A, B, C);
     TypeName t = TypeVariableName.get("T", bounds);
     TypeName clazz = ParameterizedTypeName.get(ClassName.get(Class.class), t);
 
-    Match2MethodSpec case2Match = Match2MethodSpec.builder()
-        .withName("case2").withSummaryJavadoc("Matches a case class of two elements.\n")
-        .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case2FieldExtractor.class, "clazz")
-        .withParamA(A, "a").withParamB(B, "b").build();
+    Match3MethodSpec case3Match = Match3MethodSpec.builder()
+        .withName("case3").withSummaryJavadoc("Matches a case class of three elements.\n")
+        .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case3FieldExtractor.class, "clazz")
+        .withParamA(A, "a").withParamB(B, "b").withParamC(C, "c").build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
-        "com.leacox.motif.cases", "Case2Cases", t)
+        "com.leacox.motif.cases", "Case3Cases", t)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
-        .addJavadoc("Motif cases for matching a {@link Case2}.\n")
-        .addMatch2Method(case2Match)
+        .addJavadoc("Motif cases for matching a {@link Case3}.\n")
+        .addMatch3Method(case3Match)
         .build().generate();
 
     try {

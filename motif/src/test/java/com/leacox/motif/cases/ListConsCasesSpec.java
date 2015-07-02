@@ -16,7 +16,6 @@
 package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
-import static com.leacox.motif.MatchesAny.__;
 import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.ListConsCases.headNil;
@@ -71,7 +70,7 @@ public class ListConsCasesSpec {
               "match one item list", expect -> {
                 String result = match(oneItemList)
                     .when(nil()).get(() -> "Nil")
-                    .when(headNil(__)).get(s -> s)
+                    .when(headNil(any())).get(s -> s)
                     .getMatch();
 
                 expect.that(result).is("one");
@@ -94,7 +93,7 @@ public class ListConsCasesSpec {
               "match multi-item list", expect -> {
                 String result = match(twoItemList)
                     .when(nil()).get(() -> "Nil")
-                    .when(headNil(__)).get((x) -> x)
+                    .when(headNil(any())).get((x) -> x)
                     .when(headTail(any(), any())).get((x, xs) -> "head: " + x + " tail: " + xs)
                     .getMatch();
 

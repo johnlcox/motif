@@ -17,6 +17,7 @@ package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.OptionalCases.some;
 import static com.leacox.motif.cases.Tuple2Cases.tuple2;
@@ -67,7 +68,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", "B", Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", "B", some("C"))).get(() -> "Yep")
+                    .when(tuple3("A", "B", some(eq("C")))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -139,7 +140,7 @@ public class Tuple3CasesSpec {
                     "A", "B", Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", any(), some("C"))).get(b -> b)
+                    .when(tuple3("A", any(), some(eq("C")))).get(b -> b)
                     .getMatch();
 
                 expect.that(result).is("B");
@@ -175,7 +176,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), "C");
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some("B"), "C")).get(() -> "Yep")
+                    .when(tuple3("A", some(eq("B")), "C")).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -187,7 +188,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), "C");
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some("B"), any())).get(c -> c)
+                    .when(tuple3("A", some(eq("B")), any())).get(c -> c)
                     .getMatch();
 
                 expect.that(result).is("C");
@@ -199,7 +200,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some("B"), some("C"))).get(() -> "Yep")
+                    .when(tuple3("A", some(eq("B")), some(eq("C")))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -211,7 +212,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some("B"), some(any()))).get(c -> c)
+                    .when(tuple3("A", some(eq("B")), some(any()))).get(c -> c)
                     .getMatch();
 
                 expect.that(result).is("C");
@@ -223,7 +224,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Tuple2.of("C", "D"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some("B"), tuple2(any(), any()))).get((c, d) -> c + d)
+                    .when(tuple3("A", some(eq("B")), tuple2(any(), any()))).get((c, d) -> c + d)
                     .getMatch();
 
                 expect.that(result).is("CD");
@@ -235,7 +236,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Tuple3.of("C", "D", "E"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some("B"), tuple3(any(), any(), any()))).get(
+                    .when(tuple3("A", some(eq("B")), tuple3(any(), any(), any()))).get(
                         (c, d, e) -> c + d + e)
                     .getMatch();
 
@@ -272,7 +273,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", some(any()), some("C"))).get(b -> b)
+                    .when(tuple3("A", some(any()), some(eq("C")))).get(b -> b)
                     .getMatch();
 
                 expect.that(result).is("B");
@@ -338,7 +339,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Tuple2.of("B", "C"), Optional.of("D"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", tuple2(any(), any()), some("D"))).get((b, c) -> b + c)
+                    .when(tuple3("A", tuple2(any(), any()), some(eq("D")))).get((b, c) -> b + c)
                     .getMatch();
 
                 expect.that(result).is("BC");
@@ -375,7 +376,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Tuple3.of("B", "C", "D"), Optional.of("E"));
 
                 String result = match(tuple3)
-                    .when(tuple3("A", tuple3(any(), any(), any()), some("E"))).get(
+                    .when(tuple3("A", tuple3(any(), any(), any()), some(eq("E")))).get(
                         (b, c, d) -> b + c + d)
                     .getMatch();
 
@@ -400,7 +401,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", "B", Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), "B", some("C"))).get(a -> a)
+                    .when(tuple3(any(), "B", some(eq("C")))).get(a -> a)
                     .getMatch();
 
                 expect.that(result).is("A");
@@ -458,7 +459,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", "B", Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), any(), some("C"))).get((a, b) -> a + b)
+                    .when(tuple3(any(), any(), some(eq("C")))).get((a, b) -> a + b)
                     .getMatch();
 
                 expect.that(result).is("AB");
@@ -482,7 +483,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), "C");
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), some("B"), "C")).get(a -> a)
+                    .when(tuple3(any(), some(eq("B")), "C")).get(a -> a)
                     .getMatch();
 
                 expect.that(result).is("A");
@@ -494,7 +495,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), "C");
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), some("B"), any())).get((a, c) -> a + c)
+                    .when(tuple3(any(), some(eq("B")), any())).get((a, c) -> a + c)
                     .getMatch();
 
                 expect.that(result).is("AC");
@@ -506,7 +507,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), some("B"), some("C"))).get(a -> a)
+                    .when(tuple3(any(), some(eq("B")), some(eq("C")))).get(a -> a)
                     .getMatch();
 
                 expect.that(result).is("A");
@@ -518,7 +519,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), some("B"), some(any()))).get((a, c) -> a + c)
+                    .when(tuple3(any(), some(eq("B")), some(any()))).get((a, c) -> a + c)
                     .getMatch();
 
                 expect.that(result).is("AC");
@@ -530,7 +531,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Tuple2.of("C", "D"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), some("B"), tuple2(any(), any()))).get(
+                    .when(tuple3(any(), some(eq("B")), tuple2(any(), any()))).get(
                         (a, c, d) -> a + c + d)
                     .getMatch();
 
@@ -567,7 +568,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Optional.of("B"), Optional.of("C"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), some(any()), some("C"))).get((a, b) -> a + b)
+                    .when(tuple3(any(), some(any()), some(eq("C")))).get((a, b) -> a + b)
                     .getMatch();
 
                 expect.that(result).is("AB");
@@ -603,7 +604,7 @@ public class Tuple3CasesSpec {
                     Tuple3.of("A", Tuple2.of("B", "C"), Optional.of("D"));
 
                 String result = match(tuple3)
-                    .when(tuple3(any(), tuple2(any(), any()), some("D"))).get(
+                    .when(tuple3(any(), tuple2(any(), any()), some(eq("D")))).get(
                         (a, b, c) -> a + b + c)
                     .getMatch();
 

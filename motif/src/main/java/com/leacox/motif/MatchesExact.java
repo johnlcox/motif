@@ -18,17 +18,13 @@ package com.leacox.motif;
 /**
  * @author John Leacox
  */
-public class MatchesAny<T> {
-  private MatchesAny() {
+public class MatchesExact<T> {
+  public final T t;
+  private MatchesExact(T t) {
+    this.t = t;
   }
 
-  private static MatchesAny ANY = new MatchesAny();
-
-  public static <T> MatchesAny<T> any() {
-    return ANY;
-  }
-
-  public static <T> MatchesAny<T> any(Class<T> clazz) {
-    return ANY;
+  public static <T> MatchesExact<T> eq(T t) {
+    return new MatchesExact<>(t);
   }
 }

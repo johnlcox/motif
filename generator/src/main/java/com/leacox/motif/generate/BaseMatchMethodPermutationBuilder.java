@@ -19,6 +19,7 @@ import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.TypeOfCases.typeOf;
 
 import com.leacox.motif.MatchesAny;
+import com.leacox.motif.MatchesExact;
 import com.leacox.motif.extract.DecomposableMatchBuilder;
 import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
@@ -35,6 +36,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +49,8 @@ import java.util.stream.Stream;
  * @author John Leacox
  */
 abstract class BaseMatchMethodPermutationBuilder {
-  protected static final TypeName MATCH_ANY = TypeName.get(MatchesAny.class);
+  protected static final ClassName MATCH_EXACT = ClassName.get(MatchesExact.class);
+  protected static final ClassName MATCH_ANY = ClassName.get(MatchesAny.class);
   protected static final Map<Integer, Class<? extends DecomposableMatchBuilder>>
       decomposableBuilderByArity = ImmutableMap.of(
       0, DecomposableMatchBuilder0.class, 1, DecomposableMatchBuilder1.class,
@@ -90,8 +93,10 @@ abstract class BaseMatchMethodPermutationBuilder {
   protected List<TypeNameWithArity> createTypeArityList(
       TypeName t, String extractVariableName, int maxArity) {
     List<TypeNameWithArity> typeArityList = new ArrayList<>();
-    typeArityList.add(TypeNameWithArity.of(t, 0));
-    typeArityList.add(TypeNameWithArity.of(MATCH_ANY, 1));
+    //typeArityList.add(TypeNameWithArity.of(t, 0));
+    typeArityList.add(TypeNameWithArity.of(ParameterizedTypeName.get(MATCH_EXACT, t), 0));
+    typeArityList.add(TypeNameWithArity.of(ParameterizedTypeName.get(MATCH_ANY, t), 1));
+    //typeArityList.add(TypeNameWithArity.of(TypeName.get(MatchesAny.class), 1));
     IntStream.rangeClosed(0, maxArity).forEach(
         extractArity -> {
           TypeName[] typeVariables = createTypeVariables(t, extractVariableName, extractArity);
@@ -139,6 +144,10 @@ abstract class BaseMatchMethodPermutationBuilder {
             t -> {
               if (isDecomposableBuilder(t.rawType)) {
                 return MatchType.DECOMPOSE;
+              } else if (t.rawType.equals(MATCH_ANY)) {
+                return MatchType.ANY;
+              } else if (t.rawType.equals(MATCH_EXACT)) {
+                return MatchType.EXACT;
               } else {
                 return MatchType.EXACT;
               }
@@ -153,7 +162,7 @@ abstract class BaseMatchMethodPermutationBuilder {
     if (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY) {
       matchB = "any()";
     } else {
-      matchB = "eq(" + paramName + ")";
+      matchB = "eq(" + paramName + ".t)";
     }
     return matchB;
   }
@@ -164,6 +173,8 @@ abstract class BaseMatchMethodPermutationBuilder {
             t -> {
               if (isDecomposableBuilder(t.rawType)) {
                 return t.typeArguments.subList(1, t.typeArguments.size());
+              } else if (t.rawType.equals(MATCH_ANY)){
+                return ImmutableList.of(paramType);
               } else {
                 return Collections.<TypeName>emptyList();
               }

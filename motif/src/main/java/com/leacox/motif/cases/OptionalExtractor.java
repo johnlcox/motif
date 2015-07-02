@@ -15,8 +15,25 @@
  */
 package com.leacox.motif.cases;
 
+import com.leacox.motif.extract.Extractor1;
+
+import java.util.Optional;
+
 /**
  * @author John Leacox
  */
-public @interface Nullable {
+public class OptionalExtractor<T> implements Extractor1<Optional<T>, T> {
+  @Override
+  public Optional<T> unapply(Optional<T> t) {
+    if (t.isPresent()) {
+      return t;
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Class getExtractorClass() {
+    return Optional.class;
+  }
 }

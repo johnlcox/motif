@@ -13,22 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.leacox.motif;
+package com.leacox.motif.cases;
+
+import com.leacox.motif.extract.FieldExtractor;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author John Leacox
  */
-public class MatchesAny<T> {
-  private MatchesAny() {
+public class OptionalNoneFieldExtractor <T> implements FieldExtractor<Optional<T>> {
+  OptionalNoneExtractor<T> noneExtractor = new OptionalNoneExtractor<>();
+
+  @Override
+  public Optional<List<Object>> unapply(Optional<T> value) {
+    if (!noneExtractor.unapply(value)) {
+      return Optional.empty();
+    }
+
+    return Optional.of(Collections.emptyList());
   }
 
-  private static MatchesAny ANY = new MatchesAny();
-
-  public static <T> MatchesAny<T> any() {
-    return ANY;
-  }
-
-  public static <T> MatchesAny<T> any(Class<T> clazz) {
-    return ANY;
+  @Override
+  public Class<?> getExtractorClass() {
+    return noneExtractor.getExtractorClass();
   }
 }

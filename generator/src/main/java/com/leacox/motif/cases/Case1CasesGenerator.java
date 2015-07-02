@@ -15,8 +15,10 @@
  */
 package com.leacox.motif.cases;
 
+import com.leacox.motif.caseclass.Case1;
 import com.leacox.motif.caseclass.Case2;
 import com.leacox.motif.generate.CasesGenerator;
+import com.leacox.motif.generate.Match1MethodSpec;
 import com.leacox.motif.generate.Match2MethodSpec;
 
 import com.squareup.javapoet.ClassName;
@@ -30,27 +32,26 @@ import java.io.IOException;
 /**
  * @author John Leacox
  */
-final class Case2CasesGenerator {
-  private Case2CasesGenerator() {
+final class Case1CasesGenerator {
+  private Case1CasesGenerator() {
   }
 
   public static void main(String[] args) {
     TypeName A = TypeVariableName.get("A");
-    TypeName B = TypeVariableName.get("B");
-    TypeName bounds = ParameterizedTypeName.get(ClassName.get(Case2.class), A, B);
+    TypeName bounds = ParameterizedTypeName.get(ClassName.get(Case1.class), A);
     TypeName t = TypeVariableName.get("T", bounds);
     TypeName clazz = ParameterizedTypeName.get(ClassName.get(Class.class), t);
 
-    Match2MethodSpec case2Match = Match2MethodSpec.builder()
-        .withName("case2").withSummaryJavadoc("Matches a case class of two elements.\n")
-        .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case2FieldExtractor.class, "clazz")
-        .withParamA(A, "a").withParamB(B, "b").build();
+    Match1MethodSpec case1Match = Match1MethodSpec.builder()
+        .withName("case1").withSummaryJavadoc("Matches a case class of one element.\n")
+        .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case1FieldExtractor.class, "clazz")
+        .withParamA(A, "a").build();
 
     JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
-        "com.leacox.motif.cases", "Case2Cases", t)
+        "com.leacox.motif.cases", "Case1Cases", t)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
-        .addJavadoc("Motif cases for matching a {@link Case2}.\n")
-        .addMatch2Method(case2Match)
+        .addJavadoc("Motif cases for matching a {@link Case1}.\n")
+        .addMatch1Method(case1Match)
         .build().generate();
 
     try {

@@ -41,9 +41,12 @@ public final class Motif {
    *   <li>{@link com.leacox.motif.cases.OptionalCases Optional}</li>
    *   <li>{@link com.leacox.motif.cases.ListConsCases Lists}</li>
    *   <li>{@link com.leacox.motif.cases.TypeOfCases TypeOf (instanceof)}</li>
+   *   <li>{@link com.leacox.motif.cases.Tuple1Cases Tuple1}</li>
    *   <li>{@link com.leacox.motif.cases.Tuple2Cases Tuple2}</li>
    *   <li>{@link com.leacox.motif.cases.Tuple3Cases Tuple3}</li>
-   *   <li>{@link com.leacox.motif.cases.CaseClassCases Case classes}</li>
+   *   <li>{@link com.leacox.motif.cases.Case1Cases Case1 classes}</li>
+   *   <li>{@link com.leacox.motif.cases.Case2Cases Case2 classes}</li>
+   *   <li>{@link com.leacox.motif.cases.Case3Cases Case3 classes}</li>
    * </ul>
    *
    * <p>In addition the matching case API is extremely extensible. All that is needed to create a

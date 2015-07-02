@@ -17,6 +17,7 @@ package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.OptionalCases.none;
 import static com.leacox.motif.cases.OptionalCases.some;
@@ -63,11 +64,11 @@ public class OptionalCasesSpec {
           it.should(
               "handle some", expect -> {
                 String result = match(some)
-                    .when(some("not a string?")).get(() -> "What?")
-                    .when(some("a string")).get(() -> "Found it")
-                    .when(some(any())).get(a -> a)
-                    .when(none()).get(() -> "hi")
-                    .getMatch();
+                    .when(some(eq("not a string?"))).get(() -> "What?")
+                    .when(some(eq("a string"))).get(() -> "Found it")
+                            .when(some(any())).get(a -> a)
+                            .when(none()).get(() -> "hi")
+                            .getMatch();
 
                 expect.that(result).is("Found it");
               });
@@ -76,8 +77,8 @@ public class OptionalCasesSpec {
               "handle some with exact match", expect -> {
                 String result = match(some)
                     .when(none()).get(() -> "None")
-                    .when(some("Not a string?")).get(() -> "What?")
-                    .when(some("a string")).get(() -> "Found it")
+                    .when(some(eq("Not a string?"))).get(() -> "What?")
+                    .when(some(eq("a string"))).get(() -> "Found it")
                     .getMatch();
 
                 expect.that(result).is("Found it");
@@ -123,7 +124,7 @@ public class OptionalCasesSpec {
 
                 String result = match(optOpt)
                     .when(some(none())).get(() -> "None")
-                    .when(some(some("A String"))).get(() -> "Some")
+                    .when(some(some(eq("A String")))).get(() -> "Some")
                     .getMatch();
 
                 expect.that(result).is("Some");

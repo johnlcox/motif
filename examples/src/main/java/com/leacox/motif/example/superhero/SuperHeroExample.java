@@ -17,7 +17,7 @@ package com.leacox.motif.example.superhero;
 
 import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
-import static com.leacox.motif.cases.CaseClassCases.case3;
+import static com.leacox.motif.cases.Case3Cases.case3;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

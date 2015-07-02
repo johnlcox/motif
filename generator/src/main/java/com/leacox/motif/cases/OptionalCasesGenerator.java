@@ -15,9 +15,9 @@
  */
 package com.leacox.motif.cases;
 
-import com.leacox.motif.caseclass.Case2;
 import com.leacox.motif.generate.CasesGenerator;
-import com.leacox.motif.generate.Match2MethodSpec;
+import com.leacox.motif.generate.Match0MethodSpec;
+import com.leacox.motif.generate.Match1MethodSpec;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -26,35 +26,36 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author John Leacox
  */
-final class Case2CasesGenerator {
-  private Case2CasesGenerator() {
+final class OptionalCasesGenerator {
+  private OptionalCasesGenerator() {
   }
 
   public static void main(String[] args) {
-    TypeName A = TypeVariableName.get("A");
-    TypeName B = TypeVariableName.get("B");
-    TypeName bounds = ParameterizedTypeName.get(ClassName.get(Case2.class), A, B);
-    TypeName t = TypeVariableName.get("T", bounds);
-    TypeName clazz = ParameterizedTypeName.get(ClassName.get(Class.class), t);
+    TypeName T = TypeVariableName.get("T");
+    TypeName o = ParameterizedTypeName.get(ClassName.get(Optional.class), T);
 
-    Match2MethodSpec case2Match = Match2MethodSpec.builder()
-        .withName("case2").withSummaryJavadoc("Matches a case class of two elements.\n")
-        .addNonMatchParam(clazz, "clazz").withMatchExtractor(Case2FieldExtractor.class, "clazz")
-        .withParamA(A, "a").withParamB(B, "b").build();
+    Match0MethodSpec noneMatch = Match0MethodSpec.builder()
+        .withName("none").withSummaryJavadoc("Matches an empty {@link Optional}.\n")
+        .withMatchExtractor(OptionalNoneFieldExtractor.class).build();
 
-    JavaFile tuple2CasesFile = CasesGenerator.newBuilder(
-        "com.leacox.motif.cases", "Case2Cases", t)
+    Match1MethodSpec someMatch = Match1MethodSpec.builder()
+        .withName("some").withSummaryJavadoc("Matches a non-empty {@link Optional}.\n")
+        .withMatchExtractor(OptionalFieldExtractor.class).withParamA(T, "t").build();
+
+    JavaFile listCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "OptionalCases", o)
         .addFileComment(Copyright.COPYRIGHT_NOTICE)
-        .addJavadoc("Motif cases for matching a {@link Case2}.\n")
-        .addMatch2Method(case2Match)
+        .addJavadoc("Motif cases for matching an {@link Optional}.\n")
+        .addMatch0Method(noneMatch)
+        .addMatch1Method(someMatch)
         .build().generate();
 
     try {
-      tuple2CasesFile.writeTo(System.out);
+      listCasesFile.writeTo(System.out);
     } catch (IOException e) {
       e.printStackTrace();
     }

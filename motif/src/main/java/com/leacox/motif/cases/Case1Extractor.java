@@ -13,22 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.leacox.motif;
+package com.leacox.motif.cases;
+
+import com.leacox.motif.caseclass.Case1;
+import com.leacox.motif.extract.Extractor1;
+
+import java.util.Optional;
 
 /**
  * @author John Leacox
  */
-public class MatchesAny<T> {
-  private MatchesAny() {
+public class Case1Extractor<T extends Case1<A>, A> implements Extractor1<T, A> {
+  private final Class<T> caseClazz;
+
+  Case1Extractor(Class<T> caseClazz) {
+    this.caseClazz = caseClazz;
   }
 
-  private static MatchesAny ANY = new MatchesAny();
-
-  public static <T> MatchesAny<T> any() {
-    return ANY;
+  @Override
+  public Optional<A> unapply(T t) {
+    return caseClazz.isAssignableFrom(t.getClass()) ? Optional.of(t.extract().first())
+        : Optional.empty();
   }
 
-  public static <T> MatchesAny<T> any(Class<T> clazz) {
-    return ANY;
+  @Override
+  public Class getExtractorClass() {
+    return caseClazz;
   }
 }

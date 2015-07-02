@@ -17,6 +17,7 @@ package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.OptionalCases.some;
 import static com.leacox.motif.cases.Tuple2Cases.tuple2;
@@ -111,7 +112,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), Optional.of("B"))).get(() -> "Yep")
+                    .when(tuple2(some(eq("A")), Optional.of("B"))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -123,7 +124,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), any())).get(x -> "Yep")
+                    .when(tuple2(some(eq("A")), any())).get(x -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -135,7 +136,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(Optional.of("A"), some("B"))).get(() -> "Yep")
+                    .when(tuple2(Optional.of("A"), some(eq("B")))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -159,7 +160,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), some("B"))).get(() -> "Yep")
+                    .when(tuple2(some(eq("A")), some(eq("B")))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -171,7 +172,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), some(any()))).get(b -> b)
+                    .when(tuple2(some(eq("A")), some(any()))).get(b -> b)
                     .getMatch();
 
                 expect.that(result).is("B");
@@ -183,7 +184,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Tuple2.of("B", "C"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), tuple2(any(), any()))).get(
+                    .when(tuple2(some(eq("A")), tuple2(any(), any()))).get(
                         (b, c) -> "(" + b + ", " + c + ")")
                     .getMatch();
 
@@ -196,7 +197,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Tuple2.of(Tuple2.of("B", "C"), "D"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some("A"), tuple2(tuple2(any(), any()), any()))).get(
+                    .when(tuple2(some(eq("A")), tuple2(tuple2(any(), any()), any()))).get(
                         (b, c, d) -> "(" + b + ", " + c + ", " + d + ")")
                     .getMatch();
 
@@ -209,7 +210,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(any(), some("B"))).get(x -> "Yep")
+                    .when(tuple2(any(), some(eq("B")))).get(x -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -270,7 +271,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Optional.of("A"), Optional.of("B"));
 
                 String result = match(tuple2)
-                    .when(tuple2(some(any()), some("B"))).get(a -> a)
+                    .when(tuple2(some(any()), some(eq("B")))).get(a -> a)
                     .getMatch();
 
                 expect.that(result).is("A");
@@ -320,7 +321,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of("A", "B"), Optional.of("C"));
 
                 String result = match(tuple2)
-                    .when(tuple2(tuple2(any(), any()), some("C"))).get(
+                    .when(tuple2(tuple2(any(), any()), some(eq("C")))).get(
                         (a, b) -> "(" + a + ", " + b + ")")
                     .getMatch();
 
@@ -359,7 +360,7 @@ public class Tuple2CasesSpec {
                     Tuple2.of(Tuple2.of("A", "B"), "C"), Optional.of("D"));
 
                 String result = match(tuple2)
-                    .when(tuple2(tuple2(tuple2(any(), any()), any()), some("D"))).get(
+                    .when(tuple2(tuple2(tuple2(any(), any()), any()), some(eq("D")))).get(
                         (a, b, c) -> "(" + a + ", " + b + ", " + c + ")")
                     .getMatch();
 

@@ -110,7 +110,7 @@ public final class Tuple2Cases {
    *
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is extracted.
    */
-  public static <A, B> DecomposableMatchBuilder2<Tuple2<A, B>, A, B> tuple2(MatchesAny a, MatchesAny b) {
+  public static <A, B> DecomposableMatchBuilder2<Tuple2<A, B>, A, B> tuple2(MatchesAny<A> a, MatchesAny<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<Tuple2<A, B>, A, B>(matchers, Tuple2.of(0, 1), new Tuple2FieldExtractor<>());
   }

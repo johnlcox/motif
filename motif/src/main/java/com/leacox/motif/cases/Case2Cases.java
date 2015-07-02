@@ -52,7 +52,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code b} value is extracted.
    */
-  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, B> case2(Class<T> clazz, A a, MatchesAny b) {
+  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, B> case2(Class<T> clazz, A a, MatchesAny<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a), ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<T, B>(matchers, 1, new Case2FieldExtractor<>(clazz));
   }
@@ -102,7 +102,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is extracted.
    */
-  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, A> case2(Class<T> clazz, MatchesAny a, B b) {
+  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, A> case2(Class<T> clazz, MatchesAny<A> a, B b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(b));
     return new DecomposableMatchBuilder1<T, A>(matchers, 0, new Case2FieldExtractor<>(clazz));
   }
@@ -112,7 +112,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is extracted.
    */
-  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder2<T, A, B> case2(Class<T> clazz, MatchesAny a, MatchesAny b) {
+  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder2<T, A, B> case2(Class<T> clazz, MatchesAny<A> a, MatchesAny<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz));
   }
@@ -122,7 +122,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is decomposed to 0.
    */
-  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, A> case2(Class<T> clazz, MatchesAny a, DecomposableMatchBuilder0<B> b) {
+  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, A> case2(Class<T> clazz, MatchesAny<A> a, DecomposableMatchBuilder0<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz)).decomposeSecond(b);
   }
@@ -132,7 +132,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is decomposed to 1.
    */
-  public static <T extends Case2<A, B>, A, B, B1> DecomposableMatchBuilder2<T, A, B1> case2(Class<T> clazz, MatchesAny a, DecomposableMatchBuilder1<B, B1> b) {
+  public static <T extends Case2<A, B>, A, B, B1> DecomposableMatchBuilder2<T, A, B1> case2(Class<T> clazz, MatchesAny<A> a, DecomposableMatchBuilder1<B, B1> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz)).decomposeSecond(b);
   }
@@ -142,7 +142,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is extracted and the {@code b} value is decomposed to 2.
    */
-  public static <T extends Case2<A, B>, A, B, B1, B2> DecomposableMatchBuilder3<T, A, B1, B2> case2(Class<T> clazz, MatchesAny a, DecomposableMatchBuilder2<B, B1, B2> b) {
+  public static <T extends Case2<A, B>, A, B, B1, B2> DecomposableMatchBuilder3<T, A, B1, B2> case2(Class<T> clazz, MatchesAny<A> a, DecomposableMatchBuilder2<B, B1, B2> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz)).decomposeSecond(b);
   }
@@ -162,7 +162,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 0 and the {@code b} value is extracted.
    */
-  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, B> case2(Class<T> clazz, DecomposableMatchBuilder0<A> a, MatchesAny b) {
+  public static <T extends Case2<A, B>, A, B> DecomposableMatchBuilder1<T, B> case2(Class<T> clazz, DecomposableMatchBuilder0<A> a, MatchesAny<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz)).decomposeFirst(a);
   }
@@ -222,7 +222,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 1 and the {@code b} value is extracted.
    */
-  public static <T extends Case2<A, B>, A, B, A1> DecomposableMatchBuilder2<T, A1, B> case2(Class<T> clazz, DecomposableMatchBuilder1<A, A1> a, MatchesAny b) {
+  public static <T extends Case2<A, B>, A, B, A1> DecomposableMatchBuilder2<T, A1, B> case2(Class<T> clazz, DecomposableMatchBuilder1<A, A1> a, MatchesAny<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz)).decomposeFirst(a);
   }
@@ -272,7 +272,7 @@ public final class Case2Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 2 and the {@code b} value is extracted.
    */
-  public static <T extends Case2<A, B>, A, B, A1, A2> DecomposableMatchBuilder3<T, A1, A2, B> case2(Class<T> clazz, DecomposableMatchBuilder2<A, A1, A2> a, MatchesAny b) {
+  public static <T extends Case2<A, B>, A, B, A1, A2> DecomposableMatchBuilder3<T, A1, A2, B> case2(Class<T> clazz, DecomposableMatchBuilder2<A, A1, A2> a, MatchesAny<B> b) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
     return new DecomposableMatchBuilder2<T, A, B>(matchers, Tuple2.of(0, 1), new Case2FieldExtractor<>(clazz)).decomposeFirst(a);
   }
