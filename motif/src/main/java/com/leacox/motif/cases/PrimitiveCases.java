@@ -35,6 +35,7 @@ public final class PrimitiveCases {
   private PrimitiveCases() {
   }
 
+  // TODO: Are these cases actually useful or is the when(Object o) method good enough?
   public static DecomposableMatchBuilder0<Byte> caseByte(byte b) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(eq(b));

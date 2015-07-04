@@ -22,9 +22,9 @@ import static com.leacox.motif.cases.ListConsCases.headNil;
 import static com.leacox.motif.cases.ListConsCases.headTail;
 import static com.leacox.motif.cases.OptionalCases.some;
 import static com.leacox.motif.cases.Tuple2Cases.tuple2;
+import static com.leacox.motif.cases.TypeOfCases.typeOf;
 
 import com.leacox.motif.extract.util.Lists;
-import com.leacox.motif.tuple.Tuple;
 import com.leacox.motif.tuple.Tuple2;
 
 import com.insightfullogic.lambdabehave.JunitSuiteRunner;
@@ -55,7 +55,8 @@ public class NestedCasesSpec {
 
           it.should(
               "match nested Optionals", expect -> {
-                Optional<Optional<Optional<String>>> opt = Optional.of(Optional.of(Optional.of("a")));
+                Optional<Optional<Optional<String>>> opt =
+                    Optional.of(Optional.of(Optional.of("a")));
 
                 String result = match(opt)
                     .when(some(some(some(any())))).get(a -> a)
@@ -92,7 +93,8 @@ public class NestedCasesSpec {
 
           it.should(
               "match List of Tuple2", expect -> {
-                List<Tuple2<String, String>> list = Lists.of(Tuple2.of("a", "b"), Tuple2.of("c", "d"));
+                List<Tuple2<String, String>> list =
+                    Lists.of(Tuple2.of("a", "b"), Tuple2.of("c", "d"));
 
                 String result = match(list)
                     .when(headTail(tuple2(any(), any()), any())).get(
@@ -112,6 +114,18 @@ public class NestedCasesSpec {
                     .getMatch();
 
                 expect.that(result).is("(a, b, c)");
+              });
+
+          it.should(
+              "match nested typeOf", expect -> {
+                Tuple2<Object, Object> tuple2 = Tuple2.of((Object) 2, (Object) 4);
+
+                String result = match(tuple2)
+                    .when(tuple2(typeOf(Integer.class), typeOf(Integer.class))).get(
+                        (a, b) -> String.valueOf(a))
+                    .getMatch();
+
+                expect.that(result).is("2");
               });
         });
   }

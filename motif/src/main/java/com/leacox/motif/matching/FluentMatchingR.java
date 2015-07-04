@@ -20,6 +20,9 @@ import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
 import com.leacox.motif.extract.DecomposableMatchBuilder2;
 import com.leacox.motif.extract.DecomposableMatchBuilder3;
+import com.leacox.motif.extract.matchers.ArgumentMatchers;
+import com.leacox.motif.extract.matchers.Matcher;
+import com.leacox.motif.extract.util.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +40,13 @@ public final class FluentMatchingR<T, R> {
     this.value = value;
   }
 
-  public void addPattern(Pattern<T, R> pattern) {
+  void addPattern(Pattern<T, R> pattern) {
     patterns.add(pattern);
+  }
+
+  public <U extends T> OngoingMatchingR0<T, U, R> when(Object o) {
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o));
+    return new OngoingMatchingR0<>(this, new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor()).build());
   }
 
   public <U extends T> OngoingMatchingR0<T, U, R> when(

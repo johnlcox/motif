@@ -16,6 +16,7 @@
 package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.PrimitiveCases.caseBoolean;
 import static com.leacox.motif.cases.PrimitiveCases.caseByte;
@@ -45,8 +46,8 @@ public class PrimitiveCasesSpec {
 
                 // No byte literals in Java so you have to cast
                 String result = match(b)
-                    .when(caseByte((byte) 4)).get(() -> "Nope")
-                    .when(caseByte((byte) 27)).get(() -> "27")
+                    .when((byte) 4).get(() -> "Nope")
+                    .when((byte) 27).get(() -> "27")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -59,8 +60,8 @@ public class PrimitiveCasesSpec {
 
                 // No short literals in Java so you have to cast
                 String result = match(s)
-                    .when(caseShort((short) 4)).get(() -> "Nope")
-                    .when(caseShort((short) 382)).get(() -> "382")
+                    .when((short) 4).get(() -> "Nope")
+                    .when((short) 382).get(() -> "382")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -72,8 +73,8 @@ public class PrimitiveCasesSpec {
                 int i = 2875283;
 
                 String result = match(i)
-                    .when(caseInt(4)).get(() -> "Nope")
-                    .when(caseInt(2875283)).get(() -> "2875283")
+                    .when(4).get(() -> "Nope")
+                    .when(2875283).get(() -> "2875283")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -85,8 +86,8 @@ public class PrimitiveCasesSpec {
                 long l = 82874927472927l;
 
                 String result = match(l)
-                    .when(caseLong(4l)).get(() -> "Nope")
-                    .when(caseLong(82874927472927l)).get(() -> "82874927472927")
+                    .when(4l).get(() -> "Nope")
+                    .when(82874927472927l).get(() -> "82874927472927")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -98,8 +99,8 @@ public class PrimitiveCasesSpec {
                 float f = 382.84782f;
 
                 String result = match(f)
-                    .when(caseFloat(4f)).get(() -> "Nope")
-                    .when(caseFloat(382.84782f)).get(() -> "Yep")
+                    .when(4f).get(() -> "Nope")
+                    .when(382.84782f).get(() -> "Yep")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -111,8 +112,8 @@ public class PrimitiveCasesSpec {
                 double d = 89378393384832.3847849394;
 
                 String result = match(d)
-                    .when(caseDouble(4d)).get(() -> "Nope")
-                    .when(caseDouble(89378393384832.3847849394)).get(() -> "Yep")
+                    .when(4d).get(() -> "Nope")
+                    .when(89378393384832.3847849394).get(() -> "Yep")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -124,8 +125,8 @@ public class PrimitiveCasesSpec {
                 char c = 'T';
 
                 String result = match(c)
-                    .when(caseChar('t')).get(() -> "Nope")
-                    .when(caseChar('T')).get(() -> "T")
+                    .when('t').get(() -> "Nope")
+                    .when('T').get(() -> "T")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -137,8 +138,8 @@ public class PrimitiveCasesSpec {
                 String s = "Hello World";
 
                 String result = match(s)
-                    .when(caseString("Goodbye World")).get(() -> "Nope")
-                    .when(caseString("Hello World")).get(() -> "Hello World")
+                    .when("Goodbye World").get(() -> "Nope")
+                    .when("Hello World").get(() -> "Hello World")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -150,8 +151,8 @@ public class PrimitiveCasesSpec {
                 boolean t = true;
 
                 String result = match(t)
-                    .when(caseBoolean(false)).get(() -> "Nope")
-                    .when(caseBoolean(true)).get(() -> "true")
+                    .when(false).get(() -> "Nope")
+                    .when(true).get(() -> "true")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -164,8 +165,8 @@ public class PrimitiveCasesSpec {
 
                 // No short literals in Java so you have to cast
                 String result = match(f)
-                    .when(caseBoolean(true)).get(() -> "Nope")
-                    .when(caseBoolean(false)).get(() -> "false")
+                    .when(true).get(() -> "Nope")
+                    .when(false).get(() -> "false")
                     .orElse(x -> "orElse")
                     .getMatch();
 
