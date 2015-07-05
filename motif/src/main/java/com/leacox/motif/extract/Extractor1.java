@@ -23,5 +23,5 @@ import java.util.Optional;
 public interface Extractor1<T, A> {
   Optional<A> unapply(T t);
 
-  Class getExtractorClass();
+  Class<?> getExtractorClass();
 }

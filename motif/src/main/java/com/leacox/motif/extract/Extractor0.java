@@ -21,5 +21,5 @@ package com.leacox.motif.extract;
 public interface Extractor0<T> {
   boolean unapply(T t);
 
-  Class getExtractorClass();
+  Class<?> getExtractorClass();
 }

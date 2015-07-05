@@ -11,9 +11,9 @@ A pattern matching library for Java 8. Motif provides scala-like pattern matchin
 IntStream.range(0, 101).forEach(
     n -> System.out.println(
         match(Tuple2.of(n % 3, n % 5))
-            .when(tuple2(0, 0)).get(() -> "FizzBuzz")
-            .when(tuple2(0, any())).get(y -> "Fizz")
-            .when(tuple2(any(), 0)).get(x -> "Buzz")
+            .when(tuple2(eq(0), eq(0))).get(() -> "FizzBuzz")
+            .when(tuple2(eq(0), any())).get(y -> "Fizz")
+            .when(tuple2(any(), eq(0))).get(x -> "Buzz")
             .orElse(String.valueOf(n))
             .getMatch()
     )
@@ -35,8 +35,8 @@ match(personOpt)
 ```java
 public long factorial(long i) {
   return match(i)
-      .when(caseLong(0)).get(() -> 1l)
-      .when(caseLong(any())).get(x -> x * factorial(x - 1))
+      .when(eq(0)).get(() -> 1l)
+      .when(any()).get(x -> x * factorial(x - 1))
       .getMatch();
 }
 ```
@@ -46,8 +46,8 @@ public long factorial(long i) {
 ```java
 Optional<Tuple2<String, String>> opt = Optional.of(Tuple2.of("first", "second"));
 match(opt)
-    .when(some(tuple2("third", any()))).then(b -> doStuff(b))
-    .when(some(tuple2(any(), "second"))).then(a -> doStuff(a))
+    .when(some(tuple2(eq("third"), any()))).then(b -> doStuff(b))
+    .when(some(tuple2(any(), eq("second")))).then(a -> doStuff(a))
     .when(none()).then(() -> System.out.println("Tuple not found"))
     .doMatch();
 ```
@@ -58,7 +58,7 @@ match(opt)
 List<String> list = Arrays.asList("a", "b", "c", "d");
 match(list)
     .when(nil()).then(() -> System.out.println("Empty List"))
-    .when(headNil("b")).then(() -> System.out.println("Singleton List of 'b'"))
+    .when(headNil(eq("b"))).then(() -> System.out.println("Singleton List of 'b'"))
     .when(headNil(any())).then(head -> System.out.println("Singleton List of " + head))
     .when(headTail(any(), any())).then(
         (head, tail) -> System.out.println("head: " + head + " Remaining: " + tail))

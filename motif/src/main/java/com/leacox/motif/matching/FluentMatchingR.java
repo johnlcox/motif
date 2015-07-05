@@ -16,6 +16,8 @@
 package com.leacox.motif.matching;
 
 import com.leacox.motif.MatchException;
+import com.leacox.motif.MatchesAny;
+import com.leacox.motif.MatchesExact;
 import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
 import com.leacox.motif.extract.DecomposableMatchBuilder2;
@@ -44,9 +46,14 @@ public final class FluentMatchingR<T, R> {
     patterns.add(pattern);
   }
 
-  public <U extends T> OngoingMatchingR0<T, U, R> when(Object o) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o));
-    return new OngoingMatchingR0<>(this, new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor()).build());
+  public <U extends T> OngoingMatchingR0<T, U, R> when(MatchesExact<U> o) {
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o.t));
+    return new OngoingMatchingR0<>(this, new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor<U>()).build());
+  }
+
+  public <U extends T> OngoingMatchingR1<T, U, U, R> when(MatchesAny<U> o) {
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
+    return new OngoingMatchingR1<>(this, new DecomposableMatchBuilder1<U, U>(matchers, 0, new IdentityFieldExtractor<>()).build());
   }
 
   public <U extends T> OngoingMatchingR0<T, U, R> when(

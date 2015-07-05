@@ -25,5 +25,5 @@ import java.util.Optional;
 public interface Extractor3<T, A, B, C> {
   Optional<Tuple3<A, B, C>> unapply(T t);
 
-  Class getExtractorClass();
+  Class<?> getExtractorClass();
 }

@@ -15,6 +15,7 @@
  */
 package com.leacox.motif.benchmarks;
 
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.PrimitiveCases.caseLong;
 import static com.leacox.motif.MatchesAny.any;
@@ -59,8 +60,8 @@ public class FactorialBenchmark {
 
   private long factMatching(long i) {
     return match(i)
-        .when(caseLong(0)).get(() -> 1l)
-        .when(caseLong(any())).get(x -> x * factMatching(x - 1))
+        .when(eq(0l)).get(() -> 1l)
+        .when(any()).get(x -> x * factMatching(x - 1))
         .getMatch();
   }
 }

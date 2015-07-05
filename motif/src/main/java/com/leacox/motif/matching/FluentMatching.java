@@ -15,6 +15,7 @@
  */
 package com.leacox.motif.matching;
 
+import com.leacox.motif.MatchesAny;
 import com.leacox.motif.MatchesExact;
 import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
@@ -39,9 +40,14 @@ public final class FluentMatching<T> {
     this.value = value;
   }
 
-  public <U extends T> InitialMatching0<T, U> when(Object o) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o));
-    return new InitialMatching0<>(new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor()).build(), value);
+  public <U extends T> InitialMatching0<T, U> when(MatchesExact<U> o) {
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o.t));
+    return new InitialMatching0<>(new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor<U>()).build(), value);
+  }
+
+  public <U extends T> InitialMatching1<T, U, U> when(MatchesAny<U> o) {
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
+    return new InitialMatching1<>(new DecomposableMatchBuilder1<U, U>(matchers, 0, new IdentityFieldExtractor<>()).build(), value);
   }
 
   public <U extends T> InitialMatching0<T, U> when(

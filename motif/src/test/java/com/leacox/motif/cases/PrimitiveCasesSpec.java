@@ -39,15 +39,14 @@ import org.junit.runner.RunWith;
 public class PrimitiveCasesSpec {
   {
     describe(
-        "primitive patterns", it -> {
+        "primitive cases", it -> {
           it.should(
               "match byte", expect -> {
-                byte b = 27;
+                Object b = (byte) 27;
 
-                // No byte literals in Java so you have to cast
                 String result = match(b)
-                    .when((byte) 4).get(() -> "Nope")
-                    .when((byte) 27).get(() -> "27")
+                    .when(caseByte((byte) 4)).get(() -> "Nope")
+                    .when(caseByte((byte) 27)).get(() -> "27")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -60,8 +59,8 @@ public class PrimitiveCasesSpec {
 
                 // No short literals in Java so you have to cast
                 String result = match(s)
-                    .when((short) 4).get(() -> "Nope")
-                    .when((short) 382).get(() -> "382")
+                    .when(caseShort((short) 4)).get(() -> "Nope")
+                    .when(caseShort((short) 382)).get(() -> "382")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -73,8 +72,8 @@ public class PrimitiveCasesSpec {
                 int i = 2875283;
 
                 String result = match(i)
-                    .when(4).get(() -> "Nope")
-                    .when(2875283).get(() -> "2875283")
+                    .when(caseInt(4)).get(() -> "Nope")
+                    .when(caseInt(2875283)).get(() -> "2875283")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -86,8 +85,8 @@ public class PrimitiveCasesSpec {
                 long l = 82874927472927l;
 
                 String result = match(l)
-                    .when(4l).get(() -> "Nope")
-                    .when(82874927472927l).get(() -> "82874927472927")
+                    .when(caseLong(4l)).get(() -> "Nope")
+                    .when(caseLong(82874927472927l)).get(() -> "82874927472927")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -99,8 +98,8 @@ public class PrimitiveCasesSpec {
                 float f = 382.84782f;
 
                 String result = match(f)
-                    .when(4f).get(() -> "Nope")
-                    .when(382.84782f).get(() -> "Yep")
+                    .when(caseFloat(4f)).get(() -> "Nope")
+                    .when(caseFloat(382.84782f)).get(() -> "Yep")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -112,8 +111,8 @@ public class PrimitiveCasesSpec {
                 double d = 89378393384832.3847849394;
 
                 String result = match(d)
-                    .when(4d).get(() -> "Nope")
-                    .when(89378393384832.3847849394).get(() -> "Yep")
+                    .when(caseDouble(4d)).get(() -> "Nope")
+                    .when(caseDouble(89378393384832.3847849394)).get(() -> "Yep")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -125,8 +124,8 @@ public class PrimitiveCasesSpec {
                 char c = 'T';
 
                 String result = match(c)
-                    .when('t').get(() -> "Nope")
-                    .when('T').get(() -> "T")
+                    .when(caseChar('t')).get(() -> "Nope")
+                    .when(caseChar('T')).get(() -> "T")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -138,8 +137,8 @@ public class PrimitiveCasesSpec {
                 String s = "Hello World";
 
                 String result = match(s)
-                    .when("Goodbye World").get(() -> "Nope")
-                    .when("Hello World").get(() -> "Hello World")
+                    .when(caseString("Goodbye World")).get(() -> "Nope")
+                    .when(caseString("Hello World")).get(() -> "Hello World")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -151,8 +150,8 @@ public class PrimitiveCasesSpec {
                 boolean t = true;
 
                 String result = match(t)
-                    .when(false).get(() -> "Nope")
-                    .when(true).get(() -> "true")
+                    .when(caseBoolean(false)).get(() -> "Nope")
+                    .when(caseBoolean(true)).get(() -> "true")
                     .orElse(x -> "orElse")
                     .getMatch();
 
@@ -163,10 +162,143 @@ public class PrimitiveCasesSpec {
               "match boolean false", expect -> {
                 boolean f = false;
 
-                // No short literals in Java so you have to cast
                 String result = match(f)
-                    .when(true).get(() -> "Nope")
-                    .when(false).get(() -> "false")
+                    .when(caseBoolean(true)).get(() -> "Nope")
+                    .when(caseBoolean(false)).get(() -> "false")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(f));
+              });
+        });
+
+    describe(
+        "direct primitive cases", it -> {
+          it.should(
+              "match byte", expect -> {
+                Object b = (byte) 27;
+
+                String result = match(b)
+                    .when(eq((byte) 4)).get(() -> "Nope")
+                    .when(eq((byte) 27)).get(() -> "27")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(b));
+              });
+
+          it.should(
+              "match short", expect -> {
+                short s = 382;
+
+                // No short literals in Java so you have to cast
+                String result = match(s)
+                    .when(eq((short) 4)).get(() -> "Nope")
+                    .when(eq((short) 382)).get(() -> "382")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(s));
+              });
+
+          it.should(
+              "match int", expect -> {
+                int i = 2875283;
+
+                String result = match(i)
+                    .when(eq(4)).get(() -> "Nope")
+                    .when(eq(2875283)).get(() -> "2875283")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(i));
+              });
+
+          it.should(
+              "match long", expect -> {
+                long l = 82874927472927l;
+
+                String result = match(l)
+                    .when(eq(4l)).get(() -> "Nope")
+                    .when(eq(82874927472927l)).get(() -> "82874927472927")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(l));
+              });
+
+          it.should(
+              "match float", expect -> {
+                float f = 382.84782f;
+
+                String result = match(f)
+                    .when(eq(4f)).get(() -> "Nope")
+                    .when(eq(382.84782f)).get(() -> "Yep")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is("Yep");
+              });
+
+          it.should(
+              "match double", expect -> {
+                double d = 89378393384832.3847849394;
+
+                String result = match(d)
+                    .when(eq(4d)).get(() -> "Nope")
+                    .when(eq(89378393384832.3847849394)).get(() -> "Yep")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is("Yep");
+              });
+
+          it.should(
+              "match char", expect -> {
+                char c = 'T';
+
+                String result = match(c)
+                    .when(eq('t')).get(() -> "Nope")
+                    .when(eq('T')).get(() -> "T")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(c));
+              });
+
+          it.should(
+              "match String", expect -> {
+                String s = "Hello World";
+
+                String result = match(s)
+                    .when(eq("Goodbye World")).get(() -> "Nope")
+                    .when(eq("Hello World")).get(() -> "Hello World")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(s);
+              });
+
+          it.should(
+              "match boolean true", expect -> {
+                boolean t = true;
+
+                String result = match(t)
+                    .when(eq(false)).get(() -> "Nope")
+                    .when(eq(true)).get(() -> "true")
+                    .orElse(x -> "orElse")
+                    .getMatch();
+
+                expect.that(result).is(String.valueOf(t));
+              });
+
+          it.should(
+              "match boolean false", expect -> {
+                boolean f = false;
+
+                String result = match(f)
+                    .when(eq(true)).get(() -> "Nope")
+                    .when(eq(false)).get(() -> "false")
                     .orElse(x -> "orElse")
                     .getMatch();
 

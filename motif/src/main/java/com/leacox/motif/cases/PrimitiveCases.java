@@ -87,7 +87,7 @@ public final class PrimitiveCases {
     return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Long.class));
   }
 
-  public static DecomposableMatchBuilder1<Long, Long> caseLong(MatchesAny b) {
+  public static DecomposableMatchBuilder1<Long, Long> caseLong(MatchesAny<Long> l) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(any());
 
