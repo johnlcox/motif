@@ -69,9 +69,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 0.
    */
-  public static <T> DecomposableMatchBuilder0<List<T>> headNil(DecomposableMatchBuilder0<T> head) {
+  public static <T, ET extends T> DecomposableMatchBuilder0<List<T>> headNil(DecomposableMatchBuilder0<ET> head) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -79,9 +79,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 1.
    */
-  public static <T, A1> DecomposableMatchBuilder1<List<T>, A1> headNil(DecomposableMatchBuilder1<T, A1> head) {
+  public static <T, ET extends T, A1> DecomposableMatchBuilder1<List<T>, A1> headNil(DecomposableMatchBuilder1<ET, A1> head) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -89,9 +89,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 2.
    */
-  public static <T, A1, A2> DecomposableMatchBuilder2<List<T>, A1, A2> headNil(DecomposableMatchBuilder2<T, A1, A2> head) {
+  public static <T, ET extends T, A1, A2> DecomposableMatchBuilder2<List<T>, A1, A2> headNil(DecomposableMatchBuilder2<ET, A1, A2> head) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -99,9 +99,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 3.
    */
-  public static <T, A1, A2, A3> DecomposableMatchBuilder3<List<T>, A1, A2, A3> headNil(DecomposableMatchBuilder3<T, A1, A2, A3> head) {
+  public static <T, ET extends T, A1, A2, A3> DecomposableMatchBuilder3<List<T>, A1, A2, A3> headNil(DecomposableMatchBuilder3<ET, A1, A2, A3> head) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -217,9 +217,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 0.
    */
-  public static <T> DecomposableMatchBuilder0<List<T>> headTail(DecomposableMatchBuilder0<T> head, MatchesExact<List<T>> tail) {
+  public static <T, ET extends T> DecomposableMatchBuilder0<List<T>> headTail(DecomposableMatchBuilder0<ET> head, MatchesExact<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(tail.t));
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -227,9 +227,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 0 and the {@code tail} value is extracted.
    */
-  public static <T> DecomposableMatchBuilder1<List<T>, List<T>> headTail(DecomposableMatchBuilder0<T> head, MatchesAny<List<T>> tail) {
+  public static <T, ET extends T> DecomposableMatchBuilder1<List<T>, List<T>> headTail(DecomposableMatchBuilder0<ET> head, MatchesAny<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -238,9 +238,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 0 and the {@code tail} value is decomposed to
    * 0.
    */
-  public static <T> DecomposableMatchBuilder0<List<T>> headTail(DecomposableMatchBuilder0<T> head, DecomposableMatchBuilder0<List<T>> tail) {
+  public static <T, ET extends T> DecomposableMatchBuilder0<List<T>> headTail(DecomposableMatchBuilder0<ET> head, DecomposableMatchBuilder0<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -249,9 +249,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 0 and the {@code tail} value is decomposed to
    * 1.
    */
-  public static <T, B1> DecomposableMatchBuilder1<List<T>, B1> headTail(DecomposableMatchBuilder0<T> head, DecomposableMatchBuilder1<List<T>, B1> tail) {
+  public static <T, ET extends T, B1> DecomposableMatchBuilder1<List<T>, B1> headTail(DecomposableMatchBuilder0<ET> head, DecomposableMatchBuilder1<List<T>, B1> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -260,9 +260,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 0 and the {@code tail} value is decomposed to
    * 2.
    */
-  public static <T, B1, B2> DecomposableMatchBuilder2<List<T>, B1, B2> headTail(DecomposableMatchBuilder0<T> head, DecomposableMatchBuilder2<List<T>, B1, B2> tail) {
+  public static <T, ET extends T, B1, B2> DecomposableMatchBuilder2<List<T>, B1, B2> headTail(DecomposableMatchBuilder0<ET> head, DecomposableMatchBuilder2<List<T>, B1, B2> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -271,9 +271,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 0 and the {@code tail} value is decomposed to
    * 3.
    */
-  public static <T, B1, B2, B3> DecomposableMatchBuilder3<List<T>, B1, B2, B3> headTail(DecomposableMatchBuilder0<T> head, DecomposableMatchBuilder3<List<T>, B1, B2, B3> tail) {
+  public static <T, ET extends T, B1, B2, B3> DecomposableMatchBuilder3<List<T>, B1, B2, B3> headTail(DecomposableMatchBuilder0<ET> head, DecomposableMatchBuilder3<List<T>, B1, B2, B3> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -281,9 +281,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 1.
    */
-  public static <T, A1> DecomposableMatchBuilder1<List<T>, A1> headTail(DecomposableMatchBuilder1<T, A1> head, MatchesExact<List<T>> tail) {
+  public static <T, ET extends T, A1> DecomposableMatchBuilder1<List<T>, A1> headTail(DecomposableMatchBuilder1<ET, A1> head, MatchesExact<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(tail.t));
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -291,9 +291,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 1 and the {@code tail} value is extracted.
    */
-  public static <T, A1> DecomposableMatchBuilder2<List<T>, A1, List<T>> headTail(DecomposableMatchBuilder1<T, A1> head, MatchesAny<List<T>> tail) {
+  public static <T, ET extends T, A1> DecomposableMatchBuilder2<List<T>, A1, List<T>> headTail(DecomposableMatchBuilder1<ET, A1> head, MatchesAny<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -302,9 +302,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 1 and the {@code tail} value is decomposed to
    * 0.
    */
-  public static <T, A1> DecomposableMatchBuilder1<List<T>, A1> headTail(DecomposableMatchBuilder1<T, A1> head, DecomposableMatchBuilder0<List<T>> tail) {
+  public static <T, ET extends T, A1> DecomposableMatchBuilder1<List<T>, A1> headTail(DecomposableMatchBuilder1<ET, A1> head, DecomposableMatchBuilder0<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -313,9 +313,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 1 and the {@code tail} value is decomposed to
    * 1.
    */
-  public static <T, A1, B1> DecomposableMatchBuilder2<List<T>, A1, B1> headTail(DecomposableMatchBuilder1<T, A1> head, DecomposableMatchBuilder1<List<T>, B1> tail) {
+  public static <T, ET extends T, A1, B1> DecomposableMatchBuilder2<List<T>, A1, B1> headTail(DecomposableMatchBuilder1<ET, A1> head, DecomposableMatchBuilder1<List<T>, B1> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -324,9 +324,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 1 and the {@code tail} value is decomposed to
    * 2.
    */
-  public static <T, A1, B1, B2> DecomposableMatchBuilder3<List<T>, A1, B1, B2> headTail(DecomposableMatchBuilder1<T, A1> head, DecomposableMatchBuilder2<List<T>, B1, B2> tail) {
+  public static <T, ET extends T, A1, B1, B2> DecomposableMatchBuilder3<List<T>, A1, B1, B2> headTail(DecomposableMatchBuilder1<ET, A1> head, DecomposableMatchBuilder2<List<T>, B1, B2> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -334,9 +334,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 2.
    */
-  public static <T, A1, A2> DecomposableMatchBuilder2<List<T>, A1, A2> headTail(DecomposableMatchBuilder2<T, A1, A2> head, MatchesExact<List<T>> tail) {
+  public static <T, ET extends T, A1, A2> DecomposableMatchBuilder2<List<T>, A1, A2> headTail(DecomposableMatchBuilder2<ET, A1, A2> head, MatchesExact<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(tail.t));
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -344,9 +344,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 2 and the {@code tail} value is extracted.
    */
-  public static <T, A1, A2> DecomposableMatchBuilder3<List<T>, A1, A2, List<T>> headTail(DecomposableMatchBuilder2<T, A1, A2> head, MatchesAny<List<T>> tail) {
+  public static <T, ET extends T, A1, A2> DecomposableMatchBuilder3<List<T>, A1, A2, List<T>> headTail(DecomposableMatchBuilder2<ET, A1, A2> head, MatchesAny<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -355,9 +355,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 2 and the {@code tail} value is decomposed to
    * 0.
    */
-  public static <T, A1, A2> DecomposableMatchBuilder2<List<T>, A1, A2> headTail(DecomposableMatchBuilder2<T, A1, A2> head, DecomposableMatchBuilder0<List<T>> tail) {
+  public static <T, ET extends T, A1, A2> DecomposableMatchBuilder2<List<T>, A1, A2> headTail(DecomposableMatchBuilder2<ET, A1, A2> head, DecomposableMatchBuilder0<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -366,9 +366,9 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 2 and the {@code tail} value is decomposed to
    * 1.
    */
-  public static <T, A1, A2, B1> DecomposableMatchBuilder3<List<T>, A1, A2, B1> headTail(DecomposableMatchBuilder2<T, A1, A2> head, DecomposableMatchBuilder1<List<T>, B1> tail) {
+  public static <T, ET extends T, A1, A2, B1> DecomposableMatchBuilder3<List<T>, A1, A2, B1> headTail(DecomposableMatchBuilder2<ET, A1, A2> head, DecomposableMatchBuilder1<List<T>, B1> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 
   /**
@@ -376,9 +376,9 @@ public final class ListConsCases {
    *
    * <p>If matched, the {@code head} value is decomposed to 3.
    */
-  public static <T, A1, A2, A3> DecomposableMatchBuilder3<List<T>, A1, A2, A3> headTail(DecomposableMatchBuilder3<T, A1, A2, A3> head, MatchesExact<List<T>> tail) {
+  public static <T, ET extends T, A1, A2, A3> DecomposableMatchBuilder3<List<T>, A1, A2, A3> headTail(DecomposableMatchBuilder3<ET, A1, A2, A3> head, MatchesExact<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.eq(tail.t));
-    return new DecomposableMatchBuilder1<List<T>, T>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
+    return new DecomposableMatchBuilder1<List<T>, ET>(matchers, 0, new ListConsHeadTailFieldExtractor<>()).decomposeFirst(head);
   }
 
   /**
@@ -387,8 +387,8 @@ public final class ListConsCases {
    * <p>If matched, the {@code head} value is decomposed to 3 and the {@code tail} value is decomposed to
    * 0.
    */
-  public static <T, A1, A2, A3> DecomposableMatchBuilder3<List<T>, A1, A2, A3> headTail(DecomposableMatchBuilder3<T, A1, A2, A3> head, DecomposableMatchBuilder0<List<T>> tail) {
+  public static <T, ET extends T, A1, A2, A3> DecomposableMatchBuilder3<List<T>, A1, A2, A3> headTail(DecomposableMatchBuilder3<ET, A1, A2, A3> head, DecomposableMatchBuilder0<List<T>> tail) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any(), ArgumentMatchers.any());
-    return new DecomposableMatchBuilder2<List<T>, T, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
+    return new DecomposableMatchBuilder2<List<T>, ET, List<T>>(matchers, Tuple2.of(0, 1), new ListConsHeadTailFieldExtractor<>()).decomposeFirstAndSecond(head, tail);
   }
 }

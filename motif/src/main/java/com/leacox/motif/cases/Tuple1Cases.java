@@ -19,6 +19,7 @@
 package com.leacox.motif.cases;
 
 import com.leacox.motif.MatchesAny;
+import com.leacox.motif.MatchesExact;
 import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
 import com.leacox.motif.extract.DecomposableMatchBuilder2;
@@ -40,8 +41,8 @@ public final class Tuple1Cases {
   /**
    * Matches a tuple of 1 element.
    */
-  public static <A> DecomposableMatchBuilder0<Tuple1<A>> tuple1(A a) {
-    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a));
+  public static <A> DecomposableMatchBuilder0<Tuple1<A>> tuple1(MatchesExact<A> a) {
+    List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(a.t));
     return new DecomposableMatchBuilder0<Tuple1<A>>(matchers, new Tuple1FieldExtractor<>());
   }
 
@@ -50,7 +51,7 @@ public final class Tuple1Cases {
    *
    * <p>If matched, the {@code a} value is extracted.
    */
-  public static <A> DecomposableMatchBuilder1<Tuple1<A>, A> tuple1(MatchesAny a) {
+  public static <A> DecomposableMatchBuilder1<Tuple1<A>, A> tuple1(MatchesAny<A> a) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
     return new DecomposableMatchBuilder1<Tuple1<A>, A>(matchers, 0, new Tuple1FieldExtractor<>());
   }
@@ -60,9 +61,9 @@ public final class Tuple1Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 0.
    */
-  public static <A> DecomposableMatchBuilder0<Tuple1<A>> tuple1(DecomposableMatchBuilder0<A> a) {
+  public static <A, EA extends A> DecomposableMatchBuilder0<Tuple1<A>> tuple1(DecomposableMatchBuilder0<EA> a) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<Tuple1<A>, A>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
+    return new DecomposableMatchBuilder1<Tuple1<A>, EA>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
   }
 
   /**
@@ -70,9 +71,9 @@ public final class Tuple1Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 1.
    */
-  public static <A, A1> DecomposableMatchBuilder1<Tuple1<A>, A1> tuple1(DecomposableMatchBuilder1<A, A1> a) {
+  public static <A, EA extends A, A1> DecomposableMatchBuilder1<Tuple1<A>, A1> tuple1(DecomposableMatchBuilder1<EA, A1> a) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<Tuple1<A>, A>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
+    return new DecomposableMatchBuilder1<Tuple1<A>, EA>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
   }
 
   /**
@@ -80,9 +81,9 @@ public final class Tuple1Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 2.
    */
-  public static <A, A1, A2> DecomposableMatchBuilder2<Tuple1<A>, A1, A2> tuple1(DecomposableMatchBuilder2<A, A1, A2> a) {
+  public static <A, EA extends A, A1, A2> DecomposableMatchBuilder2<Tuple1<A>, A1, A2> tuple1(DecomposableMatchBuilder2<EA, A1, A2> a) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<Tuple1<A>, A>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
+    return new DecomposableMatchBuilder1<Tuple1<A>, EA>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
   }
 
   /**
@@ -90,8 +91,8 @@ public final class Tuple1Cases {
    *
    * <p>If matched, the {@code a} value is decomposed to 3.
    */
-  public static <A, A1, A2, A3> DecomposableMatchBuilder3<Tuple1<A>, A1, A2, A3> tuple1(DecomposableMatchBuilder3<A, A1, A2, A3> a) {
+  public static <A, EA extends A, A1, A2, A3> DecomposableMatchBuilder3<Tuple1<A>, A1, A2, A3> tuple1(DecomposableMatchBuilder3<EA, A1, A2, A3> a) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new DecomposableMatchBuilder1<Tuple1<A>, A>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
+    return new DecomposableMatchBuilder1<Tuple1<A>, EA>(matchers, 0, new Tuple1FieldExtractor<>()).decomposeFirst(a);
   }
 }

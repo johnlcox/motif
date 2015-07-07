@@ -36,7 +36,6 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,6 +91,12 @@ abstract class BaseMatchMethodPermutationBuilder {
 
   protected List<TypeNameWithArity> createTypeArityList(
       TypeName t, String extractVariableName, int maxArity) {
+    TypeName u = match(t)
+        .when(typeOf(TypeVariableName.class))
+        .get(x -> (TypeName) TypeVariableName.get("E" + x.name, x))
+        .orElse(x -> x)
+        .getMatch();
+
     List<TypeNameWithArity> typeArityList = new ArrayList<>();
     //typeArityList.add(TypeNameWithArity.of(t, 0));
     typeArityList.add(TypeNameWithArity.of(ParameterizedTypeName.get(MATCH_EXACT, t), 0));
@@ -99,7 +104,7 @@ abstract class BaseMatchMethodPermutationBuilder {
     //typeArityList.add(TypeNameWithArity.of(TypeName.get(MatchesAny.class), 1));
     IntStream.rangeClosed(0, maxArity).forEach(
         extractArity -> {
-          TypeName[] typeVariables = createTypeVariables(t, extractVariableName, extractArity);
+          TypeName[] typeVariables = createTypeVariables(u, extractVariableName, extractArity);
           typeArityList.add(
               TypeNameWithArity.of(
                   ParameterizedTypeName
@@ -173,7 +178,7 @@ abstract class BaseMatchMethodPermutationBuilder {
             t -> {
               if (isDecomposableBuilder(t.rawType)) {
                 return t.typeArguments.subList(1, t.typeArguments.size());
-              } else if (t.rawType.equals(MATCH_ANY)){
+              } else if (t.rawType.equals(MATCH_ANY)) {
                 return ImmutableList.of(paramType);
               } else {
                 return Collections.<TypeName>emptyList();
@@ -187,7 +192,15 @@ abstract class BaseMatchMethodPermutationBuilder {
 
   protected List<TypeName> getReturnStatementArgs(MatchType firstMatch, TypeName paramType) {
     List<TypeName> extractA;
-    if (firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) {
+    if (firstMatch == MatchType.DECOMPOSE) {
+      TypeName u = match(paramType)
+          .when(typeOf(TypeVariableName.class)).get(
+              x -> (TypeName) TypeVariableName.get("E" + x.name, x))
+          .orElse(x -> x)
+          .getMatch();
+
+      extractA = ImmutableList.of(u);
+    } else if (firstMatch == MatchType.ANY) {
       extractA = ImmutableList.of(paramType);
     } else {
       extractA = ImmutableList.of();

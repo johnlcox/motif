@@ -17,6 +17,7 @@ package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.Case2Cases.case2;
 
@@ -40,8 +41,8 @@ public class CaseClassCasesSpec {
           it.should(
               "match cat", expect -> {
                 String result = match(cat)
-                    .when(case2(NotAnimal.class, "Cat", 4)).get(() -> "Nope")
-                    .when(case2(Animal.class, "Cat", 4)).get(() -> "Yep")
+                    .when(case2(NotAnimal.class, eq("Cat"), eq(4))).get(() -> "Nope")
+                    .when(case2(Animal.class, eq("Cat"), eq(4))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -50,8 +51,8 @@ public class CaseClassCasesSpec {
           it.should(
               "match cat and extract name", expect -> {
                 String result = match(cat)
-                    .when(case2(NotAnimal.class, "Cat", 4)).get(() -> "Nope")
-                    .when(case2(Animal.class, any(), 4)).get(name -> name)
+                    .when(case2(NotAnimal.class, eq("Cat"), eq(4))).get(() -> "Nope")
+                    .when(case2(Animal.class, any(), eq(4))).get(name -> name)
                     .getMatch();
 
                 expect.that(result).is("Cat");
@@ -60,8 +61,8 @@ public class CaseClassCasesSpec {
           it.should(
               "match cat and extract legs", expect -> {
                 String result = match(cat)
-                    .when(case2(NotAnimal.class, "Cat", 4)).get(() -> "Nope")
-                    .when(case2(Animal.class, "Cat", any())).get(legs -> legs.toString())
+                    .when(case2(NotAnimal.class, eq("Cat"), eq(4))).get(() -> "Nope")
+                    .when(case2(Animal.class, eq("Cat"), any())).get(legs -> legs.toString())
                     .getMatch();
 
                 expect.that(result).is("4");
@@ -70,7 +71,7 @@ public class CaseClassCasesSpec {
           it.should(
               "match cat and extract name and legs", expect -> {
                 String result = match(cat)
-                    .when(case2(NotAnimal.class, "Cat", 4)).get(() -> "Nope")
+                    .when(case2(NotAnimal.class, eq("Cat"), eq(4))).get(() -> "Nope")
                     .when(case2(Animal.class, any(), any())).get(
                         (name, legs) -> "(" + name + ", " + legs + ")")
                     .getMatch();

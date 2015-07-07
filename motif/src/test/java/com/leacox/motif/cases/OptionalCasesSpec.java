@@ -147,10 +147,10 @@ public class OptionalCasesSpec {
                 Optional<Tuple2<String, String>> tuple2Opt = Optional.of(Tuple2.of("A", "B"));
 
                 String result = match(tuple2Opt)
-                    .when(some(tuple2("C", "D"))).get(() -> "Nope1")
-                    .when(some(tuple2("A", "C"))).get(() -> "Nope2")
-                    .when(some(tuple2("D", "B"))).get(() -> "Nope3")
-                    .when(some(tuple2("A", "B"))).get(() -> "Yep")
+                    .when(some(tuple2(eq("C"), eq("D")))).get(() -> "Nope1")
+                    .when(some(tuple2(eq("A"), eq("C")))).get(() -> "Nope2")
+                    .when(some(tuple2(eq("D"), eq("B")))).get(() -> "Nope3")
+                    .when(some(tuple2(eq("A"), eq("B")))).get(() -> "Yep")
                     .getMatch();
 
                 expect.that(result).is("Yep");
@@ -161,10 +161,10 @@ public class OptionalCasesSpec {
                 Optional<Tuple2<String, String>> tuple2Opt = Optional.of(Tuple2.of("A", "B"));
 
                 String result = match(tuple2Opt)
-                    .when(some(tuple2("C", "D"))).get(() -> "Nope1")
-                    .when(some(tuple2("A", "C"))).get(() -> "Nope2")
-                    .when(some(tuple2("D", "B"))).get(() -> "Nope3")
-                    .when(some(tuple2(any(), "B"))).get(a -> a)
+                    .when(some(tuple2(eq("C"), eq("D")))).get(() -> "Nope1")
+                    .when(some(tuple2(eq("A"), eq("C")))).get(() -> "Nope2")
+                    .when(some(tuple2(eq("D"), eq("B")))).get(() -> "Nope3")
+                    .when(some(tuple2(any(), eq("B")))).get(a -> a)
                     .getMatch();
 
                 expect.that(result).is("A");
@@ -175,10 +175,10 @@ public class OptionalCasesSpec {
                 Optional<Tuple2<String, String>> tuple2Opt = Optional.of(Tuple2.of("A", "B"));
 
                 String result = match(tuple2Opt)
-                    .when(some(tuple2("C", "D"))).get(() -> "Nope")
-                    .when(some(tuple2("A", "C"))).get(() -> "Nope")
-                    .when(some(tuple2("D", "B"))).get(() -> "Nope")
-                    .when(some(tuple2("A", any()))).get(b -> b)
+                    .when(some(tuple2(eq("C"), eq("D")))).get(() -> "Nope")
+                    .when(some(tuple2(eq("A"), eq("C")))).get(() -> "Nope")
+                    .when(some(tuple2(eq("D"), eq("B")))).get(() -> "Nope")
+                    .when(some(tuple2(eq("A"), any()))).get(b -> b)
                     .getMatch();
 
                 expect.that(result).is("B");
@@ -189,9 +189,9 @@ public class OptionalCasesSpec {
                 Optional<Tuple2<String, String>> tuple2Opt = Optional.of(Tuple2.of("A", "B"));
 
                 String result = match(tuple2Opt)
-                    .when(some(tuple2("C", "D"))).get(() -> "Nope")
-                    .when(some(tuple2("A", "C"))).get(() -> "Nope")
-                    .when(some(tuple2("D", "B"))).get(() -> "Nope")
+                    .when(some(tuple2(eq("C"), eq("D")))).get(() -> "Nope")
+                    .when(some(tuple2(eq("A"), eq("C")))).get(() -> "Nope")
+                    .when(some(tuple2(eq("D"), eq("B")))).get(() -> "Nope")
                     .when(some(tuple2(any(), any()))).get((a, b) -> "(" + a + ", " + b + ")")
                     .getMatch();
 

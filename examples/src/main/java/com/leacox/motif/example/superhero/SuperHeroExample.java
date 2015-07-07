@@ -16,7 +16,9 @@
 package com.leacox.motif.example.superhero;
 
 import static com.leacox.motif.MatchesAny.any;
+import static com.leacox.motif.MatchesExact.eq;
 import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.Case2Cases.case2;
 import static com.leacox.motif.cases.Case3Cases.case3;
 
 import java.math.BigDecimal;
@@ -61,7 +63,9 @@ public class SuperHeroExample {
     return match(character)
         //.when(case2(Animal.class, eq("Cat"), eq(4)))
         //.when(case3(SuperHero.class, any(), any(), eq(Optional.of(alterEgo)))).get(
-        .when(case3(SuperHero.class, "", any(), Optional.of(alterEgo))).get(p -> Optional.of(p))
+        .when(case2(Civilian.class, any(), any())).get((n, w) -> Optional.<ImmutableList<String>>empty())
+        .when(case3(SuperHero.class, eq(""), any(), eq(Optional.of(alterEgo)))).get(
+            p -> Optional.of(p))
         .orElse(Optional.empty())
         .getMatch();
   }

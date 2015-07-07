@@ -18,12 +18,15 @@ package com.leacox.motif.cases;
 import static com.insightfullogic.lambdabehave.Suite.describe;
 import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
+import static com.leacox.motif.cases.Case2Cases.case2;
 import static com.leacox.motif.cases.ListConsCases.headNil;
 import static com.leacox.motif.cases.ListConsCases.headTail;
+import static com.leacox.motif.cases.OptionalCases.none;
 import static com.leacox.motif.cases.OptionalCases.some;
 import static com.leacox.motif.cases.Tuple2Cases.tuple2;
 import static com.leacox.motif.cases.TypeOfCases.typeOf;
 
+import com.leacox.motif.caseclass.Case2;
 import com.leacox.motif.extract.util.Lists;
 import com.leacox.motif.tuple.Tuple2;
 
@@ -39,6 +42,51 @@ import java.util.Optional;
  */
 @RunWith(JunitSuiteRunner.class)
 public class NestedCasesSpec {
+
+  private static abstract class CommonParent {
+    public abstract String getName();
+  }
+
+  private static class ChildOne extends CommonParent implements Case2<String, String> {
+    private final String name;
+    private final String other;
+
+    ChildOne(String name, String other) {
+      this.name = name;
+      this.other = other;
+    }
+
+    @Override
+    public Tuple2<String, String> extract() {
+      return Tuple2.of(name, other);
+    }
+
+    @Override
+    public String getName() {
+      return name;
+    }
+  }
+
+  private static class ChildTwo extends CommonParent implements Case2<String, String> {
+    private final String name;
+    private final String other;
+
+    ChildTwo(String name, String other) {
+      this.name = name;
+      this.other = other;
+    }
+
+    @Override
+    public Tuple2<String, String> extract() {
+      return Tuple2.of(name, other);
+    }
+
+    @Override
+    public String getName() {
+      return name;
+    }
+  }
+
   {
     describe(
         "nested cases", it -> {
@@ -126,6 +174,25 @@ public class NestedCasesSpec {
                     .getMatch();
 
                 expect.that(result).is("2");
+              });
+
+          it.should(
+              "match child classes", expect -> {
+                Optional<CommonParent> opt = Optional.of(new ChildTwo("c", "d"));
+                CommonParent common = new ChildTwo("c", "d");
+
+                String result = match(opt)
+                    .when(none()).get(() -> "Nope")
+                    .when(some(case2(ChildOne.class, any(), any()))).get((a, b) -> a + b)
+                    .when(some(case2(ChildTwo.class, any(), any()))).get((c, d) -> c + d)
+                    .getMatch();
+
+                //String result = match(common)
+                //    .when(case2(ChildOne.class, any(), any())).get((a, b) -> a + b)
+                //    .when(case2(ChildTwo.class, any(), any())).get((c, d) -> c + d)
+                //    .getMatch();
+
+                expect.that(result).is("cd");
               });
         });
   }

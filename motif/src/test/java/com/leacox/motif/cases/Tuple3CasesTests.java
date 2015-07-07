@@ -40,7 +40,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), "B", "C")).get(() -> "Yep")
+        .when(tuple3(some(eq("A")), eq("B"), eq("C"))).get(() -> "Yep")
         .getMatch();
 
     assertThat(result).isEqualTo("Yep");
@@ -52,7 +52,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), "B", any())).get(c -> c)
+        .when(tuple3(some(eq("A")), eq("B"), any())).get(c -> c)
         .getMatch();
 
     assertThat(result).isEqualTo("C");
@@ -64,7 +64,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Optional.of("C"));
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), "B", some(eq("C")))).get(() -> "Yep")
+        .when(tuple3(some(eq("A")), eq("B"), some(eq("C")))).get(() -> "Yep")
         .getMatch();
 
     assertThat(result).isEqualTo("Yep");
@@ -76,7 +76,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Optional.of("C"));
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), "B", some(any()))).get(c -> c)
+        .when(tuple3(some(eq("A")), eq("B"), some(any()))).get(c -> c)
         .getMatch();
 
     assertThat(result).isEqualTo("C");
@@ -88,7 +88,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Tuple2.of("C", "D"));
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), "B", tuple2(any(), any()))).get((c, d) -> c + d)
+        .when(tuple3(some(eq("A")), eq("B"), tuple2(any(), any()))).get((c, d) -> c + d)
         .getMatch();
 
     assertThat(result).isEqualTo("CD");
@@ -100,7 +100,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Tuple3.of("C", "D", "E"));
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), "B", tuple3(any(), any(), any()))).get((c, d, e) -> c + d + e)
+        .when(tuple3(some(eq("A")), eq("B"), tuple3(any(), any(), any()))).get((c, d, e) -> c + d + e)
         .getMatch();
 
     assertThat(result).isEqualTo("CDE");
@@ -112,7 +112,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), any(), "C")).get(b -> b)
+        .when(tuple3(some(eq("A")), any(), eq("C"))).get(b -> b)
         .getMatch();
 
     assertThat(result).isEqualTo("B");
@@ -179,7 +179,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Optional.of("B"), "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), some(eq("B")), "C")).get(() -> "Yep")
+        .when(tuple3(some(eq("A")), some(eq("B")), eq("C"))).get(() -> "Yep")
         .getMatch();
 
     assertThat(result).isEqualTo("Yep");
@@ -258,7 +258,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Optional.of("B"), "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), some(any()), "C")).get(b -> b)
+        .when(tuple3(some(eq("A")), some(any()), eq("C"))).get(b -> b)
         .getMatch();
 
     assertThat(result).isEqualTo("B");
@@ -323,7 +323,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Tuple2.of("B", "C"), "D");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), tuple2(any(), any()), "D")).get((b, c) -> b + c)
+        .when(tuple3(some(eq("A")), tuple2(any(), any()), eq("D"))).get((b, c) -> b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("BC");
@@ -374,7 +374,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Tuple3.of("B", "C", "D"), "E");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), tuple3(any(), any(), any()), "E")).get((b, c, d) -> b + c + d)
+        .when(tuple3(some(eq("A")), tuple3(any(), any(), any()), eq("E"))).get((b, c, d) -> b + c + d)
         .getMatch();
 
     assertThat(result).isEqualTo("BCD");
@@ -404,7 +404,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), "B", "C")).get(a -> a)
+        .when(tuple3(some(any()), eq("B"), eq("C"))).get(a -> a)
         .getMatch();
 
     assertThat(result).isEqualTo("A");
@@ -416,7 +416,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), "B", any())).get((a, c) -> a + c)
+        .when(tuple3(some(any()), eq("B"), any())).get((a, c) -> a + c)
         .getMatch();
 
     assertThat(result).isEqualTo("AC");
@@ -428,7 +428,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Optional.of("C"));
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), "B", some(eq("C")))).get(a -> a)
+        .when(tuple3(some(any()), eq("B"), some(eq("C")))).get(a -> a)
         .getMatch();
 
     assertThat(result).isEqualTo("A");
@@ -440,7 +440,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Optional.of("C"));
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), "B", some(any()))).get((a, c) -> a + c)
+        .when(tuple3(some(any()), eq("B"), some(any()))).get((a, c) -> a + c)
         .getMatch();
 
     assertThat(result).isEqualTo("AC");
@@ -452,7 +452,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Tuple2.of("C", "D"));
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), "B", tuple2(any(), any()))).get((a, c, d) -> a + c + d)
+        .when(tuple3(some(any()), eq("B"), tuple2(any(), any()))).get((a, c, d) -> a + c + d)
         .getMatch();
 
     assertThat(result).isEqualTo("ACD");
@@ -469,7 +469,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), any(), "C")).get((a, b) -> a + b)
+        .when(tuple3(some(any()), any(), eq("C"))).get((a, b) -> a + b)
         .getMatch();
 
     assertThat(result).isEqualTo("AB");
@@ -523,7 +523,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Optional.of("B"), "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), some(eq("B")), "C")).get(a -> a)
+        .when(tuple3(some(any()), some(eq("B")), eq("C"))).get(a -> a)
         .getMatch();
 
     assertThat(result).isEqualTo("A");
@@ -588,7 +588,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Optional.of("B"), "C");
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), some(any()), "C")).get((a, b) -> a + b)
+        .when(tuple3(some(any()), some(any()), eq("C"))).get((a, b) -> a + b)
         .getMatch();
 
     assertThat(result).isEqualTo("AB");
@@ -639,7 +639,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Tuple2.of("B", "C"), "D");
 
     String result = match(tuple3)
-        .when(tuple3(some(any()), tuple2(any(), any()), "D")).get((a, b, c) -> a + b + c)
+        .when(tuple3(some(any()), tuple2(any(), any()), eq("D"))).get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -668,7 +668,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), "C", "D");
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), "C", "D")).get((a, b) -> a + b)
+        .when(tuple3(tuple2(any(), any()), eq("C"), eq("D"))).get((a, b) -> a + b)
         .getMatch();
 
     assertThat(result).isEqualTo("AB");
@@ -680,7 +680,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), "C", "D");
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), "C", any())).get((a, b, d) -> a + b + d)
+        .when(tuple3(tuple2(any(), any()), eq("C"), any())).get((a, b, d) -> a + b + d)
         .getMatch();
 
     assertThat(result).isEqualTo("ABD");
@@ -692,7 +692,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), "C", Optional.of("D"));
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), "C", some(eq("D")))).get((a, b) -> a + b)
+        .when(tuple3(tuple2(any(), any()), eq("C"), some(eq("D")))).get((a, b) -> a + b)
         .getMatch();
 
     assertThat(result).isEqualTo("AB");
@@ -704,7 +704,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), "C", Optional.of("D"));
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), "C", some(any()))).get((a, b, d) -> a + b + d)
+        .when(tuple3(tuple2(any(), any()), eq("C"), some(any()))).get((a, b, d) -> a + b + d)
         .getMatch();
 
     assertThat(result).isEqualTo("ABD");
@@ -719,7 +719,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), "C", "D");
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), any(), "D")).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple2(any(), any()), any(), eq("D"))).get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -748,7 +748,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), Optional.of("C"), "D");
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), some(eq("C")), "D")).get((a, b) -> a + b)
+        .when(tuple3(tuple2(any(), any()), some(eq("C")), eq("D"))).get((a, b) -> a + b)
         .getMatch();
 
     assertThat(result).isEqualTo("AB");
@@ -799,7 +799,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple2.of("A", "B"), Optional.of("C"), "D");
 
     String result = match(tuple3)
-        .when(tuple3(tuple2(any(), any()), some(any()), "D")).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple2(any(), any()), some(any()), eq("D"))).get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -828,7 +828,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple3.of("A", "B", "C"), "D", "E");
 
     String result = match(tuple3)
-        .when(tuple3(tuple3(any(), any(), any()), "D", "E")).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple3(any(), any(), any()), eq("D"), eq("E"))).get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -840,7 +840,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple3.of("A", "B", "C"), "D", Optional.of("E"));
 
     String result = match(tuple3)
-        .when(tuple3(tuple3(any(), any(), any()), "D", some(eq("E")))).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple3(any(), any(), any()), eq("D"), some(eq("E")))).get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -852,7 +852,7 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple3.of("A", "B", "C"), Optional.of("D"), "E");
 
     String result = match(tuple3)
-        .when(tuple3(tuple3(any(), any(), any()), some(eq("D")), "E")).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple3(any(), any(), any()), some(eq("D")), eq("E"))).get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
