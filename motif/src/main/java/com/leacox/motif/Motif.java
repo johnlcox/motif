@@ -91,7 +91,7 @@ public final class Motif {
    * @param value the value the match on
    * @param <T> the type of the value
    * @return FluentMatching object used to fluently build pattern matches. <strong>Do not</strong>
-   *    create a reference to the returned object.
+   *     create a reference to the returned object.
    */
   public static <T> FluentMatching<T> match(T value) {
     return new FluentMatching<>(value);
