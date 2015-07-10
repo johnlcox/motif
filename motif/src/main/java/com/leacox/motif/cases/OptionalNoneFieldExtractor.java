@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.FieldExtractor;
@@ -24,7 +25,7 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-public class OptionalNoneFieldExtractor <T> implements FieldExtractor<Optional<T>> {
+public class OptionalNoneFieldExtractor<T> implements FieldExtractor<Optional<T>> {
   OptionalNoneExtractor<T> noneExtractor = new OptionalNoneExtractor<>();
 
   @Override

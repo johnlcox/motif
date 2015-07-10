@@ -13,11 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.leacox.motif.cases;
 
-/**
- * @author John Leacox
- */
+package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.FieldExtractor;
 import com.leacox.motif.tuple.Tuple2;
@@ -26,6 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Field extractor for extracting a {@link List} into a head element and a tail of remaining
+ * elements.
+ *
+ * @author John Leacox
+ */
 final class ListConsHeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
   private final ListConsHeadTailExtractor<A> listExtractor = new ListConsHeadTailExtractor<>();
 

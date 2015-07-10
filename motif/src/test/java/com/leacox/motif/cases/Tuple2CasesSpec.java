@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
@@ -87,7 +88,8 @@ public class Tuple2CasesSpec {
                 Tuple2<String, Tuple2<String, String>> tuple2 = Tuple2.of("A", Tuple2.of("B", "C"));
 
                 String result = match(tuple2)
-                    .when(tuple2(eq("A"), tuple2(any(), any()))).get((b, c) -> "(" + b + ", " + c + ")")
+                    .when(tuple2(eq("A"), tuple2(any(), any())))
+                    .get((b, c) -> "(" + b + ", " + c + ")")
                     .getMatch();
 
                 expect.that(result).is("(B, C)");

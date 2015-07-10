@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import static com.leacox.motif.extract.matchers.ArgumentMatchers.any;
@@ -101,7 +102,7 @@ public final class PrimitiveCases {
     return new DecomposableMatchBuilder0<>(matchers, new PrimitiveFieldExtractor<>(Float.class));
   }
 
-  public static DecomposableMatchBuilder1<Float, Float> caseFloat(MatchesAny F) {
+  public static DecomposableMatchBuilder1<Float, Float> caseFloat(MatchesAny f) {
     List<Matcher<Object>> matchers = new ArrayList<>();
     matchers.add(any());
 

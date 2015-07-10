@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.example.superhero;
 
 import com.leacox.motif.caseclass.Case3;

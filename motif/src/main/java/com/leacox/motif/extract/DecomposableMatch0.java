@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.extract;
 
 import com.leacox.motif.extract.matchers.Matcher;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * A decomposable matcher that extracts 0 values.
+ *
  * @author John Leacox
  */
 final class DecomposableMatch0<T> implements Extractor0<T> {

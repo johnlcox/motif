@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.Extractor2;
@@ -22,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * An extractor for extracting a {@link List} into a head element and a tail of remaining
+ * elements.
+ *
  * @author John Leacox
  */
 public class ListConsHeadTailExtractor<A> implements Extractor2<List<A>, A, List<A>> {

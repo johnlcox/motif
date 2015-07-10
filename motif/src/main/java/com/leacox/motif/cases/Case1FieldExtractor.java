@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.caseclass.Case1;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Field extractor for {@link Case1}.
+ *
  * @author John Leacox
  */
 final class Case1FieldExtractor<T extends Case1<A>, A>

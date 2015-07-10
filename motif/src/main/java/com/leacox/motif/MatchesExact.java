@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif;
 
 /**
@@ -20,6 +21,7 @@ package com.leacox.motif;
  */
 public class MatchesExact<T> {
   public final T t;
+
   private MatchesExact(T t) {
     this.t = t;
   }

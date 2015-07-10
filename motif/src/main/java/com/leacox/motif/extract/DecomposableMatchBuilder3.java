@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.extract;
 
 import com.leacox.motif.extract.matchers.Matcher;
+import com.leacox.motif.extract.util.Maps;
 import com.leacox.motif.tuple.Tuple2;
 import com.leacox.motif.tuple.Tuple3;
-import com.leacox.motif.extract.util.Maps;
 
 import java.util.List;
 import java.util.Map;
@@ -453,8 +454,6 @@ public final class DecomposableMatchBuilder3<T, A, B, C> extends DecomposableMat
 
     return new DecomposableMatchBuilder3<>(matchers, newIndexes, nestedFieldExtractor);
   }
-
-
 
   public <B1> DecomposableMatchBuilder2<T, A, B1> decomposeSecondAndThird(
       DecomposableMatchBuilder1<B, B1> b, DecomposableMatchBuilder0<C> c) {

@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.extract;
 
-import com.leacox.motif.tuple.Tuple3;
-
 import com.leacox.motif.extract.matchers.Matcher;
+import com.leacox.motif.tuple.Tuple3;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
+ * A decomposable matcher that extracts 3 values.
+ *
  * @author John Leacox
  */
 final class DecomposableMatch3<T, A, B, C> implements Extractor3<T, A, B, C> {

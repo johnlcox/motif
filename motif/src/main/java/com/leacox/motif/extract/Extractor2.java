@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.extract;
 
 import com.leacox.motif.tuple.Tuple2;
@@ -20,10 +21,29 @@ import com.leacox.motif.tuple.Tuple2;
 import java.util.Optional;
 
 /**
+ * An extractor for types with 2 fields.
+ *
+ * @param <T> the type to be extracted
+ * @param <A> the type of the first extracted field
+ * @param <B> the type of the second extracted field
+ *
  * @author John Leacox
  */
 public interface Extractor2<T, A, B> {
+  /**
+   * Extracts the fields of {@code t} into an {@link Optional} {@link Tuple2} if it matches this
+   * extractor.
+   *
+   * <p>If {@code t} cannot be extracted then an {@link Optional#empty()} is returned.
+   *
+   * @param t the value to extract fields from
+   * @return an {@link Optional} of the extracted fields, or {@link Optional#empty()} if the fields
+   *     cannot be extracted
+   */
   Optional<Tuple2<A, B>> unapply(T t);
 
+  /**
+   * Returns the {@link Class} type that this extractor can extract.
+   */
   Class<?> getExtractorClass();
 }

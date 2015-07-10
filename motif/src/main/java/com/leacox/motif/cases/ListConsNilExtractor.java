@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.Extractor0;
@@ -20,6 +21,8 @@ import com.leacox.motif.extract.Extractor0;
 import java.util.List;
 
 /**
+ * An extractor for extracting an empty list.
+ *
  * @author John Leacox
  */
 public class ListConsNilExtractor<A> implements Extractor0<List<A>> {

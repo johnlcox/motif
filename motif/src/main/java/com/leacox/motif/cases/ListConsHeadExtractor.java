@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.Extractor1;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * An extractor for extracting a {@link List} with a single element.
+ *
  * @author John Leacox
  */
 public class ListConsHeadExtractor<A> implements Extractor1<List<A>, A> {

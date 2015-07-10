@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.FieldExtractor;
@@ -21,7 +22,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
+
+ /**
+ * Field extractor for extracting an empty list.
+ *
  * @author John Leacox
  */
 final class ListConsNilFieldExtractor<A> implements FieldExtractor<List<A>> {

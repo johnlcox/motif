@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.extract.FieldExtractor;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Field extractor for {@link Tuple1}.
+ *
  * @author John Leacox
  */
 final class Tuple1FieldExtractor<A> implements FieldExtractor<Tuple1<A>> {

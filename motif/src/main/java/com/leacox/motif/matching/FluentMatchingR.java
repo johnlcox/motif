@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.matching;
 
 import com.leacox.motif.MatchException;
@@ -48,12 +49,15 @@ public final class FluentMatchingR<T, R> {
 
   public <U extends T> OngoingMatchingR0<T, U, R> when(MatchesExact<U> o) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o.t));
-    return new OngoingMatchingR0<>(this, new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor<U>()).build());
+    return new OngoingMatchingR0<>(
+        this, new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor<U>()).build());
   }
 
   public <U extends T> OngoingMatchingR1<T, U, U, R> when(MatchesAny<U> o) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new OngoingMatchingR1<>(this, new DecomposableMatchBuilder1<U, U>(matchers, 0, new IdentityFieldExtractor<>()).build());
+    return new OngoingMatchingR1<>(
+        this,
+        new DecomposableMatchBuilder1<U, U>(matchers, 0, new IdentityFieldExtractor<>()).build());
   }
 
   public <U extends T> OngoingMatchingR0<T, U, R> when(

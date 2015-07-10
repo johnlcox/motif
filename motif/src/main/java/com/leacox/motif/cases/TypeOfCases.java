@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import static com.leacox.motif.extract.matchers.ArgumentMatchers.any;
@@ -20,7 +21,6 @@ import static com.leacox.motif.extract.matchers.ArgumentMatchers.any;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
 import com.leacox.motif.extract.Extractor1;
 import com.leacox.motif.extract.FieldExtractor;
-
 import com.leacox.motif.extract.matchers.Matcher;
 
 import java.util.ArrayList;

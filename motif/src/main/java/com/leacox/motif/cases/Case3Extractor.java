@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import com.leacox.motif.caseclass.Case3;
@@ -24,7 +25,7 @@ import java.util.Optional;
 /**
  * @author John Leacox
  */
-public class  Case3Extractor<T extends Case3<A, B, C>, A, B, C>
+public class Case3Extractor<T extends Case3<A, B, C>, A, B, C>
     implements Extractor3<T, A, B, C> {
   private final Class<T> caseClazz;
 

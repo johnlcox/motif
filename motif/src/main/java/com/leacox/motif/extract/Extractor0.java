@@ -13,13 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.extract;
 
 /**
+ * An extractor for types with 0 fields.
+ *
+ * @param <T> the type to be extracted
+ *
  * @author John Leacox
  */
 public interface Extractor0<T> {
+  /**
+   * Returns true if {@code t} matches this extractor; otherwise false.
+   */
   boolean unapply(T t);
 
+  /**
+   * Returns the {@link Class} type that this extractor can extract.
+   */
   Class<?> getExtractorClass();
 }

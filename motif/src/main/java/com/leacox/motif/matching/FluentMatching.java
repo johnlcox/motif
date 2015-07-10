@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.matching;
 
 import com.leacox.motif.MatchesAny;
@@ -21,14 +22,11 @@ import com.leacox.motif.extract.DecomposableMatchBuilder0;
 import com.leacox.motif.extract.DecomposableMatchBuilder1;
 import com.leacox.motif.extract.DecomposableMatchBuilder2;
 import com.leacox.motif.extract.DecomposableMatchBuilder3;
-import com.leacox.motif.extract.FieldExtractor;
 import com.leacox.motif.extract.matchers.ArgumentMatchers;
 import com.leacox.motif.extract.matchers.Matcher;
 import com.leacox.motif.extract.util.Lists;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author John Leacox
@@ -42,12 +40,15 @@ public final class FluentMatching<T> {
 
   public <U extends T> InitialMatching0<T, U> when(MatchesExact<U> o) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.eq(o.t));
-    return new InitialMatching0<>(new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor<U>()).build(), value);
+    return new InitialMatching0<>(
+        new DecomposableMatchBuilder0<>(matchers, new IdentityFieldExtractor<U>()).build(), value);
   }
 
   public <U extends T> InitialMatching1<T, U, U> when(MatchesAny<U> o) {
     List<Matcher<Object>> matchers = Lists.of(ArgumentMatchers.any());
-    return new InitialMatching1<>(new DecomposableMatchBuilder1<U, U>(matchers, 0, new IdentityFieldExtractor<>()).build(), value);
+    return new InitialMatching1<>(
+        new DecomposableMatchBuilder1<U, U>(matchers, 0, new IdentityFieldExtractor<>()).build(),
+        value);
   }
 
   public <U extends T> InitialMatching0<T, U> when(

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import static com.insightfullogic.lambdabehave.Suite.describe;
@@ -66,9 +67,9 @@ public class OptionalCasesSpec {
                 String result = match(some)
                     .when(some(eq("not a string?"))).get(() -> "What?")
                     .when(some(eq("a string"))).get(() -> "Found it")
-                            .when(some(any())).get(a -> a)
-                            .when(none()).get(() -> "hi")
-                            .getMatch();
+                    .when(some(any())).get(a -> a)
+                    .when(none()).get(() -> "hi")
+                    .getMatch();
 
                 expect.that(result).is("Found it");
               });

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.leacox.motif.cases;
 
 import static com.leacox.motif.MatchesAny.any;
@@ -100,7 +101,8 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), "B", Tuple3.of("C", "D", "E"));
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), eq("B"), tuple3(any(), any(), any()))).get((c, d, e) -> c + d + e)
+        .when(tuple3(some(eq("A")), eq("B"), tuple3(any(), any(), any())))
+        .get((c, d, e) -> c + d + e)
         .getMatch();
 
     assertThat(result).isEqualTo("CDE");
@@ -374,7 +376,8 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Tuple3.of("B", "C", "D"), "E");
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), tuple3(any(), any(), any()), eq("E"))).get((b, c, d) -> b + c + d)
+        .when(tuple3(some(eq("A")), tuple3(any(), any(), any()), eq("E")))
+        .get((b, c, d) -> b + c + d)
         .getMatch();
 
     assertThat(result).isEqualTo("BCD");
@@ -386,7 +389,8 @@ public class Tuple3CasesTests {
         Tuple3.of(Optional.of("A"), Tuple3.of("B", "C", "D"), Optional.of("E"));
 
     String result = match(tuple3)
-        .when(tuple3(some(eq("A")), tuple3(any(), any(), any()), some(eq("E")))).get((b, c, d) -> b + c + d)
+        .when(tuple3(some(eq("A")), tuple3(any(), any(), any()), some(eq("E"))))
+        .get((b, c, d) -> b + c + d)
         .getMatch();
 
     assertThat(result).isEqualTo("BCD");
@@ -840,7 +844,8 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple3.of("A", "B", "C"), "D", Optional.of("E"));
 
     String result = match(tuple3)
-        .when(tuple3(tuple3(any(), any(), any()), eq("D"), some(eq("E")))).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple3(any(), any(), any()), eq("D"), some(eq("E"))))
+        .get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -852,7 +857,8 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple3.of("A", "B", "C"), Optional.of("D"), "E");
 
     String result = match(tuple3)
-        .when(tuple3(tuple3(any(), any(), any()), some(eq("D")), eq("E"))).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple3(any(), any(), any()), some(eq("D")), eq("E")))
+        .get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
@@ -864,7 +870,8 @@ public class Tuple3CasesTests {
         Tuple3.of(Tuple3.of("A", "B", "C"), Optional.of("D"), Optional.of("E"));
 
     String result = match(tuple3)
-        .when(tuple3(tuple3(any(), any(), any()), some(eq("D")), some(eq("E")))).get((a, b, c) -> a + b + c)
+        .when(tuple3(tuple3(any(), any(), any()), some(eq("D")), some(eq("E"))))
+        .get((a, b, c) -> a + b + c)
         .getMatch();
 
     assertThat(result).isEqualTo("ABC");
