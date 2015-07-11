@@ -22,9 +22,21 @@ import com.leacox.motif.tuple.Tuple3;
 import java.util.Optional;
 
 /**
+ * An extract for extracting the fields of a {@link Tuple3}.
+ *
  * @author John Leacox
  */
 public class Tuple3Extractor<A, B, C> implements Extractor3<Tuple3<A, B, C>, A, B, C> {
+  private Tuple3Extractor() {
+  }
+
+  /**
+   * Creates a new instances of {@link Tuple3Extractor}.
+   */
+  public static <A, B, C> Tuple3Extractor<A, B, C> create() {
+    return new Tuple3Extractor<>();
+  }
+
   @Override
   public Optional<Tuple3<A, B, C>> unapply(Tuple3<A, B, C> tuple3) {
     return Optional.ofNullable(tuple3);

@@ -27,6 +27,16 @@ import java.util.Optional;
  * @author John Leacox
  */
 public class ListConsHeadExtractor<A> implements Extractor1<List<A>, A> {
+  private ListConsHeadExtractor() {
+  }
+
+  /**
+   * Creates a new instance of {@link ListConsHeadExtractor}.
+   */
+  public static <A> ListConsHeadExtractor<A> create() {
+    return new ListConsHeadExtractor<>();
+  }
+
   @Override
   public Optional<A> unapply(List<A> list) {
     if (list.size() == 1) {

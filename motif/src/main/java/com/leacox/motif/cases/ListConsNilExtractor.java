@@ -26,6 +26,16 @@ import java.util.List;
  * @author John Leacox
  */
 public class ListConsNilExtractor<A> implements Extractor0<List<A>> {
+  private ListConsNilExtractor() {
+  }
+
+  /**
+   * Creates a new instance of {@link ListConsNilExtractor}.
+   */
+  public static <A> ListConsNilExtractor<A> create() {
+    return new ListConsNilExtractor<>();
+  }
+
   @Override
   public boolean unapply(List<A> list) {
     return list.isEmpty();

@@ -23,10 +23,12 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * A field extractor for extracting the value in an empty {@link Optional}.
+ *
  * @author John Leacox
  */
 public class OptionalNoneFieldExtractor<T> implements FieldExtractor<Optional<T>> {
-  OptionalNoneExtractor<T> noneExtractor = new OptionalNoneExtractor<>();
+  private final OptionalNoneExtractor<T> noneExtractor = OptionalNoneExtractor.create();
 
   @Override
   public Optional<List<Object>> unapply(Optional<T> value) {

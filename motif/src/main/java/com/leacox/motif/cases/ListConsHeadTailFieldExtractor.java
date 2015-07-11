@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 /**
  * Field extractor for extracting a {@link List} into a head element and a tail of remaining
  * elements.
@@ -31,7 +30,7 @@ import java.util.Optional;
  * @author John Leacox
  */
 final class ListConsHeadTailFieldExtractor<A> implements FieldExtractor<List<A>> {
-  private final ListConsHeadTailExtractor<A> listExtractor = new ListConsHeadTailExtractor<>();
+  private final ListConsHeadTailExtractor<A> listExtractor = ListConsHeadTailExtractor.create();
 
   @Override
   public Optional<List<Object>> unapply(List<A> value) {

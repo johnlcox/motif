@@ -23,6 +23,8 @@ import com.leacox.motif.tuple.Tuple2;
 import java.util.Optional;
 
 /**
+ * An extract for extracting the fields of a {@link Case2}.
+ *
  * @author John Leacox
  */
 public class Case2Extractor<T extends Case2<A, B>, A, B> implements Extractor2<T, A, B> {
@@ -30,6 +32,13 @@ public class Case2Extractor<T extends Case2<A, B>, A, B> implements Extractor2<T
 
   Case2Extractor(Class<T> caseClazz) {
     this.caseClazz = caseClazz;
+  }
+
+  /**
+   * Creates a new instances of {@link Case2Extractor} for the specified {@link Case2} class.
+   */
+  public static <T extends Case2<A, B>, A, B> Case2Extractor<T, A, B> create(Class<T> caseClazz) {
+    return new Case2Extractor<>(caseClazz);
   }
 
   @Override

@@ -29,6 +29,16 @@ import java.util.Optional;
  * @author John Leacox
  */
 public class ListConsHeadTailExtractor<A> implements Extractor2<List<A>, A, List<A>> {
+  private ListConsHeadTailExtractor() {
+  }
+
+  /**
+   * Creates a new instance of {@link ListConsHeadTailExtractor}.
+   */
+  public static <A> ListConsHeadTailExtractor<A> create() {
+    return new ListConsHeadTailExtractor<>();
+  }
+
   @Override
   public Optional<Tuple2<A, List<A>>> unapply(List<A> list) {
     if (list.isEmpty()) {

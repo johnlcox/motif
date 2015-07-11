@@ -21,9 +21,21 @@ import com.leacox.motif.extract.Extractor1;
 import java.util.Optional;
 
 /**
+ * An extractor for extracting an {@link Optional}.
+ *
  * @author John Leacox
  */
 public class OptionalExtractor<T> implements Extractor1<Optional<T>, T> {
+  private OptionalExtractor() {
+  }
+
+  /**
+   * Creates a new instance of {@link OptionalExtractor}.
+   */
+  public static <A> OptionalExtractor<A> create() {
+    return new OptionalExtractor<>();
+  }
+
   @Override
   public Optional<T> unapply(Optional<T> t) {
     if (t.isPresent()) {

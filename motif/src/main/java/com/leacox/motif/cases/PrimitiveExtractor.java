@@ -21,13 +21,22 @@ import com.leacox.motif.extract.Extractor1;
 import java.util.Optional;
 
 /**
+ * An extractor for extrating a primitive value.
+ *
  * @author John Leacox
  */
 public class PrimitiveExtractor<T> implements Extractor1<T, T> {
   private final Class<T> primitiveType;
 
-  PrimitiveExtractor(Class<T> primitiveType) {
+  private PrimitiveExtractor(Class<T> primitiveType) {
     this.primitiveType = primitiveType;
+  }
+
+  /**
+   * Creates a new instance of {@link PrimitiveExtractor}.
+   */
+  public static <T> PrimitiveExtractor<T> create(Class<T> primitiveType) {
+    return new PrimitiveExtractor<>(primitiveType);
   }
 
   @Override

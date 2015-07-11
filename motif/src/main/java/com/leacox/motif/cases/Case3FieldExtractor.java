@@ -33,7 +33,7 @@ final class Case3FieldExtractor<T extends Case3<A, B, C>, A, B, C>
   private final Case3Extractor<T, A, B, C> case3Extractor;
 
   Case3FieldExtractor(Class<T> caseClazz) {
-    this.case3Extractor = new Case3Extractor<>(caseClazz);
+    this.case3Extractor = Case3Extractor.create(caseClazz);
   }
 
   @Override

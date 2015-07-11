@@ -23,14 +23,24 @@ import com.leacox.motif.tuple.Tuple3;
 import java.util.Optional;
 
 /**
+ * An extract for extracting the fields of a {@link Case3}.
+ *
  * @author John Leacox
  */
 public class Case3Extractor<T extends Case3<A, B, C>, A, B, C>
     implements Extractor3<T, A, B, C> {
   private final Class<T> caseClazz;
 
-  Case3Extractor(Class<T> caseClazz) {
+  private Case3Extractor(Class<T> caseClazz) {
     this.caseClazz = caseClazz;
+  }
+
+  /**
+   * Creates a new instances of {@link Case3Extractor} for the specified {@link Case3} class.
+   */
+  public static <T extends Case3<A, B, C>, A, B, C> Case3Extractor<T, A, B, C> create(
+      Class<T> caseClazz) {
+    return new Case3Extractor<>(caseClazz);
   }
 
   @Override

@@ -22,14 +22,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-
- /**
+/**
  * Field extractor for extracting an empty list.
  *
  * @author John Leacox
  */
 final class ListConsNilFieldExtractor<A> implements FieldExtractor<List<A>> {
-  private final ListConsNilExtractor<A> emptyListExtractor = new ListConsNilExtractor<>();
+  private final ListConsNilExtractor<A> emptyListExtractor = ListConsNilExtractor.create();
 
   @Override
   public Optional<List<Object>> unapply(List<A> value) {

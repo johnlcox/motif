@@ -28,7 +28,7 @@ import java.util.Optional;
  * @author John Leacox
  */
 final class Tuple3FieldExtractor<A, B, C> implements FieldExtractor<Tuple3<A, B, C>> {
-  Tuple3Extractor<A, B, C> tuple3Extractor = new Tuple3Extractor<>();
+  private final Tuple3Extractor<A, B, C> tuple3Extractor = Tuple3Extractor.create();
 
   @Override
   public Optional<List<Object>> unapply(Tuple3<A, B, C> value) {

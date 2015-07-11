@@ -22,13 +22,22 @@ import com.leacox.motif.extract.Extractor1;
 import java.util.Optional;
 
 /**
+ * An extract for extracting the fields of a {@link Case1}.
+ *
  * @author John Leacox
  */
 public class Case1Extractor<T extends Case1<A>, A> implements Extractor1<T, A> {
   private final Class<T> caseClazz;
 
-  Case1Extractor(Class<T> caseClazz) {
+  private Case1Extractor(Class<T> caseClazz) {
     this.caseClazz = caseClazz;
+  }
+
+  /**
+   * Creates a new instances of {@link Case1Extractor} for the specified {@link Case1} class.
+   */
+  public static <T extends Case1<A>, A> Case1Extractor<T, A> create(Class<T> caseClazz) {
+    return new Case1Extractor<>(caseClazz);
   }
 
   @Override

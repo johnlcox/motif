@@ -23,13 +23,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * A field extractor for extracting a primitive value.
+ *
  * @author John Leacox
  */
 final class PrimitiveFieldExtractor<T> implements FieldExtractor<T> {
   private final PrimitiveExtractor<T> primitiveExtractor;
 
   PrimitiveFieldExtractor(Class<T> primitiveType) {
-    this.primitiveExtractor = new PrimitiveExtractor<>(primitiveType);
+    this.primitiveExtractor = PrimitiveExtractor.create(primitiveType);
   }
 
   @Override

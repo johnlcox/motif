@@ -28,7 +28,7 @@ import java.util.Optional;
  * @author John Leacox
  */
 final class ListConsHeadFieldExtractor<A> implements FieldExtractor<List<A>> {
-  private final ListConsHeadExtractor<A> headExtractor = new ListConsHeadExtractor<>();
+  private final ListConsHeadExtractor<A> headExtractor = ListConsHeadExtractor.create();
 
   @Override
   public Optional<List<Object>> unapply(List<A> value) {
