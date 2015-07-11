@@ -22,13 +22,17 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Abstract base class for all tuple classes.
+ *
+ * <p>This class implements {@link Object#equals(Object)}, {@link Object#hashCode()} and
+ * {@link Object#toString()} for all tuples.
+ *
  * @author John Leacox
  */
 public abstract class Tuple {
   private final List<Object> values;
 
   protected Tuple(Object... values) {
-    // TODO: Is it worth pulling in Guava to use ImmutableList?
     this.values = Collections.unmodifiableList(Arrays.asList(values));
   }
 

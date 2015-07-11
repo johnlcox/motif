@@ -17,6 +17,8 @@
 package com.leacox.motif.tuple;
 
 /**
+ * A tuple with a single value.
+ *
  * @author John Leacox
  */
 public final class Tuple1<A> extends Tuple {
@@ -28,10 +30,16 @@ public final class Tuple1<A> extends Tuple {
     this.a = a;
   }
 
+  /**
+   * Creates a new instance of {@link Tuple1} with the specified value.
+   */
   public static <A> Tuple1<A> of(A a) {
     return new Tuple1<>(a);
   }
 
+  /**
+   * Returns the first and only value.
+   */
   public A first() {
     return a;
   }

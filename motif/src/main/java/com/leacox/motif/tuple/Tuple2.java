@@ -17,6 +17,8 @@
 package com.leacox.motif.tuple;
 
 /**
+ * A tuple with two values.
+ *
  * @author John Leacox
  */
 public final class Tuple2<A, B> extends Tuple {
@@ -30,14 +32,23 @@ public final class Tuple2<A, B> extends Tuple {
     this.b = b;
   }
 
+  /**
+   * Creates a new instance of {@link Tuple2} with the specified values.
+   */
   public static <A, B> Tuple2<A, B> of(A a, B b) {
     return new Tuple2<>(a, b);
   }
 
+  /**
+   * Returns the first value.
+   */
   public A first() {
     return a;
   }
 
+  /**
+   * Returns the second value.
+   */
   public B second() {
     return b;
   }

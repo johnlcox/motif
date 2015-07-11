@@ -17,6 +17,8 @@
 package com.leacox.motif.tuple;
 
 /**
+ * A tuple with three values.
+ *
  * @author John Leacox
  */
 public final class Tuple3<A, B, C> extends Tuple {
@@ -32,18 +34,30 @@ public final class Tuple3<A, B, C> extends Tuple {
     this.c = c;
   }
 
+  /**
+   * Creates a new instance of {@link Tuple2} with the specified values.
+   */
   public static <A, B, C> Tuple3<A, B, C> of(A a, B b, C c) {
     return new Tuple3<>(a, b, c);
   }
 
+  /**
+   * Returns the first value.
+   */
   public A first() {
     return a;
   }
 
+  /**
+   * Returns the second value.
+   */
   public B second() {
     return b;
   }
 
+  /**
+   * Returns the third value.
+   */
   public C third() {
     return c;
   }
