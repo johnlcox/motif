@@ -26,6 +26,9 @@ package com.leacox.motif;
  * @author John Leacox
  */
 public class MatchException extends RuntimeException {
+  /**
+   * Creates a new instance of {@link MatchException}.
+   */
   public MatchException(String message) {
     super(message);
   }

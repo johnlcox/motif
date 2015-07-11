@@ -17,6 +17,8 @@
 package com.leacox.motif;
 
 /**
+ * A matcher for wildcard matching.
+ *
  * @author John Leacox
  */
 public class MatchesAny<T> {
@@ -25,10 +27,16 @@ public class MatchesAny<T> {
 
   private static MatchesAny ANY = new MatchesAny();
 
+  /**
+   * Returns an instance of {@link MatchesAny}.
+   */
   public static <T> MatchesAny<T> any() {
     return ANY;
   }
 
+  /**
+   * Returns an instance of {@link MatchesAny} for the specified type.
+   */
   public static <T> MatchesAny<T> any(Class<T> clazz) {
     return ANY;
   }

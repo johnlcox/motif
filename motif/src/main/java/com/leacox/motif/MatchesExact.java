@@ -17,6 +17,8 @@
 package com.leacox.motif;
 
 /**
+ * A wrapper for exact matching.
+ *
  * @author John Leacox
  */
 public class MatchesExact<T> {
@@ -26,6 +28,9 @@ public class MatchesExact<T> {
     this.t = t;
   }
 
+  /**
+   * Creates a new instance of {@link MatchesExact} for the specified value.
+   */
   public static <T> MatchesExact<T> eq(T t) {
     return new MatchesExact<>(t);
   }
