@@ -21,6 +21,8 @@ import com.leacox.motif.function.Consumer3;
 import com.leacox.motif.function.Function3;
 
 /**
+ * Fluent API for specifying an action to take on a match with 3 parameters.
+ *
  * @author John Leacox
  */
 public final class InitialMatching3<T, U extends T, A, B, C> extends Matching3<T, U, A, B, C> {
@@ -32,10 +34,16 @@ public final class InitialMatching3<T, U extends T, A, B, C> extends Matching3<T
     this.value = value;
   }
 
+  /**
+   * Sets a {@link Function3} to execute if this matches.
+   */
   public <R> FluentMatchingR<T, R> get(Function3<A, B, C, R> function) {
     return get(new FluentMatchingR<>(value), function);
   }
 
+  /**
+   * Sets a {@link Consumer3} to execute if this matches.
+   */
   public FluentMatchingC<T> then(Consumer3<A, B, C> consumer) {
     return then(new FluentMatchingC<>(value), consumer);
   }

@@ -19,6 +19,8 @@ package com.leacox.motif.matching;
 import java.util.function.Function;
 
 /**
+ * A pattern used internally to pair up matchers and actions.
+ *
  * @author John Leacox
  */
 interface Pattern<T, R> {

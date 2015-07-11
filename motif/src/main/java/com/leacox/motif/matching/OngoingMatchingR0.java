@@ -21,6 +21,8 @@ import com.leacox.motif.extract.Extractor0;
 import java.util.function.Supplier;
 
 /**
+ * Fluent API for specifying an action to take on a match with 0 parameters.
+ *
  * @author John Leacox
  */
 public final class OngoingMatchingR0<T, U extends T, R> extends Matching0<T, U> {
@@ -31,6 +33,9 @@ public final class OngoingMatchingR0<T, U extends T, R> extends Matching0<T, U> 
     this.fluentMatchingR = fluentMatchingR;
   }
 
+  /**
+   * Sets a {@link Supplier} to execute if this matches.
+   */
   public FluentMatchingR<T, R> get(Supplier<R> supplier) {
     return get(fluentMatchingR, supplier);
   }

@@ -22,6 +22,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
+ * Abstract matching class for matching cases that extract 1 parameter.
+ *
  * @author John Leacox
  */
 abstract class Matching1<T, U extends T, A> {
@@ -36,10 +38,8 @@ abstract class Matching1<T, U extends T, A> {
       FluentMatchingR<T, R> fluentMatchingR, Function<A, R> function) {
     fluentMatchingR.addPattern(
         Pattern.of(
-            t -> {
-              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
-                  .unapply((U) t).isPresent();
-            },
+            t -> extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                .unapply((U) t).isPresent(),
             t -> {
               A a = extractor.unapply((U) t).get();
               return function.apply(a);
@@ -53,10 +53,8 @@ abstract class Matching1<T, U extends T, A> {
   FluentMatchingC<T> then(FluentMatchingC<T> fluentMatchingC, Consumer<A> consumer) {
     fluentMatchingC.addPattern(
         ConsumablePattern.of(
-            t -> {
-              return extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
-                  .unapply((U) t).isPresent();
-            },
+            t -> extractor.getExtractorClass().isAssignableFrom(t.getClass()) && extractor
+                .unapply((U) t).isPresent(),
             t -> {
               A a = extractor.unapply((U) t).get();
               consumer.accept(a);

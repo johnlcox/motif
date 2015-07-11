@@ -21,6 +21,8 @@ import com.leacox.motif.function.Consumer2;
 import com.leacox.motif.function.Function2;
 
 /**
+ * Fluent API for specifying an action to take on a match with 2 parameters.
+ *
  * @author John Leacox
  */
 public final class InitialMatching2<T, U extends T, A, B> extends Matching2<T, U, A, B> {
@@ -32,10 +34,16 @@ public final class InitialMatching2<T, U extends T, A, B> extends Matching2<T, U
     this.value = value;
   }
 
+  /**
+   * Sets a {@link Function2} to execute if this matches.
+   */
   public <R> FluentMatchingR<T, R> get(Function2<A, B, R> function) {
     return get(new FluentMatchingR<>(value), function);
   }
 
+  /**
+   * Sets a {@link Consumer2} to execute if this matches.
+   */
   public FluentMatchingC<T> then(Consumer2<A, B> consumer) {
     return then(new FluentMatchingC<>(value), consumer);
   }

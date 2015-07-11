@@ -20,6 +20,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
+ * A pattern used internally to pair up matchers and consumable actions.
+ *
  * @author John Leacox
  */
 interface ConsumablePattern<T> {

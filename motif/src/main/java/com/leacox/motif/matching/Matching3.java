@@ -22,6 +22,8 @@ import com.leacox.motif.function.Function3;
 import com.leacox.motif.tuple.Tuple3;
 
 /**
+ * Abstract matching class for matching cases that extract 3 parameters.
+ *
  * @author John Leacox
  */
 abstract class Matching3<T, U extends T, A, B, C> {

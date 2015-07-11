@@ -20,6 +20,8 @@ import com.leacox.motif.extract.Extractor3;
 import com.leacox.motif.function.Consumer3;
 
 /**
+ * Fluent API for specifying an action to take on a match with 3 parameters.
+ *
  * @author John Leacox
  */
 public class OngoingMatchingC3<T, U extends T, A, B, C> extends Matching3<T, U, A, B, C> {
@@ -31,6 +33,9 @@ public class OngoingMatchingC3<T, U extends T, A, B, C> extends Matching3<T, U, 
     this.fluentMatchingC = fluentMatchingC;
   }
 
+  /**
+   * Sets a {@link Consumer3} to execute if this matches.
+   */
   public FluentMatchingC<T> then(Consumer3<A, B, C> consumer) {
     return then(fluentMatchingC, consumer);
   }

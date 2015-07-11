@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * A field extractor that returns a singleton list containing only the original value.
+ *
  * @author John Leacox
  */
 final class IdentityFieldExtractor<T> implements FieldExtractor<T> {

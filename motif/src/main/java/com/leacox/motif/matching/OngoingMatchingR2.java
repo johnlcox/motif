@@ -20,6 +20,8 @@ import com.leacox.motif.extract.Extractor2;
 import com.leacox.motif.function.Function2;
 
 /**
+ * Fluent API for specifying an action to take on a match with 2 parameters.
+ *
  * @author John Leacox
  */
 public final class OngoingMatchingR2<T, U extends T, A, B, R> extends Matching2<T, U, A, B> {
@@ -31,6 +33,9 @@ public final class OngoingMatchingR2<T, U extends T, A, B, R> extends Matching2<
     this.fluentMatchingR = fluentMatchingR;
   }
 
+  /**
+   * Sets a {@link Function2} to execute if this matches.
+   */
   public FluentMatchingR<T, R> get(Function2<A, B, R> function) {
     return get(fluentMatchingR, function);
   }

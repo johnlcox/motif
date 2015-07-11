@@ -22,6 +22,8 @@ import com.leacox.motif.function.Consumer0;
 import java.util.function.Supplier;
 
 /**
+ * Fluent API for specifying an action to take on a match with 0 parameters.
+ *
  * @author John Leacox
  */
 public final class InitialMatching0<T, U extends T> extends Matching0<T, U> {
@@ -33,10 +35,16 @@ public final class InitialMatching0<T, U extends T> extends Matching0<T, U> {
     this.value = value;
   }
 
+  /**
+   * Sets a {@link Supplier} to execute if this matches.
+   */
   public <R> FluentMatchingR<T, R> get(Supplier<R> supplier) {
     return get(new FluentMatchingR<>(value), supplier);
   }
 
+  /**
+   * Sets a {@link Consumer0} to execute if this matches.
+   */
   public FluentMatchingC<T> then(Consumer0 consumer) {
     return then(new FluentMatchingC<>(value), consumer);
   }

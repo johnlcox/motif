@@ -22,6 +22,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
+ * Fluent API for specifying an action to take on a match with 1 parameter.
+ *
  * @author John Leacox
  */
 public final class InitialMatching1<T, U extends T, A> extends Matching1<T, U, A> {
@@ -33,10 +35,16 @@ public final class InitialMatching1<T, U extends T, A> extends Matching1<T, U, A
     this.value = value;
   }
 
+  /**
+   * Sets a {@link Function} to execute if this matches.
+   */
   public <R> FluentMatchingR<T, R> get(Function<A, R> function) {
     return get(new FluentMatchingR<>(value), function);
   }
 
+  /**
+   * Sets a {@link Consumer} to execute if this matches.
+   */
   public FluentMatchingC<T> then(Consumer<A> consumer) {
     return then(new FluentMatchingC<>(value), consumer);
   }

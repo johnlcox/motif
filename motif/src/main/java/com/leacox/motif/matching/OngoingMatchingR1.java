@@ -21,6 +21,8 @@ import com.leacox.motif.extract.Extractor1;
 import java.util.function.Function;
 
 /**
+ * Fluent API for specifying an action to take on a match with 1 parameter.
+ *
  * @author John Leacox
  */
 public final class OngoingMatchingR1<T, U extends T, A, R> extends Matching1<T, U, A> {
@@ -32,6 +34,9 @@ public final class OngoingMatchingR1<T, U extends T, A, R> extends Matching1<T, 
     this.fluentMatchingR = fluentMatchingR;
   }
 
+  /**
+   * Sets a {@link Function} to execute if this matches.
+   */
   public FluentMatchingR<T, R> get(Function<A, R> function) {
     return get(fluentMatchingR, function);
   }

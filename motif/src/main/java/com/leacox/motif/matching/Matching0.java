@@ -22,6 +22,8 @@ import com.leacox.motif.function.Consumer0;
 import java.util.function.Supplier;
 
 /**
+ * Abstract matching class for matching cases that extract 0 parameters.
+ *
  * @author John Leacox
  */
 abstract class Matching0<T, U extends T> {

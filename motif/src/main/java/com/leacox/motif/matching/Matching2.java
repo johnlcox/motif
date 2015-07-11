@@ -22,6 +22,8 @@ import com.leacox.motif.function.Function2;
 import com.leacox.motif.tuple.Tuple2;
 
 /**
+ * Abstract matching class for matching cases that extract 2 parameters.
+ *
  * @author John Leacox
  */
 abstract class Matching2<T, U extends T, A, B> {
