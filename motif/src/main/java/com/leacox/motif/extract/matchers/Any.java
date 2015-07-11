@@ -17,9 +17,14 @@
 package com.leacox.motif.extract.matchers;
 
 /**
+ * A wildcard matcher that matches anything.
+ *
  * @author John Leacox
  */
 class Any<T> implements Matcher<T> {
+  /**
+   * A singleton instance of an {@link Any} matcher.
+   */
   public static final Any ANY = new Any();
 
   private Any() {

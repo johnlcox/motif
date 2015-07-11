@@ -30,12 +30,18 @@ public final class Maps {
   private Maps() {
   }
 
+  /**
+   * Returns a {@link TreeMap} with a single entry.
+   */
   public static <K, V> TreeMap<K, V> treeMapOf(K k1, V v1) {
     TreeMap<K, V> treeMap = new TreeMap<>();
     treeMap.put(k1, v1);
     return treeMap;
   }
 
+  /**
+   * Returns a {@link TreeMap} of the given entries, in order.
+   */
   public static <K, V> TreeMap<K, V> treeMapOf(K k1, V v1, K k2, V v2) {
     TreeMap<K, V> treeMap = new TreeMap<>();
     treeMap.put(k1, v1);
@@ -43,6 +49,9 @@ public final class Maps {
     return treeMap;
   }
 
+  /**
+   * Returns a {@link TreeMap} of the given entries, in order.
+   */
   public static <K, V> TreeMap<K, V> treeMapOf(K k1, V v1, K k2, V v2, K k3, V v3) {
     TreeMap<K, V> treeMap = new TreeMap<>();
     treeMap.put(k1, v1);

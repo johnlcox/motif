@@ -32,16 +32,25 @@ public final class Lists {
   private Lists() {
   }
 
+  /**
+   * Returns the empty list.
+   */
   public static <E> List<E> of() {
     return Collections.emptyList();
   }
 
+  /**
+   * Returns a list with a single entry.
+   */
   public static <E> List<E> of(E e1) {
     List<E> list = new ArrayList<>();
     list.add(e1);
     return list;
   }
 
+  /**
+   * Returns a list of the given elements, in order.
+   */
   public static <E> List<E> of(E e1, E e2) {
     List<E> list = new ArrayList<>();
     list.add(e1);
@@ -49,6 +58,9 @@ public final class Lists {
     return list;
   }
 
+  /**
+   * Returns a list of the given elements, in order.
+   */
   public static <E> List<E> of(E e1, E e2, E e3) {
     List<E> list = new ArrayList<>();
     list.add(e1);
@@ -57,6 +69,9 @@ public final class Lists {
     return list;
   }
 
+  /**
+   * Returns a list of the given elements, in order.
+   */
   public static <E> List<E> of(E e1, E e2, E e3, E e4) {
     List<E> list = new ArrayList<>();
     list.add(e1);

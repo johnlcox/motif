@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * Abstract base class for all DecomposableMatchBuilder classes.
+ *
  * @author John Leacox
  */
 public abstract class DecomposableMatchBuilder<T> {

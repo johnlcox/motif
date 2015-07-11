@@ -23,6 +23,8 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 /**
+ * A field extractor for extracting nested matches.
+ *
  * @author John Leacox
  */
 final class NestedFieldExtractor<T> implements FieldExtractor<T> {

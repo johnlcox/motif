@@ -26,11 +26,16 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * A decomposable match builder that extracts 3 parameters.
+ *
  * @author John Leacox
  */
 public final class DecomposableMatchBuilder3<T, A, B, C> extends DecomposableMatchBuilder<T> {
   final Tuple3<Integer, Integer, Integer> extractedIndexes;
 
+  /**
+   * Creates a new instance of {@link DecomposableMatchBuilder3}.
+   */
   public DecomposableMatchBuilder3(
       List<Matcher<Object>> fieldMatchers, Tuple3<Integer, Integer, Integer> extractedIndexes,
       FieldExtractor<T> fieldExtractor) {
@@ -43,6 +48,9 @@ public final class DecomposableMatchBuilder3<T, A, B, C> extends DecomposableMat
     return b.fieldMatchers.size() - 1;
   }
 
+  /**
+   * Builds a {@link DecomposableMatch3}.
+   */
   public DecomposableMatch3<T, A, B, C> build() {
     return new DecomposableMatch3<>(fieldMatchers, extractedIndexes, fieldExtractor);
   }

@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * A decomposable match builder that extracts 1 parameter.
+ *
  * @author John Leacox
  */
 public final class DecomposableMatchBuilder1<T, A> extends DecomposableMatchBuilder<T> {
@@ -33,6 +35,9 @@ public final class DecomposableMatchBuilder1<T, A> extends DecomposableMatchBuil
   final int extractedIndex;
   final FieldExtractor<T> fieldExtractor;
 
+  /**
+   * Creates a new instance of {@link DecomposableMatchBuilder1}.
+   */
   public DecomposableMatchBuilder1(
       List<Matcher<Object>> fieldMatchers, int extractedIndex,
       FieldExtractor<T> fieldExtractor) {
@@ -43,10 +48,19 @@ public final class DecomposableMatchBuilder1<T, A> extends DecomposableMatchBuil
     this.fieldExtractor = fieldExtractor;
   }
 
+  /**
+   * Builds a {@link DecomposableMatch1}.
+   */
   public DecomposableMatch1<T, A> build() {
     return new DecomposableMatch1<>(fieldMatchers, extractedIndex, fieldExtractor);
   }
 
+  /**
+   * Returns a new {@link DecomposableMatchBuilder0} that further decomposes the first element of
+   * this match builder.
+   *
+   * <p>The first element is decomposed and 0 elements.
+   */
   public DecomposableMatchBuilder0<T> decomposeFirst(DecomposableMatchBuilder0<A> first) {
     Objects.requireNonNull(first);
 
@@ -59,6 +73,12 @@ public final class DecomposableMatchBuilder1<T, A> extends DecomposableMatchBuil
     return new DecomposableMatchBuilder0<>(matchers, nestedFieldExtractor);
   }
 
+  /**
+   * Returns a new {@link DecomposableMatchBuilder1} that further decomposes the first element of
+   * this match builder.
+   *
+   * <p>The first element is decomposed to 1 element.
+   */
   public <B> DecomposableMatchBuilder1<T, B> decomposeFirst(
       DecomposableMatchBuilder1<A, B> first) {
     Objects.requireNonNull(first);
@@ -74,6 +94,12 @@ public final class DecomposableMatchBuilder1<T, A> extends DecomposableMatchBuil
     return new DecomposableMatchBuilder1<>(matchers, newIndex, nestedFieldExtractor);
   }
 
+  /**
+   * Returns a new {@link DecomposableMatchBuilder2} that further decomposes the first element of
+   * this match builder.
+   *
+   * <p>The first element is decomposed to 2 elements.
+   */
   public <B, C> DecomposableMatchBuilder2<T, B, C> decomposeFirst(
       DecomposableMatchBuilder2<A, B, C> first) {
     Objects.requireNonNull(first);
@@ -91,6 +117,12 @@ public final class DecomposableMatchBuilder1<T, A> extends DecomposableMatchBuil
     return new DecomposableMatchBuilder2<>(matchers, newIndexes, nestedFieldExtractor);
   }
 
+  /**
+   * Returns a new {@link DecomposableMatchBuilder3} that further decomposes the first element of
+   * this match builder.
+   *
+   * <p>The first element is decomposed to 3 elements.
+   */
   public <B, C, D> DecomposableMatchBuilder3<T, B, C, D> decomposeFirst(
       DecomposableMatchBuilder3<A, B, C, D> first) {
     Objects.requireNonNull(first);

@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * Static utility methods for working with nested matches.
+ *
  * @author John Leacox
  */
 final class NestedMatchers {

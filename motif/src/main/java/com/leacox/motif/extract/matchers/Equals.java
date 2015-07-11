@@ -19,6 +19,8 @@ package com.leacox.motif.extract.matchers;
 import java.util.Objects;
 
 /**
+ * A matcher that checks equality.
+ *
  * @author John Leacox
  */
 class Equals implements Matcher<Object> {

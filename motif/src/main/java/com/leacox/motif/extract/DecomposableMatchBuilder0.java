@@ -21,14 +21,22 @@ import com.leacox.motif.extract.matchers.Matcher;
 import java.util.List;
 
 /**
+ * A decomposable match builder that extracts 0 parameters.
+ *
  * @author John Leacox
  */
 public final class DecomposableMatchBuilder0<T> extends DecomposableMatchBuilder<T> {
+  /**
+   * Creates a new instance of {@link DecomposableMatchBuilder0}.
+   */
   public DecomposableMatchBuilder0(
       List<Matcher<Object>> fieldMatchers, FieldExtractor<T> fieldExtractor) {
     super(fieldMatchers, fieldExtractor);
   }
 
+  /**
+   * Builds a {@link DecomposableMatch0}.
+   */
   public DecomposableMatch0<T> build() {
     return new DecomposableMatch0<>(fieldMatchers, fieldExtractor);
   }

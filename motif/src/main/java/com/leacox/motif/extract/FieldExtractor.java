@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * An extractor for extracting an objects fields into an {@link Optional} of {@link List}.
+ *
  * @author John Leacox
  */
 public interface FieldExtractor<T> {

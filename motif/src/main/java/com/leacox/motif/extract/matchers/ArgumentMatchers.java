@@ -17,17 +17,28 @@
 package com.leacox.motif.extract.matchers;
 
 /**
+ * Matchers for use in creates matching cases.
+ *
+ * <p>These generally shouldn't be used direct except when creating 'Cases' classes like
+ * {@link com.leacox.motif.cases.OptionalCases}.
+ *
  * @author John Leacox
  */
 public class ArgumentMatchers {
   private ArgumentMatchers() {
   }
 
+  /**
+   * Returns a wildcard matcher.
+   */
   @SuppressWarnings("unchecked")
   public static <T> Matcher<T> any() {
     return Any.ANY;
   }
 
+  /**
+   * Returns an equals matcher for the given value.
+   */
   @SuppressWarnings("unchecked")
   public static <T> Matcher<T> eq(T value) {
     return (Matcher<T>) new Equals(value);
