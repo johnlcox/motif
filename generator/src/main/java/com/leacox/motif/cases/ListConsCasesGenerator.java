@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Generator for {@link List} cons match cases.
  * @author John Leacox
  */
 final class ListConsCasesGenerator {

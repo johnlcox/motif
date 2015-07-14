@@ -17,6 +17,8 @@
 package com.leacox.motif.cases;
 
 /**
+ * Utility for copyright notices on Motif internally generated classes.
+ *
  * @author John Leacox
  */
 final class Copyright {

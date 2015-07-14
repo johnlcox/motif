@@ -16,10 +16,8 @@
 
 package com.leacox.motif.cases;
 
-import com.leacox.motif.caseclass.Case2;
 import com.leacox.motif.caseclass.Case3;
 import com.leacox.motif.generate.CasesGenerator;
-import com.leacox.motif.generate.Match2MethodSpec;
 import com.leacox.motif.generate.Match3MethodSpec;
 
 import com.squareup.javapoet.ClassName;
@@ -31,6 +29,8 @@ import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 
 /**
+ * Generator for {@link Case3} match cases.
+ *
  * @author John Leacox
  */
 final class Case3CasesGenerator {

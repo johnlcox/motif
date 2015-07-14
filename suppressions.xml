@@ -5,6 +5,7 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+  <suppress files="[/\\]target[/\\]" checks="[a-zA-Z0-9]*"/>
   <suppress files="Case1Cases\.java" checks="[a-zA-Z0-9]*"/>
   <suppress files="Case2Cases\.java" checks="[a-zA-Z0-9]*"/>
   <suppress files="Case3Cases\.java" checks="[a-zA-Z0-9]*"/>
@@ -13,4 +14,13 @@
   <suppress files="Tuple1Cases\.java" checks="[a-zA-Z0-9]*"/>
   <suppress files="Tuple2Cases\.java" checks="[a-zA-Z0-9]*"/>
   <suppress files="Tuple3Cases\.java" checks="[a-zA-Z0-9]*"/>
+  <suppress files="Case1CasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="Case2CasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="Case3CasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="ListConsCasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="OptionalCasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="PrimitiveCasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="Tuple1CasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="Tuple2CasesGenerator\.java" checks="LocalVariableName"/>
+  <suppress files="Tuple3CasesGenerator\.java" checks="LocalVariableName"/>
 </suppressions>

@@ -16,14 +16,19 @@
 
 package com.leacox.motif.example;
 
+import static com.leacox.motif.MatchesAny.any;
 import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.cases.PrimitiveCases.caseLong;
-import static com.leacox.motif.MatchesAny.any;
 
 /**
+ * An example of using pattern matching for implementing factorial.
+ *
  * @author John Leacox
  */
-public class Factorial {
+public class FactorialExample {
+  /**
+   * A traditional implementation of factorial with a conditional.
+   */
   public long factConditional(long n) {
     if (n == 0) {
       return 1;
@@ -32,9 +37,12 @@ public class Factorial {
     }
   }
 
+  /**
+   * An implementation of factorial using motif pattern matching.
+   */
   public long factMatching(long n) {
     return match(n)
-        .when(caseLong(0)).get(() -> 1l)
+        .when(caseLong(0)).get(() -> 1L)
         .when(caseLong(any())).get(i -> i * factMatching(i - 1))
         .getMatch();
   }

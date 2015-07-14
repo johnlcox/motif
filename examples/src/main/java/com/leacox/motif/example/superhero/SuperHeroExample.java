@@ -27,44 +27,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import autovalue.shaded.com.google.common.common.collect.ImmutableList;
-
 /**
+ * An example of case class matching with nested extraction.
+ *
  * @author John Leacox
  */
 public class SuperHeroExample {
+  /**
+   * Main method that runs the example.
+   */
   public static void main(String[] args) {
     new SuperHeroExample().run();
   }
 
-  public void run() {
+  private void run() {
     List<String> powers = new ArrayList<>();
     powers.add("Awesome Suit");
     powers.add("Flying");
 
-    Civilian tonyStark = Civilian.create("Tony Stark", new BigDecimal(9838439287473l));
+    Civilian tonyStark = Civilian.create("Tony Stark", new BigDecimal(9838439287473L));
 
     Character ironMan = SuperHero.create("IronMan", powers, Optional.of(tonyStark));
 
-    Optional<ImmutableList<String>> ironManPowersOpt = getPowersForAlterEgo(ironMan, tonyStark);
+    Optional<List<String>> ironManPowersOpt = getPowersForAlterEgo(ironMan, tonyStark);
 
     System.out.println("Iron man powers: " + ironManPowersOpt.get());
 
     Civilian benUrich = Civilian.create("Ben Urich", new BigDecimal(15000));
 
-    Optional<ImmutableList<String>> benUrichPowersOpt = getPowersForAlterEgo(ironMan, benUrich);
+    Optional<List<String>> benUrichPowersOpt = getPowersForAlterEgo(ironMan, benUrich);
 
     System.out.println("Iron man powers if alter ego Ben Urich: " + benUrichPowersOpt);
   }
 
-  private Optional<ImmutableList<String>> getPowersForAlterEgo(
+  private Optional<List<String>> getPowersForAlterEgo(
       Character character, Civilian alterEgo) {
-
-    // TODO: Figure out why this doesn't work
     return match(character)
-        //.when(case2(Animal.class, eq("Cat"), eq(4)))
-        //.when(case3(SuperHero.class, any(), any(), eq(Optional.of(alterEgo)))).get(
-        .when(case2(Civilian.class, any(), any())).get((n, w) -> Optional.<ImmutableList<String>>empty())
+        .when(case2(Civilian.class, any(), any()))
+        .get((n, w) -> Optional.<List<String>>empty())
         .when(case3(SuperHero.class, eq(""), any(), eq(Optional.of(alterEgo)))).get(
             p -> Optional.of(p))
         .orElse(Optional.empty())

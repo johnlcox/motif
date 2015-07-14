@@ -46,6 +46,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
+ * Abstract base class for matching permutation builders.
+ *
  * @author John Leacox
  */
 abstract class BaseMatchMethodPermutationBuilder {
@@ -56,6 +58,20 @@ abstract class BaseMatchMethodPermutationBuilder {
       0, DecomposableMatchBuilder0.class, 1, DecomposableMatchBuilder1.class,
       2, DecomposableMatchBuilder2.class, 3, DecomposableMatchBuilder3.class);
 
+  /**
+   * Returns a list of type variables for a given type.
+   *
+   * <p>There are several cases for what the returned type variables will be:
+   * <ul>
+   *   <li>If {@code t} is a type variable itself, and has no bounds, then a singleton list
+   *   containing only {@code t} will be returned.</li>
+   *   <li>If {@code t} is a type variable with bounds, then the returned list will first contain
+   *   {@code t} followed by the type variables for the bounds</li>
+   *   <li>If {@code t} is a parameterized type, then the returned list will contain the type
+   *   variables of the parameterized type arguments</li>
+   *   <li>Otherwise an empty list is returned</li>
+   * </ul>
+   */
   protected List<TypeVariableName> getTypeVariables(TypeName t) {
     return match(t)
         .when(typeOf(TypeVariableName.class)).get(
@@ -79,6 +95,9 @@ abstract class BaseMatchMethodPermutationBuilder {
         .getMatch();
   }
 
+  /**
+   * Returns true if the given {@link ClassName} is a decomposable match builder; false otherwise.
+   */
   protected boolean isDecomposableBuilder(ClassName t) {
     return t.equals(ClassName.get(DecomposableMatchBuilder0.class))
         || t.equals(ClassName.get(DecomposableMatchBuilder1.class))
@@ -86,10 +105,16 @@ abstract class BaseMatchMethodPermutationBuilder {
         || t.equals(ClassName.get(DecomposableMatchBuilder3.class));
   }
 
+  /**
+   * Returns the decomposable match builder for the given arity.
+   */
   protected Class<? extends DecomposableMatchBuilder> getDecomposableBuilderByArity(int arity) {
     return decomposableBuilderByArity.get(arity);
   }
 
+  /**
+   * Returns a list of pairs of types and arities up to a given max arity.
+   */
   protected List<TypeNameWithArity> createTypeArityList(
       TypeName t, String extractVariableName, int maxArity) {
     TypeName u = match(t)
@@ -117,6 +142,9 @@ abstract class BaseMatchMethodPermutationBuilder {
     return typeArityList;
   }
 
+  /**
+   * Returns an array of type variables for a given type and arity.
+   */
   protected TypeName[] createTypeVariables(
       TypeName extractedType, String extractVariableName, int extractArity) {
     List<TypeName> typeVariables = new ArrayList<>();
@@ -131,6 +159,9 @@ abstract class BaseMatchMethodPermutationBuilder {
     return typeVariables.toArray(new TypeName[typeVariables.size()]);
   }
 
+  /**
+   * Returns the statement arguments for the match method matcher statement.
+   */
   protected static Object[] getMatcherStatementArgs(int matchedCount) {
     TypeName matcher = ParameterizedTypeName.get(ClassName.get(Matcher.class), TypeName.OBJECT);
     TypeName listOfMatchers = ParameterizedTypeName.get(ClassName.get(List.class), matcher);
@@ -144,6 +175,9 @@ abstract class BaseMatchMethodPermutationBuilder {
     ).toArray(s -> new TypeName[s]);
   }
 
+  /**
+   * Returns the type of match to use for a given type.
+   */
   protected MatchType getMatchType(TypeName m) {
     return match(m)
         .when(typeOf(ParameterizedTypeName.class)).get(
@@ -163,9 +197,12 @@ abstract class BaseMatchMethodPermutationBuilder {
         .getMatch();
   }
 
-  protected String getMatcherString(MatchType secondMatch, String paramName) {
+  /**
+   * Returns the matcher string {@code any() or eq(x)} for a given type.
+   */
+  protected String getMatcherString(MatchType matchType, String paramName) {
     String matchB;
-    if (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY) {
+    if (matchType == MatchType.DECOMPOSE || matchType == MatchType.ANY) {
       matchB = "any()";
     } else {
       matchB = "eq(" + paramName + ".t)";
@@ -173,6 +210,9 @@ abstract class BaseMatchMethodPermutationBuilder {
     return matchB;
   }
 
+  /**
+   * Returns the extracted type parameters.
+   */
   protected List<TypeName> getExtractedTypes(TypeName permutationType, TypeName paramType) {
     return match(permutationType)
         .when(typeOf(ParameterizedTypeName.class)).get(
@@ -191,9 +231,12 @@ abstract class BaseMatchMethodPermutationBuilder {
         .getMatch();
   }
 
-  protected List<TypeName> getReturnStatementArgs(MatchType firstMatch, TypeName paramType) {
+  /**
+   * Returns the statement arguments for the match method returns statement.
+   */
+  protected List<TypeName> getReturnStatementArgs(MatchType matchType, TypeName paramType) {
     List<TypeName> extractA;
-    if (firstMatch == MatchType.DECOMPOSE) {
+    if (matchType == MatchType.DECOMPOSE) {
       TypeName u = match(paramType)
           .when(typeOf(TypeVariableName.class)).get(
               x -> (TypeName) TypeVariableName.get("E" + x.name, x))
@@ -201,7 +244,7 @@ abstract class BaseMatchMethodPermutationBuilder {
           .getMatch();
 
       extractA = ImmutableList.of(u);
-    } else if (firstMatch == MatchType.ANY) {
+    } else if (matchType == MatchType.ANY) {
       extractA = ImmutableList.of(paramType);
     } else {
       extractA = ImmutableList.of();

@@ -35,6 +35,8 @@ import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
 
 /**
+ * Builder for a 1-arity match method.
+ *
  * @author John Leacox
  */
 final class Match1MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {

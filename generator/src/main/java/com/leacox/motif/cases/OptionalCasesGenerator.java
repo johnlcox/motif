@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
+ * Generator for {@link Optional} match cases.
+ *
  * @author John Leacox
  */
 final class OptionalCasesGenerator {
@@ -48,12 +50,13 @@ final class OptionalCasesGenerator {
         .withName("some").withSummaryJavadoc("Matches a non-empty {@link Optional}.\n")
         .withMatchExtractor(OptionalFieldExtractor.class).withParamA(T, "t").build();
 
-    JavaFile optionalCasesFile = CasesGenerator.newBuilder("com.leacox.motif.cases", "OptionalCases", o)
-        .addFileComment(Copyright.COPYRIGHT_NOTICE)
-        .addJavadoc("Motif cases for matching an {@link Optional}.\n")
-        .addMatch0Method(noneMatch)
-        .addMatch1Method(someMatch)
-        .build().generate();
+    JavaFile optionalCasesFile =
+        CasesGenerator.newBuilder("com.leacox.motif.cases", "OptionalCases", o)
+            .addFileComment(Copyright.COPYRIGHT_NOTICE)
+            .addJavadoc("Motif cases for matching an {@link Optional}.\n")
+            .addMatch0Method(noneMatch)
+            .addMatch1Method(someMatch)
+            .build().generate();
 
     try {
       optionalCasesFile.writeTo(System.out);

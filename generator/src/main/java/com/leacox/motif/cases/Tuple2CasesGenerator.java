@@ -29,6 +29,8 @@ import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 
 /**
+ * Generator for {@link Tuple2} match cases.
+ *
  * @author John Leacox
  */
 final class Tuple2CasesGenerator {

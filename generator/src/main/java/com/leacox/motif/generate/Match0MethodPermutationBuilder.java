@@ -33,6 +33,8 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 /**
+ * Builder for a 0-arity match method.
+ *
  * @author John Leacox
  */
 public class Match0MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {

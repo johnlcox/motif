@@ -34,12 +34,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 /**
+ * Fizzbuzz benchmarks.
+ *
  * @author John Leacox
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class FizzBuzzBenchmark {
+  /**
+   * Fizzbuzz benchmark using a conditional.
+   */
   @Benchmark
   public void fizzbuzzConditional() {
 
@@ -58,6 +63,9 @@ public class FizzBuzzBenchmark {
     );
   }
 
+  /**
+   * Fizzbuzz benchmark using motif pattern matching.
+   */
   @Benchmark
   public void fizzBuzzPatternMatching() {
     IntStream.range(0, 101).forEach(

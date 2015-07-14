@@ -27,6 +27,8 @@ import com.squareup.javapoet.TypeName;
 import java.util.List;
 
 /**
+ * Specification of a match method that with 1-arity.
+ *
  * @author John Leacox
  */
 
@@ -82,6 +84,9 @@ public final class Match1MethodSpec {
       return this;
     }
 
+    /**
+     * Creates a new instances of {@link Match1MethodSpec} with the builder parameters.
+     */
     public Match1MethodSpec build() {
       checkNotNull(name, "name == null");
       checkNotNull(fieldExtractorWithArgs, "matchExtractor == null");

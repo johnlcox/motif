@@ -32,6 +32,8 @@ import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
 
 /**
+ * A generator for generating matching cases classes.
+ *
  * @author John Leacox
  */
 public final class CasesGenerator {
@@ -53,6 +55,9 @@ public final class CasesGenerator {
     return new Builder(packageName, className, matchType);
   }
 
+  /**
+   * Generates the matching cases class and returns it as a {@link JavaFile}.
+   */
   public JavaFile generate() {
     MethodSpec privateConstructor = MethodSpec.constructorBuilder()
         .addModifiers(Modifier.PRIVATE)
@@ -102,18 +107,29 @@ public final class CasesGenerator {
       this.matchType = matchType;
     }
 
+    /**
+     * Adds a file level comment.
+     *
+     * <p>This is useful to add a copyright notice, for instance.
+     */
     public Builder addFileComment(String fileComment) {
       this.fileComment = fileComment;
 
       return this;
     }
 
+    /**
+     * Adds class level javadoc.
+     */
     public Builder addJavadoc(String javadoc) {
       javadocs.add(javadoc);
 
       return this;
     }
 
+    /**
+     * Adds a 0-arity match method.
+     */
     public Builder addMatch0Method(Match0MethodSpec match0MethodSpec) {
       match0Methods.addAll(
           new Match0MethodPermutationBuilder(matchType, match0MethodSpec).build());
@@ -121,6 +137,9 @@ public final class CasesGenerator {
       return this;
     }
 
+    /**
+     * Adds a 1-arity match method.
+     */
     public Builder addMatch1Method(Match1MethodSpec match1MethodSpec) {
       match1Methods.addAll(
           new Match1MethodPermutationBuilder(matchType, match1MethodSpec, MAX_ARITY).build());
@@ -128,20 +147,9 @@ public final class CasesGenerator {
       return this;
     }
 
-    public Builder addMatch2Method(Match2MethodSpec match2MethodSpec) {
-      match2Methods.addAll(
-          new Match2MethodPermutationBuilder(matchType, match2MethodSpec, MAX_ARITY).build());
-
-      return this;
-    }
-
-    public Builder addMatch3Method(Match3MethodSpec match3MethodSpec) {
-      match3Methods.addAll(
-          new Match3MethodPermutationBuilder(matchType, match3MethodSpec, MAX_ARITY).build());
-
-      return this;
-    }
-
+    /**
+     * Adds a 1-arity match method.
+     */
     public Builder addMatch1Method(Match1MethodSpec match1MethodSpec, int maxArity) {
       checkArgument(
           maxArity <= MAX_ARITY, "Arity greater than " + MAX_ARITY + "is not currently supported");
@@ -151,6 +159,19 @@ public final class CasesGenerator {
       return this;
     }
 
+    /**
+     * Adds a 2-arity match method.
+     */
+    public Builder addMatch2Method(Match2MethodSpec match2MethodSpec) {
+      match2Methods.addAll(
+          new Match2MethodPermutationBuilder(matchType, match2MethodSpec, MAX_ARITY).build());
+
+      return this;
+    }
+
+    /**
+     * Adds a 2-arity match method.
+     */
     public Builder addMatch2Method(Match2MethodSpec match2MethodSpec, int maxArity) {
       checkArgument(
           maxArity <= MAX_ARITY, "Arity greater than " + MAX_ARITY + "is not currently supported");
@@ -160,6 +181,19 @@ public final class CasesGenerator {
       return this;
     }
 
+    /**
+     * Adds a 3-arity match method.
+     */
+    public Builder addMatch3Method(Match3MethodSpec match3MethodSpec) {
+      match3Methods.addAll(
+          new Match3MethodPermutationBuilder(matchType, match3MethodSpec, MAX_ARITY).build());
+
+      return this;
+    }
+
+    /**
+     * Adds a 3-arity match method.
+     */
     public Builder addMatch3Method(Match3MethodSpec match3MethodSpec, int maxArity) {
       checkArgument(
           maxArity <= MAX_ARITY, "Arity greater than " + MAX_ARITY + "is not currently supported");
@@ -192,6 +226,9 @@ public final class CasesGenerator {
           .collect(Collectors.toList());
     }
 
+    /**
+     * Creates a new instance of {@link CasesGenerator} with the builder parameters.
+     */
     public CasesGenerator build() {
       return new CasesGenerator(this);
     }

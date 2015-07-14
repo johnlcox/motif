@@ -19,6 +19,8 @@ package com.leacox.motif.generate;
 import com.squareup.javapoet.TypeName;
 
 /**
+ * A parameter for a method, containing both the type and the name of the parameter.
+ *
  * @author John Leacox
  */
 final class MethodParam {

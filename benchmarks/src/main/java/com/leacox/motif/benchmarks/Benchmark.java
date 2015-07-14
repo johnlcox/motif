@@ -22,10 +22,14 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 /**
+ * Benchmarks of motif vs traditional Java.
+ *
  * @author John Leacox
  */
 public class Benchmark {
-
+  /**
+   * Main method to execute benchmarks.
+   */
   public static void main(String[] args) throws RunnerException {
     Options opt = new OptionsBuilder()
         .include(FactorialBenchmark.class.getSimpleName())

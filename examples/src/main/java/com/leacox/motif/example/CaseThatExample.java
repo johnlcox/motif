@@ -20,14 +20,19 @@ import static com.leacox.motif.Motif.match;
 import static com.leacox.motif.hamcrest.CaseThatCases.caseEq;
 
 /**
+ * An example of using a hamcrest matcher with motif pattern matching.
+ *
  * @author John Leacox
  */
 public class CaseThatExample {
+  /**
+   * A main method to run the hamcrest example.
+   */
   public static void main(String[] args) {
     new CaseThatExample().run();
   }
 
-  public void run() {
+  private void run() {
     Object pi = Math.PI;
 
     String result = match(pi)

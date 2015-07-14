@@ -24,26 +24,29 @@ import com.google.auto.value.AutoValue;
 import java.util.List;
 import java.util.Optional;
 
-import autovalue.shaded.com.google.common.common.collect.ImmutableList;
-
 /**
+ * A superhero character.
+ *
  * @author John Leacox
  */
 @AutoValue
 public abstract class SuperHero
-    implements Case3<String, ImmutableList<String>, Optional<Civilian>>, Character {
+    implements Case3<String, List<String>, Optional<Civilian>>, Character {
+  /**
+   * Creates a new instance of {@link SuperHero}.
+   */
   public static SuperHero create(String name, List<String> powers, Optional<Civilian> alterEgo) {
-    return new AutoValue_SuperHero(name, ImmutableList.copyOf(powers), alterEgo);
+    return new AutoValue_SuperHero(name, powers, alterEgo);
   }
 
   @Override
-  public Tuple3<String, ImmutableList<String>, Optional<Civilian>> extract() {
+  public Tuple3<String, List<String>, Optional<Civilian>> extract() {
     return Tuple3.of(name(), powers(), alterEgo());
   }
 
   public abstract String name();
 
-  public abstract ImmutableList<String> powers();
+  public abstract List<String> powers();
 
   public abstract Optional<Civilian> alterEgo();
 }

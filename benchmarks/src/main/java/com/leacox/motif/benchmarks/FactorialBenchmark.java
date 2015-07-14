@@ -31,6 +31,8 @@ import org.openjdk.jmh.annotations.State;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Factorial benchmarks.
+ *
  * @author John Leacox
  */
 @State(Scope.Thread)
@@ -40,6 +42,9 @@ public class FactorialBenchmark {
   @Param({"0", "1", "10"})
   public int n;
 
+  /**
+   * Factorial benchmark using a conditional.
+   */
   @Benchmark
   public long factorialConditional() {
     return factConditionl(n);
@@ -53,6 +58,9 @@ public class FactorialBenchmark {
     }
   }
 
+  /**
+   * Factorial benchmark using motif pattern matching.
+   */
   @Benchmark
   public long factorialPatternMatching() {
     return factMatching(n);
@@ -60,7 +68,7 @@ public class FactorialBenchmark {
 
   private long factMatching(long i) {
     return match(i)
-        .when(eq(0l)).get(() -> 1l)
+        .when(eq(0L)).get(() -> 1L)
         .when(any()).get(x -> x * factMatching(x - 1))
         .getMatch();
   }

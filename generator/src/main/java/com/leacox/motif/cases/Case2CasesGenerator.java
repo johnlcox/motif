@@ -29,6 +29,8 @@ import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 
 /**
+ * Generator for {@link Case2} match cases.
+ *
  * @author John Leacox
  */
 final class Case2CasesGenerator {

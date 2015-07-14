@@ -17,6 +17,8 @@
 package com.leacox.motif.generate;
 
 /**
+ * Motif matching types.
+ *
  * @author John Leacox
  */
 enum MatchType {

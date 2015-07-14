@@ -24,10 +24,15 @@ import com.google.auto.value.AutoValue;
 import java.math.BigDecimal;
 
 /**
+ * A civilian character.
+ *
  * @author John Leacox
  */
 @AutoValue
 public abstract class Civilian implements Case2<String, BigDecimal>, Character {
+  /**
+   * Creates a new instance of {@link Civilian}.
+   */
   public static Civilian create(String name, BigDecimal wealth) {
     return new AutoValue_Civilian(name, wealth);
   }

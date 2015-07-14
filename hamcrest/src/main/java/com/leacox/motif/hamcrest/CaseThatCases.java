@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Motif cases for matching a hamcrest {@link Matcher}.
+ *
  * @author John Leacox
  */
 public class CaseThatCases {
@@ -83,6 +85,13 @@ public class CaseThatCases {
     }
   }
 
+  /**
+   * Matches on a hamcrest {@link org.hamcrest.Matcher}.
+   *
+   * <p>If the hamcrest matcher returns a match, then motif will consider it a match.
+   *
+   * <p>If matched, the {@code t} value is extracted.
+   */
   public static <T> DecomposableMatchBuilder1<T, T> caseThat(org.hamcrest.Matcher<T> matcher) {
     @SuppressWarnings("unchecked")
     List<Matcher<Object>> matchers = Lists.of((Matcher<Object>) HamcrestMatcher.of(matcher));

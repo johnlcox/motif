@@ -36,6 +36,8 @@ import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
 
 /**
+ * Builder for a 3-arity match method.
+ *
  * @author John Leacox
  */
 final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBuilder {
@@ -282,18 +284,18 @@ final class Match3MethodPermutationBuilder extends BaseMatchMethodPermutationBui
     MatchType secondMatch = getMatchType(b.typeName);
     MatchType thirdMatch = getMatchType(c.typeName);
 
-    if ((firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) &&
-        (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY) &&
-        (thirdMatch == MatchType.DECOMPOSE || thirdMatch == MatchType.ANY)) {
+    if ((firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY)
+        && (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY)
+        && (thirdMatch == MatchType.DECOMPOSE || thirdMatch == MatchType.ANY)) {
       return "$T.of(0, 1, 2)";
-    } else if ((firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) &&
-        (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY)) {
+    } else if ((firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY)
+        && (secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY)) {
       return "$T.of(0, 1)";
-    } else if ((firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) &&
-        (thirdMatch == MatchType.DECOMPOSE || thirdMatch == MatchType.ANY)) {
+    } else if ((firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY)
+        && (thirdMatch == MatchType.DECOMPOSE || thirdMatch == MatchType.ANY)) {
       return "$T.of(0, 2)";
-    } else if ((secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY) &&
-        (thirdMatch == MatchType.DECOMPOSE || thirdMatch == MatchType.ANY)) {
+    } else if ((secondMatch == MatchType.DECOMPOSE || secondMatch == MatchType.ANY)
+        && (thirdMatch == MatchType.DECOMPOSE || thirdMatch == MatchType.ANY)) {
       return "$T.of(1, 2)";
     } else if (firstMatch == MatchType.DECOMPOSE || firstMatch == MatchType.ANY) {
       return "0";

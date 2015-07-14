@@ -19,6 +19,8 @@ package com.leacox.motif.generate;
 import com.squareup.javapoet.TypeName;
 
 /**
+ * A pair containing a type and its arity.
+ *
  * @author John Leacox
  */
 final class TypeNameWithArity {

@@ -17,6 +17,8 @@
 package com.leacox.motif.example.superhero;
 
 /**
+ * A character with a name.
+ *
  * @author John Leacox
  */
 public interface Character {

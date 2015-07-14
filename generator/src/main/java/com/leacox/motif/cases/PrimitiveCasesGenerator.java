@@ -29,9 +29,13 @@ import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 
 /**
+ * Generator for primitive match cases.
+ *
+ * <p>Note: This isn't currently used.
+ *
  * @author John Leacox
  */
-final class PrimitiveCasesGenerator{
+final class PrimitiveCasesGenerator {
   private PrimitiveCasesGenerator() {
   }
 
@@ -41,7 +45,8 @@ final class PrimitiveCasesGenerator{
 
     Match1MethodSpec byteMatch = Match1MethodSpec.builder()
         .withName("aByte").withSummaryJavadoc("Matches a byte.\n")
-        .withMatchExtractor(PrimitiveFieldExtractor.class, Byte.class).withParamA(TypeName.get(byte.class), "b").build();
+        .withMatchExtractor(PrimitiveFieldExtractor.class, Byte.class)
+        .withParamA(TypeName.get(byte.class), "b").build();
 
     JavaFile primitiveCasesFile = CasesGenerator.newBuilder(
         "com.leacox.motif.cases", "PrimitiveCases", t)
