@@ -3,6 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.leacox.motif</groupId>
+  <artifactId>motif-parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>Motif (Parent)</name>
+  <description>Scala-like pattern matching for Java 8+</description>
+  <url>https://github.com/johnlcox/motif</url>
+
   <modules>
     <module>motif</module>
     <module>benchmarks</module>
@@ -10,11 +20,6 @@
     <module>hamcrest</module>
     <module>generator</module>
   </modules>
-
-  <groupId>com.leacox.motif</groupId>
-  <artifactId>motif-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,6 +44,13 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
+
+  <developers>
+    <developer>
+      <name>John Leacox</name>
+      <url>https://github.com/johnlcox</url>
+    </developer>
+  </developers>
 
   <dependencyManagement>
     <dependencies>
