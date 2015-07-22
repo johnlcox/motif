@@ -56,9 +56,9 @@
 <div class="highlight highlight-java"><pre><span class="pl-smi">IntStream</span><span class="pl-k">.</span>range(<span class="pl-c1">0</span>, <span class="pl-c1">101</span>)<span class="pl-k">.</span>forEach(
     n <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(
         match(<span class="pl-smi">Tuple2</span><span class="pl-k">.</span>of(n <span class="pl-k">%</span> <span class="pl-c1">3</span>, n <span class="pl-k">%</span> <span class="pl-c1">5</span>))
-            .when(tuple2(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>))<span class="pl-k">.</span>get(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>FizzBuzz<span class="pl-pds">"</span></span>)
-            .when(tuple2(<span class="pl-c1">0</span>, any()))<span class="pl-k">.</span>get(y <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Fizz<span class="pl-pds">"</span></span>)
-            .when(tuple2(any(), <span class="pl-c1">0</span>))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Buzz<span class="pl-pds">"</span></span>)
+            .when(tuple2(eq(<span class="pl-c1">0</span>), eq(<span class="pl-c1">0</span>)))<span class="pl-k">.</span>get(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>FizzBuzz<span class="pl-pds">"</span></span>)
+            .when(tuple2(eq(<span class="pl-c1">0</span>), any()))<span class="pl-k">.</span>get(y <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Fizz<span class="pl-pds">"</span></span>)
+            .when(tuple2(any(), eq(<span class="pl-c1">0</span>)))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Buzz<span class="pl-pds">"</span></span>)
             .orElse(<span class="pl-smi">String</span><span class="pl-k">.</span>valueOf(n))
             .getMatch()
     )
@@ -78,8 +78,8 @@ match(personOpt)
 
 <div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">long</span> factorial(<span class="pl-k">long</span> i) {
   <span class="pl-k">return</span> match(i)
-      .when(caseLong(<span class="pl-c1">0</span>))<span class="pl-k">.</span>get(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-c1">1l</span>)
-      .when(caseLong(any()))<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> x <span class="pl-k">*</span> factorial(x <span class="pl-k">-</span> <span class="pl-c1">1</span>))
+      .when(eq(<span class="pl-c1">0</span>))<span class="pl-k">.</span>get(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-c1">1l</span>)
+      .when(any())<span class="pl-k">.</span>get(x <span class="pl-k">-</span><span class="pl-k">&gt;</span> x <span class="pl-k">*</span> factorial(x <span class="pl-k">-</span> <span class="pl-c1">1</span>))
       .getMatch();
 }</pre></div>
 
@@ -88,8 +88,8 @@ match(personOpt)
 
 <div class="highlight highlight-java"><pre><span class="pl-k">Optional&lt;<span class="pl-k">Tuple2&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span>&gt;</span> opt <span class="pl-k">=</span> <span class="pl-smi">Optional</span><span class="pl-k">.</span>of(<span class="pl-smi">Tuple2</span><span class="pl-k">.</span>of(<span class="pl-s"><span class="pl-pds">"</span>first<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>second<span class="pl-pds">"</span></span>));
 match(opt)
-    .when(some(tuple2(<span class="pl-s"><span class="pl-pds">"</span>third<span class="pl-pds">"</span></span>, any())))<span class="pl-k">.</span>then(b <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(b))
-    .when(some(tuple2(any(), <span class="pl-s"><span class="pl-pds">"</span>second<span class="pl-pds">"</span></span>)))<span class="pl-k">.</span>then(a <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(a))
+    .when(some(tuple2(eq(<span class="pl-s"><span class="pl-pds">"</span>third<span class="pl-pds">"</span></span>), any())))<span class="pl-k">.</span>then(b <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(b))
+    .when(some(tuple2(any(), eq(<span class="pl-s"><span class="pl-pds">"</span>second<span class="pl-pds">"</span></span>))))<span class="pl-k">.</span>then(a <span class="pl-k">-</span><span class="pl-k">&gt;</span> doStuff(a))
     .when(none())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Tuple not found<span class="pl-pds">"</span></span>))
     .doMatch();</pre></div>
 
@@ -99,7 +99,7 @@ match(opt)
 <div class="highlight highlight-java"><pre><span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> list <span class="pl-k">=</span> <span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>d<span class="pl-pds">"</span></span>);
 match(list)
     .when(nil())<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Empty List<span class="pl-pds">"</span></span>))
-    .when(headNil(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>))<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Singleton List of 'b'<span class="pl-pds">"</span></span>))
+    .when(headNil(eq(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>)))<span class="pl-k">.</span>then(() <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Singleton List of 'b'<span class="pl-pds">"</span></span>))
     .when(headNil(any()))<span class="pl-k">.</span>then(head <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Singleton List of <span class="pl-pds">"</span></span> <span class="pl-k">+</span> head))
     .when(headTail(any(), any()))<span class="pl-k">.</span>then(
         (head, tail) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>head: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> head <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> Remaining: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> tail))
@@ -108,23 +108,12 @@ match(list)
 <h2>
 <a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
 
-<p>Add the Sonatype snapshot repository:</p>
-
-<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">repository</span>&gt;
-  &lt;<span class="pl-ent">id</span>&gt;ossrh&lt;/<span class="pl-ent">id</span>&gt;
-  &lt;<span class="pl-ent">name</span>&gt;Sonatype OSSRH&lt;/<span class="pl-ent">name</span>&gt;
-  &lt;<span class="pl-ent">url</span>&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/<span class="pl-ent">url</span>&gt;
-  &lt;<span class="pl-ent">snapshots</span>&gt;
-    &lt;<span class="pl-ent">enabled</span>&gt;true&lt;/<span class="pl-ent">enabled</span>&gt;
-  &lt;/<span class="pl-ent">snapshots</span>&gt;
-&lt;/<span class="pl-ent">repository</span>&gt;</pre></div>
-
-<p>Download the latest snapshot JAR via Maven:</p>
+<p>Download the latest JAR via Maven:</p>
 
 <div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
   &lt;<span class="pl-ent">groupId</span>&gt;com.leacox.motif&lt;/<span class="pl-ent">groupId</span>&gt;
   &lt;<span class="pl-ent">artifactId</span>&gt;motif&lt;/<span class="pl-ent">artifactId</span>&gt;
-  &lt;<span class="pl-ent">version</span>&gt;1.0-SNAPSHOT&lt;/<span class="pl-ent">version</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;0.1&lt;/<span class="pl-ent">version</span>&gt;
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h2>
