@@ -1,0 +1,9 @@
+com.leacox.motif
+com.leacox.motif.caseclass
+com.leacox.motif.cases
+com.leacox.motif.extract
+com.leacox.motif.extract.matchers
+com.leacox.motif.extract.util
+com.leacox.motif.function
+com.leacox.motif.matching
+com.leacox.motif.tuple
